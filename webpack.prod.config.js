@@ -30,7 +30,8 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({
             "process.env": {
-                "NODE_ENV": JSON.stringify("production")
+                "NODE_ENV": JSON.stringify("production"),
+                "GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY)
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
@@ -38,5 +39,6 @@ module.exports = {
                 warnings: false
             }
         })
-    ]
+    ],
+    externals: ['google']
 };
