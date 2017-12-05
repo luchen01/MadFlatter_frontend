@@ -1,32 +1,24 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import Title from '../components/Title';
+// import Register from '../components/Register';
 
-const AppContainer = ({ name }) => {
-    return (
-        <div>
-            <Title name={name} />
-        </div>
-    );
-};
+class AppContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        };
+    }
 
-AppContainer.propTypes = {
-    name: PropTypes.string,
-};
+    render() {
+        return(
+      <div>
+        This is the App Container.
+        MadFlatter
 
-const mapStateToProps = (state) => {
-    return {
-        name: state.name
-    };
-};
+      </div>
+        );
+    }
+}
 
-const mapDispatchToProps = (/* dispatch */) => {
-    return {
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppContainer);
+export default AppContainer;
