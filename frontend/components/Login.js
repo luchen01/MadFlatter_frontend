@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-DOM';
 import axios from 'axios';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Login extends React.Component {
     constructor(props) {
@@ -31,12 +33,26 @@ class Login extends React.Component {
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
             <h1>LOGIN</h1>
             <br/>
-            <input type="text" name="username" placeholder="username" value={this.state.username} onChange={(e)=>(this.setState({username: e.target.value}))}/>
-            <br/>
-            <input type="password" name="password" placeholder="password" value={this.state.password} onChange={(e)=>(this.setState({password: e.target.value}))}/>
-            <div style={{margin: '20px'}}>
-              <button onClick={this.login.bind(this)}> Login </button>
-            </div>
+            <TextField
+              floatingLabelText="Username"
+              type="text"
+              value={this.state.username}
+              onChange={(e)=>(this.setState({username: e.target.value}))}
+              // errorText="This field is required"
+            /><br />
+            <TextField
+              floatingLabelText="Password"
+              type="password"
+              value={this.state.password}
+              onChange={(e)=>(this.setState({password: e.target.value}))}
+              // errorText="This field is required"
+            /><br />
+            <RaisedButton
+                primary={true}
+                style={{margin: '20px'}}
+                label = "Login"
+                onClick={this.login.bind(this)}
+              />
             <Link to="/register">
               <div style={{padding: '10px'}}>Not a member? Click Here to Register</div>
             </Link>

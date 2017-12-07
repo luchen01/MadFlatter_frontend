@@ -5,6 +5,8 @@ import Register from '../components/Register';
 import Login from '../components/Login';
 import Profile from '../components/Profile';
 import Title from '../components/Title';
+import Footer from '../components/Footer';
+
 
 class Router extends React.Component {
     constructor(props) {
@@ -19,6 +21,7 @@ class Router extends React.Component {
         <Route path={"/register"} exact component = {Register} />
         <Route path={"/login"} exact component = {Login} />
         <Route path={"/profile"} component = {Profile} />
+        <Footer />
       </div>
         );
     }
