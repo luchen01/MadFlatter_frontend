@@ -9,6 +9,7 @@ class Profile extends React.Component {
         return(
       <div>
         <h1>Profile Page</h1>
+        
       </div>
         );
     }
