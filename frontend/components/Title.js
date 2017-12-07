@@ -10,22 +10,17 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 class Login extends Component {
-    // static muiName = 'FlatButton';
-
     render() {
         return (
           <Link to="/login" >Login</Link>
-      // <FlatButton {...this.props} label="Login" />
         );
     }
 }
 
 class Register extends Component {
-    // static muiName = 'FlatButton';
-
     render() {
         return (
-      <Link to="/Register" >Register</Link>
+          <Link to="/Register" >Register</Link>
         );
     }
 }
@@ -46,8 +41,6 @@ const Logged = (props) => (
   </IconMenu>
 );
 
-// Logged.muiName = 'IconMenu';
-
 /**
  * This example is taking advantage of the composability of the `AppBar`
  * to render different components depending on the application state.
@@ -60,28 +53,21 @@ class AppBarExampleComposition extends Component {
         };
     }
 
-  handleChange(event, logged){
-    this.setState({logged: logged});
-  };
+    handleChange(event, logged) {
+        this.setState({logged: logged});
+    }
 
-  render() {
-    return (
-      <div>
-        {/* <Toggle
-          label="Logged"
-          defaultToggled={true}
-          onToggle={this.handleChange}
-          labelPosition="right"
-          style={{margin: 20}}
-        /> */}
-        <AppBar
+    render() {
+        return (
+          <div>
+            <AppBar
           title="MadFlatter"
           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px'}}><Login /><Register /></div>}
         />
       </div>
-    );
-  }
+        );
+    }
 }
 
 export default AppBarExampleComposition;
