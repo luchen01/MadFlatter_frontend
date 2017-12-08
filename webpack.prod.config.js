@@ -31,7 +31,8 @@ module.exports = {
         new webpack.DefinePlugin({
             "process.env": {
                 "NODE_ENV": JSON.stringify("production"),
-                "GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY)
+                "GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY),
+                "ZILLOW_API_KEY": JSON.stringify(process.env.ZILLOW_API_KEY)
             }
         }),
         new webpack.optimize.UglifyJsPlugin({

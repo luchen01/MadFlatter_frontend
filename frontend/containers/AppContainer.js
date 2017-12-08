@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Title from '../components/Title';
-import Map from './Map';
+import Map from '../components/Map';
 // import GoogleMapReact from 'google-map-react';
 
 const AppContainer = ({ name }) => {

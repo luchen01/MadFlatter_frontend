@@ -1,9 +1,72 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import Listing from './Listing';
 
 class Map extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      listing: null,
+      markers:[]
+    }
+  }
+
+  renderListing(listing){
+    console.log('rerendering listing');
+    this.setState({
+      listing: listing
+    })
+  }
+
+  loadApartmentsFromCraigsList(){
+    console.log('making axios call');
+    axios.get('http://localhost:3000/craigslist')
+    .then((response)=>{
+        console.log(response.data.message);
+
+    })
+  }
+
+  findApartmentsByLocation(){
+    const self = this;
+    var rectangle = this.state.rectangle;
+    this.state.map.fitBounds(this.state.rectangle)
+    axios.post('http://localhost:3000/apartmentsByLocation', {
+        minLat: rectangle.f.b,
+        maxLat: rectangle.f.f,
+        minLng: rectangle.b.b,
+        maxLng: rectangle.b.f
+      })
+      .then((response) => {
+        self.state.markers.map((marker) => {
+          marker.setMap(null);
+        })
+        self.setState({
+          markers: []
+        })
+        response.data.apartments.map((listing) => {
+          if(!listing.lat) console.log(listing.title);
+          else {
+            let marker = new google.maps.Marker({
+              position: {lat: listing.lat, lng: listing.lng},
+              map: self.state.map,
+              title: listing.title,
+            })
+            marker.addListener('click', () => {
+              self.renderListing(listing);
+            });
+            self.setState({
+              markers: [...this.state.markers, marker]
+            })
+          }
+        })
+      })
+  }
+
   componentDidMount(){
+    var self = this;
     var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
             center: new google.maps.LatLng(37.783335, -122.419042),
@@ -27,13 +90,16 @@ class Map extends Component {
     // });
 
     var drawingManager = new google.maps.drawing.DrawingManager({
-      drawingMode: google.maps.drawing.OverlayType.MARKER,
+      // drawingMode: google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: ['circle', 'rectangle']
       },
-      markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+      markerOptions: {
+        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+
+      },
       circleOptions: {
         fillColor: '#fd0202',
         fillOpacity: .2,
@@ -68,8 +134,14 @@ class Map extends Component {
         })
       } else if(event.type === 'rectangle'){
         var rectangle = event.overlay;
+        self.setState({
+          rectangle: rectangle.getBounds()
+        })
         google.maps.event.addListener(rectangle, 'bounds_changed', function(event){
           console.log(rectangle.getBounds().b, rectangle.getBounds().f);
+          self.setState({
+            rectangle: rectangle.getBounds()
+          })
             //UPDATE DATABASE
         })
         google.maps.event.addListener(rectangle, 'rightclick', function(event){
@@ -78,13 +150,22 @@ class Map extends Component {
         })
       }
     });
+    this.setState({
+      map: map
+    })
+
   }
 
   render(){
     return (
       <div>
         <h1>{name}</h1>
-        <div id='map' style={{height: '500px', width: '500px'}}></div>
+        <button className="btn btn-default" onClick={()=>(this.loadApartmentsFromCraigsList())}>Click to load apartments</button>
+        <button className="btn btn-default" onClick={()=>(this.findApartmentsByLocation())}>Click to find apartments in this region</button>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <div id='map' style={{height: '500px', width: '500px'}}></div>
+          {this.state.listing ? <Listing listing={this.state.listing}/> : <p>Click on a listing to view</p>}
+        </div>
       </div>
     );
   }
