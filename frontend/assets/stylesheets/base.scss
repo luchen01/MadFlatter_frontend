@@ -14,6 +14,32 @@ padding: none;
 
 }
 
+.infoContainer {
+  text-align: center;
+  font-family: helvetica;
+  font-weight: 100;
+}
+
+.profileimg{
+  position: relative;
+  width: 300px;
+  height:300px;
+}
+
+.icon{
+  width: 150px;
+  height: 150px;
+}
+
+.profileContainer{
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  flex: 1
+}
+
 .photo_slider
 {
 	position : relative;
@@ -30,7 +56,13 @@ padding: none;
 
 .howto{
   display: flex;
-  align-items: center
+  margin: 10px;
+  padding: 10px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  flex: 1;
+  // text-align: center;
+
 }
 
 .search

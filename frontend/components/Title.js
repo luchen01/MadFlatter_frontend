@@ -78,7 +78,7 @@ class AppBarExampleComposition extends Component {
         <AppBar
           title="MadFlatter - Live the Way You Want!"
           iconElementLeft={<IconButton
-            href = "http://localhost:3000/#/"> <ActionHome /></IconButton>}
+            href = "http://localhost:3030/#/"> <ActionHome /></IconButton>}
           iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px', padding: '10px'}}><Login />  <Register /></div>}
         />
       </div>

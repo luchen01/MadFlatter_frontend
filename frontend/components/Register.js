@@ -6,6 +6,8 @@ import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import * as colors from 'material-ui/styles/colors';
+
 
 class Register extends React.Component {
     constructor(props) {
@@ -67,12 +69,14 @@ class Register extends React.Component {
             <RaisedButton
                 primary={true}
                 style={{margin: '20px'}}
+                // backgroundColor = {String(colors.gray200)}
                 label = "Register with Facebook"
                 href = "http://madflatter.herokuapp.com/auth/facebook"
                 // onClick={this.facebook.bind(this)}
               />
             <RaisedButton
                   primary={true}
+                  backgroundColor = {colors.gray200}
                   style={{margin: '20px'}}
                   label = "Register with Google"
                   href = "http://madflatter.herokuapp.com/auth/google"

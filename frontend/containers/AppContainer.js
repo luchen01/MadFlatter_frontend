@@ -3,14 +3,20 @@ import Background from '../components/Background';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import ApartmentDisplay from '../components/ApartmentDisplay';
+import RoommateDisplay from '../components/RoommateDisplay';
+import FontIcon from 'material-ui/FontIcon';
+import ActionHome from 'material-ui/svg-icons/action/home';
+// import Devices from 'material-ui/svg-icons/action/importantdevices';
+import Chat from 'material-ui/svg-icons/communication/forum';
+
 
 class AppContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            videoURL: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4'
+            search: '',
+            city: '',
         };
     }
 
@@ -23,10 +29,25 @@ class AppContainer extends React.Component {
                 Your browser does not support the video tag.
         </video> */}
     <Background />
-     <div className="howto container">
-       <h1>HOW MADFLATTER WORKS</h1>
-     </div>
-     <div className = "search container">
+    <h1 style = {{textAlign: 'center'}}>HOW MADFLATTER WORKS</h1>
+     <div className="howto row">
+         <div className = "infoContainer col-md-4">
+           <img className = "icon" src = "https://cdn0.iconfinder.com/data/icons/social-messaging-productivity-5/128/questions-answers-256.png"/><br/>
+           Tell us what you want.
+         </div>
+         <div className = "infoContainer col-md-4">
+           <img className = "icon" src = "http://www.yoroommate.com/Amsterdam-Room-Roommate-Finder/images/member.png"/><br/>
+           Pick from your matched roommates and apartments.
+         </div>
+         <div className = "infoContainer col-md-4">
+           <img className = "icon" src = "https://image.flaticon.com/icons/png/512/25/25694.png"/><br/>
+           Happy Moving Day!
+       </div>
+     </div><br/>
+
+     <ApartmentDisplay /><br/>
+     <RoommateDisplay />
+     <div className = "search container col-md-3 col-xs-10">
        <SelectField
           floatingLabelText="What are you looking for"
           value={this.state.value}
