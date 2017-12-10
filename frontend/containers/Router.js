@@ -6,6 +6,8 @@ import Login from '../components/Login';
 import Profile from '../components/Profile';
 import Title from '../components/Title';
 import Footer from '../components/Footer';
+import BrowseApartment from '../components/BrowseApartment';
+import BrowseRoommate from '../components/BrowseRoommate';
 
 
 class Router extends React.Component {
@@ -21,6 +23,9 @@ class Router extends React.Component {
         <Route path={"/register"} exact component = {Register} />
         <Route path={"/login"} exact component = {Login} />
         <Route path={"/profile/:userid"} exact component = {Profile} />
+        <Route path={"/browseapartment"} exact component = {BrowseApartment} />
+        <Route path={"/browseroommate"} exact component = {BrowseRoommate} />
+
         <Footer />
       </div>
         );

@@ -9,7 +9,8 @@ import FontIcon from 'material-ui/FontIcon';
 import ActionHome from 'material-ui/svg-icons/action/home';
 // import Devices from 'material-ui/svg-icons/action/importantdevices';
 import Chat from 'material-ui/svg-icons/communication/forum';
-
+import IconButton from 'material-ui/IconButton';
+import { Link } from 'react-router-DOM';
 
 class AppContainer extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class AppContainer extends React.Component {
            Tell us what you want.
          </div>
          <div className = "infoContainer col-md-4">
-           <img className = "icon" src = "http://www.yoroommate.com/Amsterdam-Room-Roommate-Finder/images/member.png"/><br/>
+           <img className = "icon" src = "https://image.flaticon.com/icons/png/128/181/181548.png"/><br/>
            Pick from your matched roommates and apartments.
          </div>
          <div className = "infoContainer col-md-4">
@@ -44,9 +45,10 @@ class AppContainer extends React.Component {
            Happy Moving Day!
        </div>
      </div><br/>
-
      <ApartmentDisplay /><br/>
+     <Link to="/browseapartment">See More Apartments</Link>
      <RoommateDisplay />
+     <Link to="/browseroommate" >See More People</Link>
      <div className = "search container col-md-3 col-xs-10">
        <SelectField
           floatingLabelText="What are you looking for"
