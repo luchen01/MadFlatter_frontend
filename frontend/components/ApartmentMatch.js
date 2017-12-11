@@ -3,6 +3,7 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import { Link } from 'react-router-DOM';
 
 const styles = {
   root: {
@@ -73,7 +74,7 @@ class ApartmentMatch extends React.Component{
       style={styles.gridList}
     >
       <Subheader>Saved Results</Subheader>
-      {tilesData.map((tile) => (
+      {tilesData.map((tile) => (<Link to="/apartmentprofile">
         <GridTile
           key={tile.img}
           // title={tile.title}
@@ -81,7 +82,7 @@ class ApartmentMatch extends React.Component{
           actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
         >
           <img src={tile.img} />
-        </GridTile>
+        </GridTile></Link>
       ))}
     </GridList>
   </div>

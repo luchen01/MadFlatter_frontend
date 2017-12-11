@@ -6,7 +6,7 @@ class BrowseRoommate extends React.Component{
       <div>
         <h1>Browse Roommate</h1>
       </div>
-    )
+    );
   }
 }
 

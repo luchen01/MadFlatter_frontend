@@ -47,7 +47,7 @@ class Profile extends React.Component {
       <div>
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
-            <h1>Profile Page</h1>
+            <h1>Roommate Profile</h1>
             <img className = "profileimg" src="https://i.pinimg.com/736x/48/bd/3f/48bd3f6e928d7cb4b8d499cb0f96b8a8--despicable-minions-funny-minion.jpg"></img>
             <h1>username</h1>
             <h1>Description</h1>
