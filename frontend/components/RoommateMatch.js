@@ -1,8 +1,10 @@
 import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import { Link } from 'react-router-DOM';
 
 const styles = {
   root: {
@@ -67,14 +69,13 @@ class RoommateMatch extends React.Component{
   render() {
     return(
       <div style={styles.root}>
-        
     <GridList
       cellHeight={180}
       cellWidth={300}
       style={styles.gridList}
     >
       <Subheader>Saved Results</Subheader>
-      {tilesData.map((tile) => (
+      {tilesData.map((tile) => ( <Link to="/profile">
         <GridTile
           key={tile.img}
           // title={tile.title}
@@ -82,7 +83,7 @@ class RoommateMatch extends React.Component{
           actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
         >
           <img src={tile.img} />
-        </GridTile>
+        </GridTile></Link>
       ))}
     </GridList>
   </div>

@@ -9,21 +9,17 @@ import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import ActionHome from 'material-ui/svg-icons/action/home';
+import axios from 'axios';
 
 class Login extends Component {
-    // static muiName = 'FlatButton';
-
     render() {
         return (
           <Link to="/login" >Login</Link>
-      // <FlatButton {...this.props} label="Login" />
         );
     }
 }
 
 class Register extends Component {
-    // static muiName = 'FlatButton';
-
     render() {
         return (
       <Link to="/Register" >Register</Link>
@@ -47,8 +43,6 @@ const Logged = (props) => (
   </IconMenu>
 );
 
-// Logged.muiName = 'IconMenu';
-
 /**
  * This example is taking advantage of the composability of the `AppBar`
  * to render different components depending on the application state.
@@ -61,12 +55,19 @@ class AppBarExampleComposition extends Component {
         };
     }
 
-  handleChange(event, logged){
-    this.setState({logged: logged});
-  };
+    componentWillMount() {
+        axios.get('http://localhost:3000/loggedin')
+      .then(response=>{
+          console.log('response in title', response);
+          if(response.data) {
+              this.setState({logged: true});
+          }
+      })
+      .catch(err=>console.log(err));
+    }
 
-  render() {
-    return (
+    render() {
+        return (
       <div>
         {/* <Toggle
           label="Logged"
@@ -82,8 +83,8 @@ class AppBarExampleComposition extends Component {
           iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px', padding: '10px'}}><Login />  <Register /></div>}
         />
       </div>
-    );
-  }
+        );
+    }
 }
 
 export default AppBarExampleComposition;

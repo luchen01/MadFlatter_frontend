@@ -21,14 +21,15 @@ class AppContainer extends React.Component {
         };
     }
 
+    explore() {
+        if(this.state) {
+            this.props.history.push(`/${this.state.search}`);
+        }
+    }
+
     render() {
         return(
       <div>
-        {/* <video id="background-video" loop autoPlay>
-                <source src={this.state.videoURL} type="video/mp4" />
-                <source src={this.state.videoURL} type="video/ogg" />
-                Your browser does not support the video tag.
-        </video> */}
     <Background />
     <h1 style = {{textAlign: 'center'}}>HOW MADFLATTER WORKS</h1>
      <div className="howto row">
@@ -49,29 +50,30 @@ class AppContainer extends React.Component {
      <Link to="/browseapartment">See More Apartments</Link>
      <RoommateDisplay />
      <Link to="/browseroommate" >See More People</Link>
-     <div className = "search container col-md-3 col-xs-10">
+     <div className = "search container col-md-offset-6 col-md-3">
        <SelectField
           floatingLabelText="What are you looking for"
-          value={this.state.value}
-          onChange={this.handleChange}
+          value={this.state.search}
+          onChange={(event, index, value)=>this.setState({search: value})}
         >
-          <MenuItem value={1} primaryText="Roommates" />
-          <MenuItem value={2} primaryText="Apartment" />
-          <MenuItem value={3} primaryText="Both" />
+          <MenuItem value={"browseroommate"} primaryText="Roommates" />
+          <MenuItem value={"browseapartment"} primaryText="Apartment" />
+          <MenuItem value={"Both"} primaryText="Both" />
         </SelectField><br/>
         <SelectField
            floatingLabelText="Select your City"
-           value={this.state.value}
-           onChange={this.handleChange}
+           value={this.state.city}
+           onChange={(event, index, value)=>this.setState({city: value})}
          >
-           <MenuItem value={1} primaryText="San Francisco" />
-           <MenuItem value={2} primaryText="New York" />
-           <MenuItem value={3} primaryText="Los Angeles" />
+           <MenuItem value={"San Francisco"} primaryText="San Francisco" />
+           <MenuItem value={"Other"} primaryText="New York" />
+           <MenuItem value={"Other"} primaryText="Los Angeles" />
          </SelectField><br/>
          <RaisedButton
              primary={true}
              style={{margin: '20px'}}
              label = "Explore"
+             onClick = {()=>this.explore()}
            />
      </div>
       </div>

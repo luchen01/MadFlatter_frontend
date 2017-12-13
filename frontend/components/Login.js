@@ -1,9 +1,12 @@
 import React from 'react';
 // import Redirect from 'react-router';
 import {Link} from 'react-router-DOM';
+import Divider from 'material-ui/Divider';
 import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as colors from 'material-ui/styles/colors';
+
 
 class Login extends React.Component {
     constructor(props) {
@@ -34,6 +37,23 @@ class Login extends React.Component {
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
             <h1>LOGIN</h1>
             <br/>
+            <RaisedButton
+                primary={true}
+                style={{margin: '20px'}}
+                // backgroundColor = {String(colors.gray200)}
+                label = "Login with Facebook"
+                href = "http://madflatter.herokuapp.com/auth/facebook"
+                // onClick={this.facebook.bind(this)}
+              />
+            <RaisedButton
+                  primary={true}
+                  backgroundColor = {colors.gray200}
+                  style={{margin: '20px'}}
+                  label = "Login with Google"
+                  href = "http://madflatter.herokuapp.com/auth/google"
+                  // onClick={this.google.bind(this)}
+              />
+              <Divider inset={true} />
             <TextField
               floatingLabelText="Username"
               type="text"

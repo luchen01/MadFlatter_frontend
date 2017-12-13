@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class Profile extends React.Component {
+class RoommateProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,12 +99,12 @@ class Profile extends React.Component {
                       /><br />
                   </div>
                 </Tab>
-                <Tab label="Roommate Matches" >
+                {/* <Tab label="Roommate Matches" >
                   <RoommateMatch />
                 </Tab>
                 <Tab label="Apartment Matches" >
                     <ApartmentMatch />
-                </Tab>
+                </Tab> */}
               </Tabs>
             </div>
       </div>
@@ -113,4 +113,4 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+export default RoommateProfile;
