@@ -69,26 +69,35 @@ class BrowseApartment extends React.Component{
     return(
       <div>
         <h1>Browse Apartment</h1><br/>
-      <div style={styles.root}>
-    <GridList
-      cellHeight={180}
-      cellWidth={300}
-      style={styles.gridList}
-    >
-      {tilesData.map((tile) => (<Link to="/apartmentprofile">
-        <GridTile
-          key={tile.img}
-          // title={tile.title}
-          // subtitle={<span>by <b>{tile.author}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img src={tile.img} />
-        </GridTile></Link>
-      ))}
-    </GridList>
+        <div>
+          <div className="row" style = {{margin: "10px"}}>
+            <div className = "container col-md-9 col-xs-12">
+            <div style={styles.root}>
+          <GridList
+            cellHeight={180}
+            cellWidth={300}
+            style={styles.gridList}
+          >
+            {tilesData.map((tile) => (<Link to="/apartmentprofile">
+              <GridTile
+                key={tile.img}
+                // title={tile.title}
+                // subtitle={<span>by <b>{tile.author}</b></span>}
+                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+              >
+                <img src={tile.img} />
+              </GridTile></Link>
+            ))}
+          </GridList>
+        </div>
+      </div>
+      <div className = "container col-md-3 col-xs-12">
+        Map
+      </div>
+    </div>
   </div>
-  </div>
-    )
+</div>
+    );
   }
 }
 

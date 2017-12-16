@@ -78,7 +78,7 @@ class BrowseRoommate extends React.Component{
       style={styles.gridList}
     >
 
-      {tilesData.map((tile) => (<Link to="/profile">
+      {tilesData.map((tile) => (<Link to="/roommateprofile/1">
         <GridTile
           key={tile.img}
           // title={tile.title}
@@ -86,10 +86,9 @@ class BrowseRoommate extends React.Component{
           actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
         >
           <img src={tile.img} />
+            {/* <p>apartment: {tile.title}</p> */}
         </GridTile>
-        <span>
-          <p>apartment: {tile.title}</p>
-        </span>
+
       </Link>
       ))}
     </GridList>

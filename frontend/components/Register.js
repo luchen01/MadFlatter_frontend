@@ -23,8 +23,8 @@ class Register extends React.Component {
     }
 
     register() {
-      console.log(process.env.BASE_URL + "signup");
-      axios.post(process.env.BASE_URL + "signup", this.state)
+      // console.log(process.env.BASE_URL + "signup");
+      axios.post("http://localhost:3000/signup", this.state)
       .then((response)=>{
         console.log('register response', response.data);
           this.props.history.push('/login')
@@ -69,10 +69,8 @@ class Register extends React.Component {
             <RaisedButton
                 primary={true}
                 style={{margin: '20px'}}
-                // backgroundColor = {String(colors.gray200)}
                 label = "Register with Facebook"
-                href = "http://madflatter.herokuapp.com/auth/facebook"
-                // onClick={this.facebook.bind(this)}
+                href = "http://localhost:3000/auth/facebook"
               />
             <RaisedButton
                   primary={true}
@@ -80,7 +78,6 @@ class Register extends React.Component {
                   style={{margin: '20px'}}
                   label = "Register with Google"
                   href = "http://madflatter.herokuapp.com/auth/google"
-                  // onClick={this.google.bind(this)}
               />
               <Divider/>
             <TextField
@@ -88,47 +85,37 @@ class Register extends React.Component {
               type="text"
               value={this.state.firstname}
               onChange={(e)=>(this.setState({firstname: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Last Name"
               type="text"
               value={this.state.lastname}
               onChange={(e)=>(this.setState({lastname: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Username"
               type="text"
               value={this.state.username}
               onChange={(e)=>(this.setState({username: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Password"
               type="password"
               value={this.state.password}
               onChange={(e)=>(this.setState({password: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Email"
               type="text"
               value={this.state.email}
               onChange={(e)=>(this.setState({email: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Birthday"
               type="date"
               value={this.state.birthday}
               onChange={(e)=>(this.setState({birthday: e.target.value}))}
-              // errorText="This field is required"
             /><br />
-            {/* <DatePicker
-            hintText="Birthday"
-            value={this.state.birthday}
-            onChange={(e)=>(this.setState({birtdhay: e.target.value}))}/> */}
             <RaisedButton
                 primary={true}
                 style={{margin: '20px'}}

@@ -22,8 +22,18 @@ class Apartmentprofile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          location: []
         };
+    }
+
+    componentWillMount() {
+        axios.post('http://localhost:3000/apartmentprofile', {
+          aptid: this.props.match.params.aptid
+        })
+        .then(resp=>{
+          console.log('resp in apartment profile', resp.data);
+            this.setState(resp.data);
+        })
+        .catch(err=>console.log(err));
     }
 
     render() {

@@ -29,7 +29,7 @@ class Router extends React.Component {
         <Route path={"/profile/:userid"} exact component = {Profile} />
         <Route path={"/roommateprofile/:userid"} exact component = {RoommateProfile} />
         <Route path={"/mygroup/:groupid"} exact component = {MyGroup} />
-        <Route path={"/apartmentprofile"} exact component = {ApartmentProfile} />
+        <Route path={"/apartmentprofile/:aptid"} exact component = {ApartmentProfile} />
         <Route path={"/browseapartment"} exact component = {BrowseApartment} />
         <Route path={"/browseroommate"} exact component = {BrowseRoommate} />
         <Footer />

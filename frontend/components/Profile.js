@@ -22,11 +22,12 @@ const styles = {
 class Profile extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+          edit: false
+        };
     }
 
     componentWillMount() {
-        console.log(this.props.match.params.userid);
         axios.post('http://localhost:3000/myprofile', {
           userid: this.props.match.params.userid
         })
@@ -38,10 +39,12 @@ class Profile extends React.Component {
 
     saveEdit() {
         var sendingState = Object.assign({}, this.state, {userid: this.props.match.params.userid});
-        console.log('sendingState', sendingState);
         axios.post('http://localhost:3000/saveedit', sendingState)
       .then(resp=>{
           console.log('resp.data', resp.data);
+          if(resp.data) {
+              this.setState({edit: false})
+          }
       })
       .catch(err=>console.log(err));
     }
@@ -52,8 +55,8 @@ class Profile extends React.Component {
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
             <h1>Profile Page</h1>
-            <img className = "profileimg" src="https://i.pinimg.com/736x/48/bd/3f/48bd3f6e928d7cb4b8d499cb0f96b8a8--despicable-minions-funny-minion.jpg"></img>
-            <h1>Welcome {this.state.firstname} !</h1>
+            <img className = "profileimg" src="https://pbs.twimg.com/profile_images/446566229210181632/2IeTff-V.jpeg"></img>
+            <h2>Welcome {this.state.firstname} !</h2>
             <h1>Description</h1>
           </div>
           <div className = "result container col-md-9 col-xs-12">
@@ -64,7 +67,7 @@ class Profile extends React.Component {
                     <RaisedButton
                         primary={true}
                         style={{margin: '20px'}}
-                        label = "Edit"
+                        label = {this.state.edit ? "Save" : "Edit"}
                         onClick = {()=>this.saveEdit()}
                       /><br/>
                       <TextField

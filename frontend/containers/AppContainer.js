@@ -31,6 +31,33 @@ class AppContainer extends React.Component {
         return(
       <div>
     <Background />
+    <div className = "search container col-md-offset-6 col-md-3">
+      <SelectField
+         floatingLabelText="What are you looking for"
+         value={this.state.search}
+         onChange={(event, index, value)=>this.setState({search: value})}
+       >
+         <MenuItem value={"browseroommate"} primaryText="Roommates" />
+         <MenuItem value={"browseapartment"} primaryText="Apartment" />
+         <MenuItem value={"Both"} primaryText="Both" />
+       </SelectField><br/>
+       <SelectField
+          floatingLabelText="Select your City"
+          value={this.state.city}
+          onChange={(event, index, value)=>this.setState({city: value})}
+        >
+          <MenuItem value={"San Francisco"} primaryText="San Francisco" />
+          <MenuItem value={"Other"} primaryText="New York" />
+          <MenuItem value={"Other"} primaryText="Los Angeles" />
+        </SelectField><br/>
+        <RaisedButton
+            primary={true}
+            style={{margin: '20px'}}
+            icon={<FontIcon className="material-icons"> search </FontIcon>}
+            label = "Explore"
+            onClick = {()=>this.explore()}
+          />
+    </div>
     <h1 style = {{textAlign: 'center'}}>HOW MADFLATTER WORKS</h1>
      <div className="howto row">
          <div className = "infoContainer col-md-4">
@@ -47,35 +74,9 @@ class AppContainer extends React.Component {
        </div>
      </div><br/>
      <ApartmentDisplay /><br/>
-     <Link to="/browseapartment">See More Apartments</Link>
+     <Link to="/browseapartment" className = "seeMore">See More Apartments >>></Link>
      <RoommateDisplay />
-     <Link to="/browseroommate" >See More People</Link>
-     <div className = "search container col-md-offset-6 col-md-3">
-       <SelectField
-          floatingLabelText="What are you looking for"
-          value={this.state.search}
-          onChange={(event, index, value)=>this.setState({search: value})}
-        >
-          <MenuItem value={"browseroommate"} primaryText="Roommates" />
-          <MenuItem value={"browseapartment"} primaryText="Apartment" />
-          <MenuItem value={"Both"} primaryText="Both" />
-        </SelectField><br/>
-        <SelectField
-           floatingLabelText="Select your City"
-           value={this.state.city}
-           onChange={(event, index, value)=>this.setState({city: value})}
-         >
-           <MenuItem value={"San Francisco"} primaryText="San Francisco" />
-           <MenuItem value={"Other"} primaryText="New York" />
-           <MenuItem value={"Other"} primaryText="Los Angeles" />
-         </SelectField><br/>
-         <RaisedButton
-             primary={true}
-             style={{margin: '20px'}}
-             label = "Explore"
-             onClick = {()=>this.explore()}
-           />
-     </div>
+     <Link to="/browseroommate" className = "seeMore">See More People >>></Link>
       </div>
         );
     }

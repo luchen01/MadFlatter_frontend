@@ -28,20 +28,40 @@ class Register extends Component {
 }
 
 
-const Logged = (props) => (
-  <IconMenu
-    {...props}
-    iconButtonElement={
-      <IconButton><MoreVertIcon /></IconButton>
-    }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-  >
-    <MenuItem primaryText="Refresh" />
-    <MenuItem primaryText="Help" />
-    <MenuItem primaryText="Sign out" />
-  </IconMenu>
-);
+class Logged extends React.Component {
+  constructor(props) {
+      super(props);
+  }
+
+  signout() {
+    axios.get("http://localhost:3000/logout")
+  .then((response)=>{
+      console.log("response after login", response.data);
+      this.props.history.push('/');
+  })
+  .catch((err)=>{
+      console.log('Error: ', err);
+      return null;
+  });
+  }
+
+  render(){
+    return(
+      <IconMenu
+        iconButtonElement={
+          <IconButton><MoreVertIcon /></IconButton>
+        }
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      >
+        <MenuItem primaryText="Help" />
+        <MenuItem primaryText="Sign out"
+          onClick = {this.signout.bind(this)}
+        />
+      </IconMenu>
+    );
+  }
+}
 
 /**
  * This example is taking advantage of the composability of the `AppBar`
@@ -55,16 +75,16 @@ class AppBarExampleComposition extends Component {
         };
     }
 
-    componentWillMount() {
-        axios.get('http://localhost:3000/loggedin')
-      .then(response=>{
-          console.log('response in title', response);
-          if(response.data) {
-              this.setState({logged: true});
-          }
-      })
-      .catch(err=>console.log(err));
-    }
+    // componentWillMount() {
+    //     axios.get('http://localhost:3000/loggedin')
+    //   .then(response=>{
+    //       console.log('response in title', response);
+    //       if(response.data) {
+    //           this.setState({logged: true});
+    //       }
+    //   })
+    //   .catch(err=>console.log(err));
+    // }
 
     render() {
         return (

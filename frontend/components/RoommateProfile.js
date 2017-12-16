@@ -5,7 +5,10 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
+import FontIcon from 'material-ui/FontIcon';
+import Chat from './Chat';
 
 const styles = {
   headline: {
@@ -23,7 +26,11 @@ class RoommateProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          user: {}
+          firstname: "Luchen",
+          lastname: "Peng",
+          description: "Hello future roomie!",
+          budget: "1200-1500",
+          chat: false,
         }
     }
 
@@ -48,55 +55,33 @@ class RoommateProfile extends React.Component {
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
             <h1>Roommate Profile</h1>
-            <img className = "profileimg" src="https://i.pinimg.com/736x/48/bd/3f/48bd3f6e928d7cb4b8d499cb0f96b8a8--despicable-minions-funny-minion.jpg"></img>
-            <h1>username</h1>
-            <h1>Description</h1>
+            <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
+            <div>
+              <h1>Basic Info</h1>
+
+            </div>
+            <br/>
+            <RaisedButton
+                primary={true}
+                style={{margin: '20px'}}
+                label = "Message"
+                icon={<FontIcon className="material-icons"> message </FontIcon>}
+                onClick = {()=>this.setState({chat: !this.state.chat})}
+                  /><br/>
+            <RaisedButton
+                  primary={true}
+                  style={{margin: '20px'}}
+                  label = "Favorite"
+                  icon = {<StarBorder />}
+                /><br/>
           </div>
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
-              <Tab label="Personal Information" >
+              <Tab label="About Me" >
                   <div>
-                    <h2 style={styles.headline}>Profile Settings</h2>
-                    <RaisedButton
-                        primary={true}
-                        style={{margin: '20px'}}
-                        label = "Edit"
-                      /><br/>
-                      <TextField
-                        floatingLabelText="First Name"
-                        type="text"
-                        value={this.state.user.firstname}
-                        // onChange={(e)=>(this.setState({firstname: e.target.value}))}
-                        // errorText="This field is required"
-                      /><br />
-                      <TextField
-                        floatingLabelText="Last Name"
-                        type="text"
-                        value={this.state.user.lastname}
-                        // onChange={(e)=>(this.setState({lastname: e.target.value}))}
-                        // errorText="This field is required"
-                      /><br />
-                      <TextField
-                        floatingLabelText="Username"
-                        type="text"
-                        value={this.state.user.username}
-                        // onChange={(e)=>(this.setState({username: e.target.value}))}
-                        // errorText="This field is required"
-                      /><br />
-                      <TextField
-                        floatingLabelText="Email"
-                        type="text"
-                        value={this.state.user.email}
-                        // onChange={(e)=>(this.setState({email: e.target.value}))}
-                        // errorText="This field is required"
-                      /><br />
-                      <TextField
-                        floatingLabelText="Birthday"
-                        type="date"
-                        value={this.state.user.birthday}
-                        // onChange={(e)=>(this.setState({birthday: e.target.value}))}
-                        // errorText="This field is required"
-                      /><br />
+                    Hey there! I am {this.state.firstname}.
+                    <p>I'm looking for apartents in: </p><br/>
+                    <p>My budget range is:</p>
                   </div>
                 </Tab>
                 {/* <Tab label="Roommate Matches" >
@@ -106,7 +91,9 @@ class RoommateProfile extends React.Component {
                     <ApartmentMatch />
                 </Tab> */}
               </Tabs>
+              {this.state.chat ? <Chat/> : <div/>}
             </div>
+
       </div>
       </div>
         );

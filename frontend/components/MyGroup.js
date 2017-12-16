@@ -16,6 +16,7 @@ import Delete from 'material-ui/svg-icons/action/delete';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import FontIcon from 'material-ui/FontIcon';
 import ApartmentDisplay from './ApartmentDisplay';
+import axios from 'axios';
 
 const styles = {
   headline: {
@@ -81,6 +82,17 @@ class MyGroup extends React.Component {
         };
     }
 
+    leaveGroup() {
+      axios.post('http://localhost:3000/leavegroup', {
+        groupid: this.props.match.params.groupid
+      })
+      .then((resp)=>{
+        console.log('left');
+        this.props.history.push('/profile/' + response.data.id);
+      })
+      .catch(err=>console.log(err))
+    }
+
     render() {
         return(
     <div>
@@ -89,46 +101,24 @@ class MyGroup extends React.Component {
         <div className = "infoContainer col-md-3 col-xs-12">
           <Paper style={styles.paper}>
     <Menu>
-      <h5>Roommate Options</h5>
-      <MenuItem primaryText="View Group Members"
+      <MenuItem primaryText="Group Members"
                 leftIcon={<RemoveRedEye />}
                 onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
-      <MenuItem primaryText="Add New Group Member"
+      <MenuItem primaryText="Add Member"
                 leftIcon={<PersonAdd />}
                 onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
-      <MenuItem primaryText="View Matched Apartments"
+      <MenuItem primaryText="Chat Group"
+                leftIcon={<FontIcon className="material-icons"> message </FontIcon>}
+                onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
+      <MenuItem primaryText="View Apartments"
                 leftIcon={<ActionHome />}
                 onClick = {(event)=>{this.setState({display: <ViewApartmentMatch />})}}/>
       <Divider />
-      <h5>Apartment Options</h5>
-      <MenuItem primaryText="Leave Group" leftIcon={<Delete />} />
+      <MenuItem primaryText="Leave Group"
+                leftIcon={<Delete />}
+                onClick={()=>{this.leaveGroup()}}/>
     </Menu>
   </Paper>
-  <Paper style={styles.paper}>
-    <Menu>
-      <MenuItem primaryText="Clear Config" />
-      <MenuItem primaryText="New Config" rightIcon={<PersonAdd />} />
-      {/* <MenuItem primaryText="Project" rightIcon={<FontIcon className="material-icons">settings</FontIcon>} />
-      <MenuItem
-        primaryText="Workspace"
-        rightIcon={
-          <FontIcon className="material-icons" style={{color: '#559'}}>settings</FontIcon>
-        }
-      /> */}
-      {/* <MenuItem primaryText="Paragraph" rightIcon={<b style={styles.rightIcon}>¶</b>} /> */}
-      {/* <MenuItem primaryText="Section" rightIcon={<b style={styles.rightIcon}>§</b>} /> */}
-    </Menu>
-  </Paper>
-          {/* <RaisedButton
-              primary={true}
-              style={{margin: '20px'}}
-              label = "View Group Member"
-            /><br/>
-            <RaisedButton
-                primary={true}
-                style={{margin: '20px'}}
-                label = "Message Group"
-              /><br/> */}
         </div>
         <div className = "result container col-md-9 col-xs-12">
         {this.state.display}

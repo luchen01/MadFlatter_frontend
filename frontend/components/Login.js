@@ -42,7 +42,7 @@ class Login extends React.Component {
                 style={{margin: '20px'}}
                 // backgroundColor = {String(colors.gray200)}
                 label = "Login with Facebook"
-                href = "http://madflatter.herokuapp.com/auth/facebook"
+                href = "http://localhost:3000/auth/facebook"
                 // onClick={this.facebook.bind(this)}
               />
             <RaisedButton
@@ -59,14 +59,12 @@ class Login extends React.Component {
               type="text"
               value={this.state.username}
               onChange={(e)=>(this.setState({username: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Password"
               type="password"
               value={this.state.password}
               onChange={(e)=>(this.setState({password: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <RaisedButton
                 primary={true}
