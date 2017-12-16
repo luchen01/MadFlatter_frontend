@@ -24,6 +24,21 @@ class Listing extends Component{
     })
   }
 
+  componentWillReceiveProps(props){
+    console.log('in listing');
+    axios.get(`http://localhost:3000/apartment/${this.props.listing.id}`)
+    .then((response) => {
+      console.log(response);
+      this.setState({
+        listing: response.data.apartment
+      })
+      console.log(this.state.listing.pictures);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   render(){
     return(
       <div>

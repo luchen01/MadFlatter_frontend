@@ -9,7 +9,7 @@ const AppContainer = ({ name }) => {
     return (
         <div>
             <Title name={name} />
-            <Map/>
+            {/* <Map drawingAllowed={true} height="500px" width="500px"/> */}
         </div>
     );
 };
