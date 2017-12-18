@@ -4,6 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { Link } from 'react-router-DOM';
+import axios from 'axios';
 
 const styles = {
   root: {
@@ -65,6 +66,22 @@ const tilesData = [
 ];
 
 class BrowseApartment extends React.Component{
+  constructor(props) {
+      super(props);
+      this.state = {
+        isAdmin: false
+      };
+  }
+
+  componentWillMount() {
+      axios.get('http://localhost:3000/allapartment')
+      .then(resp=>{
+          this.setState(resp.data);
+          console.log('this.state in browse apartment', this.state);
+      })
+      .catch(err=>console.log(err));
+  }
+
   render() {
     return(
       <div>
@@ -78,9 +95,9 @@ class BrowseApartment extends React.Component{
             cellWidth={300}
             style={styles.gridList}
           >
-            {tilesData.map((tile) => (<Link to="/apartmentprofile">
+            {tilesData.map((tile) => (<Link to={`/apartmentprofile/${tile.id}`}>
               <GridTile
-                key={tile.img}
+                key={tile.id}
                 // title={tile.title}
                 // subtitle={<span>by <b>{tile.author}</b></span>}
                 actionIcon={<IconButton><StarBorder color="white" /></IconButton>}

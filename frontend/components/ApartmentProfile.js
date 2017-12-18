@@ -1,7 +1,9 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import FontIcon from 'material-ui/FontIcon';
 import Toggle from 'material-ui/Toggle';
 import axios from 'axios';
 
@@ -22,19 +24,30 @@ class Apartmentprofile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+          isAdmin: false,
+          apartment: {
+            address: '706 polk street'
+          }
         };
+
+        axios.get(`http://localhost:3000/apartment/${this.props.match.params.aptid}`)
+        .then(resp=>{
+            this.setState({apartment: resp.data.apartment});
+            console.log('this.state in apartment profile', this.state);
+            console.log('apartment', this.state.apartment.address);
+            console.log('pictures', this.state.apartment.pictures);
+        })
     }
 
-    componentWillMount() {
-        axios.post('http://localhost:3000/apartmentprofile', {
-          aptid: this.props.match.params.aptid
-        })
-        .then(resp=>{
-          console.log('resp in apartment profile', resp.data);
-            this.setState(resp.data);
-        })
-        .catch(err=>console.log(err));
-    }
+    // componentWillMount() {
+    //     axios.get(`http://localhost:3000/apartment/${this.props.match.params.aptid}`)
+    //     .then(resp=>{
+    //         this.setState({apartment: resp.data});
+    //         console.log('this.state in apartment profile', this.state);
+    //         console.log('apartment', this.state.apartment);
+    //     })
+    //     .catch(err=>console.log(err));
+    // }
 
     render() {
         return(
@@ -70,10 +83,14 @@ class Apartmentprofile extends React.Component {
             </svg>
              </label>
              </div>
-          <div className="slider slide_img_01"></div>
+          {/* <div className="slider slide_img_01" style = {{background: `url(${this.state.apartment.pictures[0]})`}}></div> */}
           <div className="slider slide_img_02"></div>
         </div>
+        <div className = "title">
+          <h1>{this.state.title}</h1>
+        </div>
         <div className="row" style = {{margin: "10px"}}>
+
           <div className = "container col-md-3 col-xs-12">
             Map
           </div>
@@ -81,19 +98,42 @@ class Apartmentprofile extends React.Component {
             <Tabs>
               <Tab label="Apartment Information">
                   <div>
-                    <RaisedButton
-                        primary={true}
-                        style={{margin: '20px'}}
-                        label = "Edit"
-                      /><br/>
-                  <h1>Neighborhood</h1>
-                  <h1>Available Date</h1>
-                  <h1>Description</h1>
-                  <h1>Bedrooms</h1>
-                  <h1>Bathroom</h1>
-                  <h1>Laundry</h1>
-                  <h1>Parking</h1>
-                  <h1>Open House</h1>
+                    {this.state.isAdmin ?  <div><RaisedButton
+                                            primary={true}
+                                            style={{margin: '20px'}}
+                                            label = "Edit"
+                                          /><br/></div> : <div/>}
+                <List>
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> location_on </FontIcon>}
+                     primaryText = "Address"
+                     secondaryText = {this.state.apartment.address}
+                   />
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> attach_money </FontIcon>}
+                    primaryText = "Price"
+                    secondaryText = {this.state.apartment.price}
+                  />
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> date_range </FontIcon>}
+                    primaryText = "Available Date"
+                    secondaryText = {this.state.apartment.dateAvailable}
+                  />
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> hotel </FontIcon>}
+                    primaryText = "Bedrooms"
+                    secondaryText = {this.state.apartment.beds}
+                  />
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> wc </FontIcon>}
+                    primaryText = "Bathroom"
+                    secondaryText = {this.state.apartment.baths}
+                  />
+                  <ListItem
+                    leftIcon={<FontIcon className="material-icons"> description </FontIcon>}
+                    primaryText = "Description"
+                  />{this.state.apartment.postBody}
+                </List>
                   </div>
                 </Tab>
                 <Tab label="Posted By" >

@@ -68,22 +68,36 @@ const tilesData = [
 /**
  * This example demonstrates the horizontal scrollable single-line grid list of images.
  */
-const ApartmentDisplay= () => (
-  <div style={styles.root}>
-    <GridList style={styles.gridList} cols={2.2}>
-      {tilesData.map((tile) => (<Link to="/apartmentprofile">
-        <GridTile
-          key={tile.img}
-          // title={tile.title}
-          actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>}
-          titleStyle={styles.titleStyle}
-          titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-        >
-          <img src={tile.img} />
-        </GridTile></Link>
-      ))}
-    </GridList>
-  </div>
-);
+class ApartmentDisplay extends React.Component{
+  constructor(props) {
+      super(props);
+      this.state = {
+        isAdmin: false
+      };
+  }
+
+  // componentWillMount() {
+  //
+  // }
+
+  render() {
+  return (  <div style={styles.root}>
+      <GridList style={styles.gridList} cols={2.2}>
+        {tilesData.map((tile) => (<Link to="/apartmentprofile">
+          <GridTile
+            key={tile.img}
+            // title={tile.title}
+            actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>}
+            titleStyle={styles.titleStyle}
+            titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+          >
+            <img src={tile.img} />
+          </GridTile></Link>
+        ))}
+      </GridList>
+    </div>
+  );
+}
+}
 
 export default ApartmentDisplay;

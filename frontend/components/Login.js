@@ -7,6 +7,12 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 
+const config = {
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 class Login extends React.Component {
     constructor(props) {
@@ -20,7 +26,11 @@ class Login extends React.Component {
     login() {
         axios.post("http://localhost:3000/login", {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
         })
       .then((response)=>{
           console.log("response after login", response.data);

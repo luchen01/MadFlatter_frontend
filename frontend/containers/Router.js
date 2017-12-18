@@ -12,8 +12,6 @@ import BrowseRoommate from '../components/BrowseRoommate';
 import RoommateProfile from '../components/RoommateProfile';
 import MyGroup from '../components/MyGroup';
 
-
-
 class Router extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +27,7 @@ class Router extends React.Component {
         <Route path={"/profile/:userid"} exact component = {Profile} />
         <Route path={"/roommateprofile/:userid"} exact component = {RoommateProfile} />
         <Route path={"/mygroup/:groupid"} exact component = {MyGroup} />
-        <Route path={"/apartmentprofile/:aptid"} exact component = {ApartmentProfile} />
+        <Route path={"/apartment/:aptid"} exact component = {ApartmentProfile} />
         <Route path={"/browseapartment"} exact component = {BrowseApartment} />
         <Route path={"/browseroommate"} exact component = {BrowseRoommate} />
         <Footer />
