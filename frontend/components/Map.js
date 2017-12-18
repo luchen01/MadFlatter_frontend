@@ -58,7 +58,6 @@ class Map extends Component {
       }
     });
     // this.state.map.fitBounds(bounds);
-    console.log('successfully mapped regions', regions, self.state.searchFilters);
     axios.post('http://localhost:3000/apartmentsByLocation', {
         regions: regions,
         searchFilters: self.state.searchFilters
