@@ -1,5 +1,4 @@
 import React from 'react';
-// import Redirect from 'react-router';
 import {Link} from 'react-router-DOM';
 import Divider from 'material-ui/Divider';
 import axios from 'axios';
@@ -82,7 +81,6 @@ class Login extends React.Component {
             <Link to="/register">
               <div style={{padding: '10px'}}>Not a member? Click Here to Register</div>
             </Link>
-            {/* <Route path="/editor" component = {Main}/> */}
           </div>
         );
     }

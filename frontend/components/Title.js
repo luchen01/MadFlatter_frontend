@@ -22,7 +22,7 @@ class Login extends Component {
 class Register extends Component {
     render() {
         return (
-      <Link to="/Register" >Register</Link>
+          <Link to="/Register" >Register</Link>
         );
     }
 }
