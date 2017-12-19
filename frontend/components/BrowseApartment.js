@@ -1,13 +1,19 @@
 import React from 'react';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
+=======
+>>>>>>> master
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { Link } from 'react-router-DOM';
 import axios from 'axios';
+<<<<<<< HEAD
 import Map from './Map';
 import { changeListing, findApartments } from '../actions/index';
+=======
+>>>>>>> master
 
 const styles = {
   root: {
@@ -16,7 +22,11 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
+<<<<<<< HEAD
     width: 800,
+=======
+    width: 900,
+>>>>>>> master
     height: 450,
     display: 'flex',
     flexWrap: 'wrap',
@@ -128,6 +138,7 @@ class BrowseApartment extends React.Component{
   }
 }
 
+<<<<<<< HEAD
 const mapStateToProps = (state) => {
   return {
     apartments: state.apartments,
@@ -144,4 +155,6 @@ const mapDispatchToProps = (dispatch) => {
 
 BrowseApartment = connect(mapStateToProps, mapDispatchToProps)(BrowseApartment);
 
+=======
+>>>>>>> master
 export default BrowseApartment;
