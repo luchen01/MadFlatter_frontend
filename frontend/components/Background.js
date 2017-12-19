@@ -36,7 +36,7 @@ class Background extends React.Component {
  </div>
     <div className="slider slide_img_01"/>
     <div className="slider slide_img_02"/>
-  </div>   );
+  </div>  );
     }
 }
 

@@ -1,8 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-DOM';
+import Divider from 'material-ui/Divider';
 import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as colors from 'material-ui/styles/colors';
+
+const config = {
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,9 +23,13 @@ class Login extends React.Component {
     }
 
     login() {
-        axios.post(process.env.BASE_URL + "login", {
+        axios.post("http://localhost:3000/login", {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
         })
       .then((response)=>{
           console.log("response after login", response.data);
@@ -33,19 +46,34 @@ class Login extends React.Component {
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
             <h1>LOGIN</h1>
             <br/>
+            <RaisedButton
+                primary={true}
+                style={{margin: '20px'}}
+                // backgroundColor = {String(colors.gray200)}
+                label = "Login with Facebook"
+                href = "http://localhost:3000/auth/facebook"
+                // onClick={this.facebook.bind(this)}
+              />
+            <RaisedButton
+                  primary={true}
+                  backgroundColor = {colors.gray200}
+                  style={{margin: '20px'}}
+                  label = "Login with Google"
+                  href = "http://madflatter.herokuapp.com/auth/google"
+                  // onClick={this.google.bind(this)}
+              />
+              <Divider inset={true} />
             <TextField
               floatingLabelText="Username"
               type="text"
               value={this.state.username}
               onChange={(e)=>(this.setState({username: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <TextField
               floatingLabelText="Password"
               type="password"
               value={this.state.password}
               onChange={(e)=>(this.setState({password: e.target.value}))}
-              // errorText="This field is required"
             /><br />
             <RaisedButton
                 primary={true}

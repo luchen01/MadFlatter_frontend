@@ -4,23 +4,58 @@ h1 {
 }
 
 #background-video{
-
 height: 100%;
 width: 100%;
 float: left;
 top: 0;
 padding: none;
 // position: fixed; // optional depending on what you want
-
 }
 
-.photo_slider
-{
-	position : relative;
+// .material-icons {
+//   font-family: 'Material Icons';
+//   font-weight: normal;
+//   font-style: normal;
+//   font-size: 24px;  /* Preferred icon size */
+//   display: inline-block;
+//   line-height: 1;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   word-wrap: normal;
+//   white-space: nowrap;
+//   direction: ltr;
+// }
 
+.infoContainer {
+  text-align: center;
+  font-family: helvetica;
+  font-weight: 100;
+}
+
+.profileimg{
+  position: relative;
+  width: 300px;
+  height:300px;
+}
+
+.icon{
+  width: 150px;
+  height: 150px;
+}
+
+.profileContainer{
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  flex: 1
+}
+
+.photo_slider{
+	position : relative;
 	display : block;
 	overflow : hidden;
-
 	width : 100%;
 	max-width : 1440px;
 	height : 800px;
@@ -30,38 +65,43 @@ padding: none;
 
 .howto{
   display: flex;
-  align-items: center
+  margin: 10px;
+  padding: 10px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  flex: 1;
+  // text-align: center;
 }
 
-.search
-{
+.seeMore{
+  // position: absolute;
+  margin-right: 6px;
+  color: gray;
+}
+
+.search{
   position: absolute;
-  padding: 10px;
+  padding: 20px;
   top: 300px;
-  right:  300px;
+  // right:  300px;
   // border: 2px solid black;
   background-color: white;
 }
 
-.slider
-{
+.slider{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
 	align-content: center;
-
   position: absolute;
   left: 0;
   top: 0;
-
   width: 100%;
   height: 100%;
-
   opacity: 1;
   z-index: 0;
-
   transition: transform 1600ms;
   transform: scale(1);
 }
