@@ -28,13 +28,18 @@ class Profile extends React.Component {
     }
 
     componentWillMount() {
-        axios.post('http://localhost:3000/myprofile', {
-          userid: this.props.match.params.userid
-        })
-        .then(resp=>{
-            this.setState(resp.data);
-        })
-        .catch(err=>console.log(err));
+      console.log('this.props.match.params.userid',this.props.match.params.userid);
+      axios.post('http://localhost:3000/myprofile', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        userid: this.props.match.params.userid
+      })
+      .then(resp=>{
+          this.setState(resp.data);
+      })
+      .catch(err=>console.log(err));
     }
 
     saveEdit() {

@@ -11,6 +11,7 @@ const config = {
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   },
 };
 
@@ -27,14 +28,10 @@ class Login extends React.Component {
         axios.post("http://localhost:3000/login", {
             username: this.state.username,
             password: this.state.password,
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
         })
       .then((response)=>{
-          console.log("response after login", response.data);
-          this.props.history.push('/profile/' + response.data.id);
+          console.log("response after login", response.data.user.id, response.data);
+          this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
           console.log('Error: ', err);
