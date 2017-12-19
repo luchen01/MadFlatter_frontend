@@ -75,6 +75,12 @@ class Profile extends React.Component {
                         label = {this.state.edit ? "Save" : "Edit"}
                         onClick = {()=>this.saveEdit()}
                       /><br/>
+                      <RaisedButton
+                          primary={true}
+                          style={{margin: '20px'}}
+                          label = "Answer Questionnaire"
+                          href="http://localhost:3030/#/questionnaire"
+                        /><br/>
                       <TextField
                         floatingLabelText="First Name"
                         type="text"

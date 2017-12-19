@@ -122,8 +122,6 @@ class Register extends React.Component {
                 label = "Register"
                 onClick={this.register.bind(this)}
               />
-
-
             </div>
         );
     }

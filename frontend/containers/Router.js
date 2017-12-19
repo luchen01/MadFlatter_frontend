@@ -11,6 +11,7 @@ import Questionnaire from '../components/Questionnaire';
 import BrowseApartment from '../components/BrowseApartment';
 import BrowseRoommate from '../components/BrowseRoommate';
 import RoommateProfile from '../components/RoommateProfile';
+import MyGroup from '../components/MyGroup';
 
 class Router extends React.Component {
     constructor(props) {

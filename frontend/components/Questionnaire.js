@@ -6,7 +6,8 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import Form from './RoommateQuestionnaire';
+import RoommateQuestionnaire from './RoommateQuestionnaire';
+import ApartmentQuestionnaire from './ApartmentQuestionnaire';
 
 /**
  * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
@@ -42,10 +43,12 @@ class Questionnaire extends React.Component {
     switch (stepIndex) {
       case 0:
         return (
-          <Form />
+          <RoommateQuestionnaire />
         );
       case 1:
-        return 'What is an ad group anyways?';
+        return (
+          <ApartmentQuestionnaire />
+        );
       case 2:
         return 'This is the bit I really care about!';
       default:
@@ -86,7 +89,7 @@ class Questionnaire extends React.Component {
           ) : (
             <div>
               <p>{this.getStepContent(stepIndex)}</p>
-              <div style={{marginTop: 12}}>
+              <div style={{marginTop: 12, textAlign: 'center'}}>
                 <FlatButton
                   label="Back"
                   disabled={stepIndex === 0}

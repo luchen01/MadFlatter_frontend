@@ -6,13 +6,13 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 
-const config = {
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  },
-};
+// const config = {
+//   withCredentials: true,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Access-Control-Allow-Origin': '*'
+//   },
+// };
 
 class Login extends React.Component {
     constructor(props) {
@@ -24,17 +24,22 @@ class Login extends React.Component {
     }
 
     login() {
-        axios.post("http://localhost:3000/login", {
-            username: this.state.username,
-            password: this.state.password,
-        })
+      axios.defaults.withCredentials = true;
+      axios.post('http://localhost:3000/login', {
+        username: this.state.username,
+        password: this.state.password,
+      })
       .then((response)=>{
-          console.log("response after login", response.data.user.id, response.data);
-          this.props.history.push('/profile/' + response.data.user.id);
+        console.log("response after login", response.data.user.id, response);
+        axios.get("http://localhost:3000/aaa")
+        .then((res) => {
+          console.log('aaaaa:' , res);
+        })
+        // this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
-          console.log('Error: ', err);
-          return null;
+        console.log('Error: ', err);
+        return null;
       });
     }
 
