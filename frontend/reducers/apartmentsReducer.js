@@ -1,7 +1,7 @@
 const apartmentsReducer = (state = null, action) => {
-    console.log('in findApartments reducer');
     switch (action.type) {
         case "FIND_APARTMENTS":
+            console.log('in findApartments reducer');
             return action.apartments;
         default:
             return state;

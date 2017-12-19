@@ -11,7 +11,7 @@ export function changeListing(listing) {
 }
 
 export function findApartments(apartments) {
-    console.log("Called selectListing()");
+    console.log("Called findApartments()");
     return({
         type: 'FIND_APARTMENTS',
         apartments,
