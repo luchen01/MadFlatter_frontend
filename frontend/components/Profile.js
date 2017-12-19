@@ -139,4 +139,9 @@ class Profile extends React.Component {
     }
 }
 
+/* Layout should include features like profile picture (could be imported from
+Facebook and will be the default if the user logged in with Facebook), age,
+compatibility ranking, and maybe some extra sections devoted to bio, perks of
+being their roommate, etc. */
+
 export default Profile;
