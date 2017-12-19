@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Listing from './Listing';
+import { changeListing, findApartments } from '../actions/index';
 
 class Map extends Component {
 
@@ -20,6 +22,37 @@ class Map extends Component {
     //     });
   }
 
+  newMarker(listing){
+    const self = this;
+    var image = new google.maps.MarkerImage(
+      'http://images.clipartpanda.com/google-location-icon-Location_marker_pin_map_gps.png',
+      new google.maps.Size(80, 80),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(17, 34),
+      new google.maps.Size(25, 25));
+    var defaultImage = new google.maps.MarkerImage(
+      'http://simpleicon.com/wp-content/uploads/map-marker-5.png',
+      new google.maps.Size(71, 71),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(17, 34),
+      new google.maps.Size(25, 25));
+    let marker = new google.maps.Marker({
+      position: {lat: listing.lat, lng: listing.lng},
+      map: self.state.map,
+      title: listing.title,
+      icon: (listing.id === self.props.listing) ? image : defaultImage
+    })
+    marker.addListener('click', () => {
+      self.renderListing(listing);
+      // marker.addListener('click', function() {
+      //   self.infoWindow.open(map, marker);
+      // });
+    });
+    self.setState({
+      markers: [...this.state.markers, marker]
+    })
+  }
+
   changeSearch(e, property) {
     this.setState({
       searchFilters: Object.assign({}, this.state.searchFilters, {[property]: e.target.value})
@@ -33,11 +66,25 @@ class Map extends Component {
     })
   }
 
-  loadApartmentsFromCraigsList(){
-    console.log('making axios call');
-    axios.get('http://localhost:3000/craigslist')
-    .then((response)=>{
-        console.log('line 40:', response.data.message);
+  // loadApartmentsFromCraigsList(){
+  //   console.log('making axios call');
+  //   axios.get('http://localhost:3000/craigslist')
+  //   .then((response)=>{
+  //       console.log('line 40:', response.data.message);
+  //   })
+  // }
+
+  loadApartments(apts){
+    const self = this;
+    this.props.toFindApartments(apts);
+    self.state.markers.map((marker) => {
+      marker.setMap(null);
+    })
+    self.setState({
+      markers: []
+    })
+    apts.map((listing) => {
+      self.newMarker(listing);
     })
   }
 
@@ -58,40 +105,22 @@ class Map extends Component {
       }
     });
     // this.state.map.fitBounds(bounds);
+    console.log('sending apartments request');
     axios.post('http://localhost:3000/apartmentsByLocation', {
         regions: regions,
         searchFilters: self.state.searchFilters
+      }, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        }
       })
       .then((response) => {
-        console.log('line 67:', response);
-        self.state.markers.map((marker) => {
-          marker.setMap(null);
-        })
-        self.setState({
-          markers: []
-        })
-        response.data.apartments.map((listing) => {
-          newMarker(listing);
-        })
+        console.log(response);
+        self.loadApartments(response.data.apartments);
       })
-  }
-
-  newMarker(listing){
-    const self = this;
-    let marker = new google.maps.Marker({
-      position: {lat: listing.lat, lng: listing.lng},
-      map: self.state.map,
-      title: listing.title
-    })
-    marker.addListener('click', () => {
-      self.renderListing(listing);
-      // marker.addListener('click', function() {
-      //   self.infoWindow.open(map, marker);
-      // });
-    });
-    self.setState({
-      markers: [...this.state.markers, marker]
-    })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   componentDidMount(){
@@ -103,9 +132,6 @@ class Map extends Component {
             gestureHandling: 'cooperative',
             disableDoubleClickZoom: true
           });
-
-
-
     // map.addListener('bounds_changed', function() {
     //   // 3 seconds after the center of the map has changed, pan back to the
     //   // marker.
@@ -124,7 +150,6 @@ class Map extends Component {
         },
         markerOptions: {
           icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-
         },
         circleOptions: {
           fillColor: '#fd0202',
@@ -144,7 +169,6 @@ class Map extends Component {
         }
       });
       drawingManager.setMap(map);
-      // flightPath.setMap(map);
       google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
         if(event.type === 'rectangle'){
           var time = (new Date()).getTime();
@@ -196,6 +220,7 @@ class Map extends Component {
     this.setState({
       map: map
     })
+    self.findApartmentsByLocation();
   }
 
   render(){
@@ -261,5 +286,20 @@ Map.propTypes = {
     name: PropTypes.string,
 };
 
+const mapStateToProps = (state) => {
+  return {
+    apartments: state.apartments,
+    listing: state.listing
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toChangeListing: (listing) => dispatch(changeListing(listing)),
+    toFindApartments: (apartments) => dispatch(findApartments(apartments))
+  }
+}
+
+Map = connect(mapStateToProps, mapDispatchToProps)(Map);
 
 export default Map;
