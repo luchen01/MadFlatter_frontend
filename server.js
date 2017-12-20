@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3030;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (request, response) => {
+app.get('/*', (request, response) => {
     response.sendFile(__dirname + '/public/index.html'); // For React/Redux
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
+var io = require('socket.io-client')
 
 class Chat extends React.Component {
     constructor(props) {
@@ -8,31 +8,36 @@ class Chat extends React.Component {
         this.state = {
             chat: '',
             chatHistory: {},
-            socket: io('http://localhost:3000'),
+            socket: io.connect('http://localhost:3000'),
         };
-        this.state.socket.on('connect', function() {
-          self.state.socket.emit('join room', self.state.params.docid);
-        });
+        // this.state.socket.on('message', (msg) => {
+        //   console.log(msg);
+        // });
 
-        this.state.socket.on('message', (msg) => {
-          console.log(msg);
-        });
-        this.state.socket.on('update', (contentState, specs)=>{
-          let currentSelection = this.state.editorState.getSelection();
-          currentSelection = currentSelection.merge({
-            anchorKey: specs.anchorKey,
-            anchorOffset: specs.anchorOffset,
-            focusKey: specs.focusKey,
-            focusOffset: specs.focusOffset
-          });
-          this.setState({
-            editorState: EditorState.forceSelection(EditorState.push(this.state.editorState, convertFromRaw(contentState)), currentSelection)
-          });
-        });
+        // this.state.socket.on('update', message=>{
+        //
+        //   });
       }
 
+componentDidMount(){
+  // this.state.socket.on('connect', ()=>{
+  this.state.socket.emit('join room', this.props.roomName);
+  // });
+}
+
   componentWillUnmount() {
-    this.state.socket.emit('leave room', this.state.params.id);
+    this.state.socket.emit('leave room', this.props.roomName);
+  }
+
+  // onChange(e){
+  //   this.setState({
+  //     chat: e.target.value
+  //   });
+  //   this.state.socket.emit('update', this.state.chat);
+  // }
+
+  onSubmit(){
+    this.state.socket.emit('newMessage', this.state.chat);
   }
 
     render() {
@@ -49,9 +54,13 @@ class Chat extends React.Component {
               type="text"
               value = {this.state.chat}
               placeholder="Say Something..."
-              onChange = {(e)=>{this.setState({chat: e.target.value})}}
+              onChange = {(e)=>this.setState({chat: e.target.value})}
             /><br/>
-        <button className="inline submitbutton" id='submitbutton'> Send</button>
+        <button
+              className="inline submitbutton"
+              id='submitbutton'
+              onClick = {this.onSubmit.bind(this)}
+              > Send</button>
       </div>
     );
     }

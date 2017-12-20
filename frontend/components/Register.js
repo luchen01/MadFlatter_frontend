@@ -77,7 +77,7 @@ class Register extends React.Component {
                   backgroundColor = {colors.gray200}
                   style={{margin: '20px'}}
                   label = "Register with Google"
-                  href = "http://madflatter.herokuapp.com/auth/google"
+                  href = "http://localhost:3000/auth/google"
               />
               <Divider/>
             <TextField
@@ -122,8 +122,6 @@ class Register extends React.Component {
                 label = "Register"
                 onClick={this.register.bind(this)}
               />
-
-
             </div>
         );
     }

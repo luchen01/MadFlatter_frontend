@@ -1,5 +1,4 @@
 import React from 'react';
-// import Redirect from 'react-router';
 import {Link} from 'react-router-DOM';
 import Divider from 'material-ui/Divider';
 import axios from 'axios';
@@ -7,12 +6,13 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 
-const config = {
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+// const config = {
+//   withCredentials: true,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Access-Control-Allow-Origin': '*'
+//   },
+// };
 
 class Login extends React.Component {
     constructor(props) {
@@ -24,21 +24,18 @@ class Login extends React.Component {
     }
 
     login() {
-        axios.post("http://localhost:3000/login", {
-            username: this.state.username,
-            password: this.state.password,
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-        })
+      axios.defaults.withCredentials = true;
+      axios.post('http://localhost:3000/login', {
+        username: this.state.username,
+        password: this.state.password,
+      })
       .then((response)=>{
-          console.log("response after login", response.data);
-          this.props.history.push('/profile/' + response.data.id);
+        console.log("response after login", response.data.user.id, response);
+        this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
-          console.log('Error: ', err);
-          return null;
+        console.log('Error: ', err);
+        return null;
       });
     }
 
@@ -85,7 +82,6 @@ class Login extends React.Component {
             <Link to="/register">
               <div style={{padding: '10px'}}>Not a member? Click Here to Register</div>
             </Link>
-            {/* <Route path="/editor" component = {Main}/> */}
           </div>
         );
     }

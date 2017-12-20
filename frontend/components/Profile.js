@@ -1,5 +1,6 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import {Link} from 'react-router-DOM';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
@@ -28,13 +29,15 @@ class Profile extends React.Component {
     }
 
     componentWillMount() {
-        axios.post('http://localhost:3000/myprofile', {
-          userid: this.props.match.params.userid
-        })
-        .then(resp=>{
-            this.setState(resp.data);
-        })
-        .catch(err=>console.log(err));
+      // console.log('this.props.match.params.userid',this.props.match.params.userid);
+      axios.defaults.withCredentials = true;
+      axios.post('http://localhost:3000/myprofile', {
+        userid: this.props.match.params.userid
+      })
+      .then(resp=>{
+          this.setState(resp.data);
+      })
+      .catch(err=>console.log(err));
     }
 
     saveEdit() {
@@ -70,6 +73,11 @@ class Profile extends React.Component {
                         label = {this.state.edit ? "Save" : "Edit"}
                         onClick = {()=>this.saveEdit()}
                       /><br/>
+                      <Link to="/questionnaire"><RaisedButton
+                          primary={true}
+                          style={{margin: '20px'}}
+                          label = "Answer Questionnaire"
+                        /></Link><br/>
                       <TextField
                         floatingLabelText="First Name"
                         type="text"
@@ -108,27 +116,24 @@ class Profile extends React.Component {
                   </div>
                 </Tab>
                 <Tab label="Roommate Matches" >
-                  <RaisedButton
+                  <Link to='/mygroup/1'><RaisedButton
                       primary={true}
                       style={{margin: '20px'}}
                       label = "See my group"
-                      href="http://localhost:3030/#/mygroup/1"
-                    /><br/>
-                    <RaisedButton
+                    /></Link><br/>
+                    <Link to="/browseroommate"><RaisedButton
                         primary={true}
                         style={{margin: '20px'}}
                         label = "Browse more roommates"
-                        href="http://localhost:3030/#/browseroommate"
-                      /><br/>
+                      /></Link><br/>
                   <RoommateMatch />
                 </Tab>
                 <Tab label="Apartment Matches" >
-                  <RaisedButton
+                  <Link to="/browseapartment"><RaisedButton
                       primary={true}
                       style={{margin: '20px'}}
                       label = "Browse more apartment"
-                      href="http://localhost:3030/#/browseapartment"
-                    /><br/>
+                    /></Link><br/>
                     <ApartmentMatch />
                 </Tab>
               </Tabs>
@@ -138,5 +143,10 @@ class Profile extends React.Component {
         );
     }
 }
+
+/* Layout should include features like profile picture (could be imported from
+Facebook and will be the default if the user logged in with Facebook), age,
+compatibility ranking, and maybe some extra sections devoted to bio, perks of
+being their roommate, etc. */
 
 export default Profile;

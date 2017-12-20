@@ -35,8 +35,8 @@ class RoommateProfile extends React.Component {
     }
 
     componentWillMount() {
-      console.log('componentwillmount');
-      console.log(this.props.match.params.userid);
+      // console.log('componentwillmount');
+      // console.log(this.props.match.params.userid);
       axios.post('http://localhost:3000/myprofile', {
         userid: this.props.match.params.userid
       })
@@ -91,7 +91,7 @@ class RoommateProfile extends React.Component {
                     <ApartmentMatch />
                 </Tab> */}
               </Tabs>
-              {this.state.chat ? <Chat/> : <div/>}
+              {this.state.chat ? <Chat roomName = {this.props.match.params.userid}/> : <div/>}
             </div>
 
       </div>
