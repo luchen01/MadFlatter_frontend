@@ -31,11 +31,7 @@ class Login extends React.Component {
       })
       .then((response)=>{
         console.log("response after login", response.data.user.id, response);
-        axios.get("http://localhost:3000/aaa")
-        .then((res) => {
-          console.log('aaaaa:' , res);
-        })
-        // this.props.history.push('/profile/' + response.data.user.id);
+        this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
         console.log('Error: ', err);

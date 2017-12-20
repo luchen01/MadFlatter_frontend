@@ -12,16 +12,32 @@ import BrowseApartment from '../components/BrowseApartment';
 import BrowseRoommate from '../components/BrowseRoommate';
 import RoommateProfile from '../components/RoommateProfile';
 import MyGroup from '../components/MyGroup';
+import axios from 'axios';
 
 class Router extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            user: {}
+        };
+    }
+
+    componentWillMount(){
+      console.log('inside router');
+      axios.get('http://localhost:3000/loggedin')
+    .then(response=>{
+        console.log('response router', response);
+        if(response.data) {
+            this.setState({user:response.data});
+        }
+    })
+    .catch(err=>console.log(err));
     }
 
     render() {
         return(
       <div>
-        <Title isLoggedIn = {false}/>
+        <Title isLoggedIn = {this.state.user ? true : false } user = {this.state.user}/>
         <Route path={"/"} exact component = {AppContainer} />
         <Route path={"/register"} exact component = {Register} />
         <Route path={"/login"} exact component = {Login} />

@@ -8,6 +8,16 @@ import FontIcon from 'material-ui/FontIcon';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
+const styles = {
+  chip: {
+    margin: 4,
+  },
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+};
+
 class ApartmentQuestionnaire extends Component{
   constructor(props) {
     super(props);
@@ -20,10 +30,21 @@ class ApartmentQuestionnaire extends Component{
       maxDate.setHours(0, 0, 0, 0);
 
       this.state = {
+        maxBedrooom: 0,
+        minBedroom: 0,
+        maxBathroom: 0,
+        minBathroom: 0,
         minDate: minDate,
         maxDate: maxDate,
         autoOk: false,
         disableYearSelection: false,
+        chipData: [
+          {key: 0, label: 'I have a fluffy friend', icon: 'pets'},
+          {key: 1, label: 'Laundry in unit plz', icon: 'local_laundry_service'},
+          {key: 2, label: 'Gym in building', icon: 'fitness_center'},
+          {key: 3, label: 'Wheelchair access', icon: 'accessible'},
+          {key: 4, label: 'Furnished', icon: 'local_florist'}
+        ]
       };
     }
 
@@ -39,8 +60,12 @@ class ApartmentQuestionnaire extends Component{
       });
     };
 
-    handleClick(){
-    console.log('clicked!')
+    handleRequestDelete(key){
+    console.log('clicked!');
+    let newChipData = this.state.chipData;
+    const chipToDelete = newChipData.map(chip=>chip.key).indexOf(key);
+    newChipData.splice(chipToDelete, 1);
+    this.setState({chipData: newChipData})
 }
 
     render() {
@@ -53,8 +78,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bedrooms"
-           value={this.state.search}
-           onChange={(event, index, value)=>this.setState({search: value})}
+           value={this.state.minBedroom}
+           onChange={(event, index, value)=>this.setState({minBedroom: value})}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -67,8 +92,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bedrooms"
-            value={this.state.search}
-            onChange={(event, index, value)=>this.setState({search: value})}
+            value={this.state.maxBedroom}
+            onChange={(event, index, value)=>this.setState({maxBedroom: value})}
           >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
@@ -84,8 +109,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons"> wc </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bathrooms"
-           value={this.state.search}
-           onChange={(event, index, value)=>this.setState({search: value})}
+           value={this.state.minBathroom}
+           onChange={(event, index, value)=>this.setState({minBathroom: value})}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -98,8 +123,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bathrooms"
-            value={this.state.search}
-            onChange={(event, index, value)=>this.setState({search: value})}
+            value={this.state.maxBathroom}
+            onChange={(event, index, value)=>this.setState({maxBathroom: value})}
           >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
@@ -129,14 +154,17 @@ class ApartmentQuestionnaire extends Component{
           />
         </div>
         <div>
-          <FontIcon className="material-icons">playlist_add</FontIcon><br/>
-          <Chip
-         onClick={this.handleClick}
-         // style={styles.chip}
-       >
-         <Avatar icon={<FontIcon className="material-icons">perm_identity</FontIcon>} />
-         FontIcon Avatar Chip
-       </Chip>
+          <FontIcon className="material-icons">playlist_add</FontIcon>Additional filters<br/>
+          {this.state.chipData.map(chip=>{
+            return(
+              <Chip key = {chip.key}
+                    style={styles.chip}
+                    onRequestDelete={()=>this.handleRequestDelete(chip.key)}>
+                    <Avatar icon = {<FontIcon className = "material-icons">{chip.icon}</FontIcon>}/>
+                    {chip.label}
+                  </Chip>
+            )
+          })}
         </div>
       </div>
       <div className = "col-md-7 col-xs-12">
