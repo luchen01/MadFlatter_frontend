@@ -4,7 +4,7 @@ const router = express.Router();
 // YOUR API ROUTES HERE
 
 // SAMPLE ROUTE
-router.use('/*', (req, res) => {
+router.use('/', (req, res) => {
     res.json({ success: true });
 });
 
