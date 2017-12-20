@@ -3,6 +3,7 @@ node_modules/
 *.DS_Store
 public/bundle.js
 package-lock.json
+env.sh
 *hot-update.js
 *hot-update.json
 env.sh

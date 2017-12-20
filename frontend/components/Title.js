@@ -22,7 +22,7 @@ class Login extends Component {
 class Register extends Component {
     render() {
         return (
-          <Link to="/Register" >Register</Link>
+          <Link to="/register" >Register</Link>
         );
     }
 }
@@ -74,17 +74,17 @@ class AppBarExampleComposition extends Component {
             logged: false,
         };
     }
-
-    // componentWillMount() {
-    //     axios.get('http://localhost:3000/loggedin')
-    //   .then(response=>{
-    //       console.log('response in title', response);
-    //       if(response.data) {
-    //           this.setState({logged: true});
-    //       }
-    //   })
-    //   .catch(err=>console.log(err));
-    // }
+    
+    componentWillMount() {
+        axios.get('http://localhost:3000/loggedin')
+      .then(response=>{
+          console.log('response in title', response);
+          if(response.data) {
+              this.setState({logged: true});
+          }
+      })
+      .catch(err=>console.log(err));
+    }
 
     render() {
         return (
@@ -99,7 +99,7 @@ class AppBarExampleComposition extends Component {
         <AppBar
           title="MadFlatter - Live the Way You Want!"
           iconElementLeft={<IconButton
-            href = "http://localhost:3030/#/"> <ActionHome /></IconButton>}
+            href = "http://localhost:3030/"> <ActionHome /></IconButton>}
           iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px', padding: '10px'}}><Login />  <Register /></div>}
         />
       </div>

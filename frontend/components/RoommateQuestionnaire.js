@@ -42,7 +42,12 @@ class RoommateQuestionnaire extends Component {
   render() {
     const { onSubmit } = this.props
     const { page } = this.state
-    return (<div>
+    return (
+      <div>
+      <div style = {{textAlign: 'center'}}>
+        Question: {page}
+      </div>
+      <div>
         {page === 1 && <QuestionnaireFirstPage onSubmit={this.nextPage}/>}
         {page === 2 && <QuestionnaireSecondPage previousPage={this.previousPage} onSubmit={this.nextPage}/>}
         {page === 3 && <QuestionnaireThirdPage previousPage={this.previousPage} onSubmit={this.nextPage}/>}
@@ -64,6 +69,7 @@ class RoommateQuestionnaire extends Component {
         {page === 19 && <QuestionnaireNineteenthPage previousPage={this.previousPage} onSubmit={this.nextPage}/>}
         {page === 20 && <QuestionnaireTwentiethPage previousPage={this.previousPage} onSubmit={onSubmit}/>}
       </div>
+    </div>
     )
   }
 }
