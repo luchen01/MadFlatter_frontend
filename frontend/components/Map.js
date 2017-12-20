@@ -102,9 +102,15 @@ class Map extends Component {
       }
     });
     // this.state.map.fitBounds(bounds);
-    console.log('sending apartments request');
+
+    var defaultBounds = {
+      north: 180,
+      south: 0,
+      west: -180,
+      east: 0,
+    }
     axios.post('http://localhost:3000/apartmentsByLocation', {
-        regions: regions,
+        regions: regions.length ? regions : [defaultBounds],
         searchFilters: self.state.searchFilters
       }, {
         headers: {
@@ -256,6 +262,7 @@ class Map extends Component {
     if(self.props.oneListing){
       console.log('there is one listing', self.props.oneListing);
       self.newMarker(this.props.oneListing);
+      self.findApartmentsByLocation();
     } else {
       console.log('no oneListing prop');
       self.findApartmentsByLocation();
