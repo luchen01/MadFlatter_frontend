@@ -1,7 +1,7 @@
 const listingReducer = (state = null, action) => {
     switch (action.type) {
-        case "CHANGE_LISTING":
-            console.log('in change listing reducer');
+        case "SELECT_LISTING":
+            console.log('in select listing reducer');
             console.log(action.listing);
             return action.listing;
         default:

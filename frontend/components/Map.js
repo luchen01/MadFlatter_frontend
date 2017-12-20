@@ -10,7 +10,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listing: this.props.listing ? this.props.listing : null,
+      oneListing: this.props.listing ? this.props.listing : null,
       markers: this.props.markers ? this.props.markers : [],
       regions: this.props.regions ? this.props.regions : [],
       searchFilters: { },
@@ -22,26 +22,23 @@ class Map extends Component {
     //     });
   }
 
-  newMarker(listing){
+  newMarker(listing, n){
     const self = this;
-    var image = new google.maps.MarkerImage(
-      'http://images.clipartpanda.com/google-location-icon-Location_marker_pin_map_gps.png',
-      new google.maps.Size(80, 80),
-      new google.maps.Point(0, 0),
-      new google.maps.Point(17, 34),
-      new google.maps.Size(25, 25));
+    const size = n ? n : 25;
     var defaultImage = new google.maps.MarkerImage(
       'http://simpleicon.com/wp-content/uploads/map-marker-5.png',
       new google.maps.Size(71, 71),
       new google.maps.Point(0, 0),
-      new google.maps.Point(17, 34),
-      new google.maps.Size(25, 25));
+      new google.maps.Point(size/2, size),
+      new google.maps.Size(size, size));
     let marker = new google.maps.Marker({
       position: {lat: listing.lat, lng: listing.lng},
       map: self.state.map,
       title: listing.title,
-      icon: (listing.id === self.props.listing) ? image : defaultImage
+      icon: defaultImage
     })
+    marker.id = listing.id;
+    // if(self.props.oneListing)
     marker.addListener('click', () => {
       self.renderListing(listing);
       // marker.addListener('click', function() {
@@ -121,6 +118,42 @@ class Map extends Component {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  componentWillReceiveProps(props){
+      const self = this;
+      let listingId = props.listing;
+      console.log('in componentWillReceiveProps. listingId =', listingId);
+      var image = new google.maps.MarkerImage(
+        'http://images.clipartpanda.com/google-location-icon-Location_marker_pin_map_gps.png',
+        new google.maps.Size(200, 200),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(17, 34),
+        new google.maps.Size(25, 25));
+      var defaultImage = new google.maps.MarkerImage(
+        'http://simpleicon.com/wp-content/uploads/map-marker-5.png',
+        new google.maps.Size(71, 71),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(17, 34),
+        new google.maps.Size(25, 25));
+
+      this.setState({
+        markers: self.state.markers.map((marker) => {
+          if(marker.id === listingId){
+            marker.setMap(null);
+            marker.icon = image;
+            marker.setZIndex(10000);
+            marker.setMap(self.state.map);
+          } else if(marker.getZIndex() === 10000){
+            marker.setMap(null);
+            marker.icon = defaultImage;
+            marker.setZIndex(1);
+            marker.setMap(self.state.map);
+          }
+          return marker;
+        })
+      })
+      if(props.oneListing) this.newMarker(props.oneListing, 45);
   }
 
   componentDidMount(){
@@ -220,14 +253,20 @@ class Map extends Component {
     this.setState({
       map: map
     })
-    self.findApartmentsByLocation();
+    if(self.props.oneListing){
+      console.log('there is one listing', self.props.oneListing);
+      self.newMarker(this.props.oneListing);
+    } else {
+      console.log('no oneListing prop');
+      self.findApartmentsByLocation();
+    }
   }
 
   render(){
     var height = this.props.height ? this.props.height : '500px';
     var width =  this.props.width ? this.props.width : '500px';
     return (
-      <div style={{width: '500px'}}>
+      <div style={{width: width, height: height}}>
         {/* <h1>Current listing: {this.state.listing ? this.state.listing.title : 'NA'}</h1>
         <button className="btn btn-default" onClick={()=>(this.loadApartmentsFromCraigsList())}>Click to load apartments</button>
         <button className="btn btn-default" onClick={()=>(this.findApartmentsByLocation())}>Click to find apartments in this region</button>

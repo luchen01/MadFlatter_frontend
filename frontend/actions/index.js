@@ -4,6 +4,7 @@
 
 export function changeListing(listing) {
     console.log("Called selectListing()");
+    console.log(listing);
     return({
         type: 'SELECT_LISTING',
         listing,
