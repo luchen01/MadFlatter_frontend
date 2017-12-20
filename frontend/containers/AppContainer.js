@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Map from '../components/Map';
 import Background from '../components/Background';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
