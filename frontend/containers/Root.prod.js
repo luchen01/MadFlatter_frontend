@@ -14,6 +14,7 @@ import Questionnaire from '../components/Questionnaire';
 import BrowseApartment from '../components/BrowseApartment';
 import BrowseRoommate from '../components/BrowseRoommate';
 import RoommateProfile from '../components/RoommateProfile';
+import Messages from '../components/Messages';
 import MyGroup from '../components/MyGroup';
 import axios from 'axios';
 
@@ -53,6 +54,7 @@ class Root extends React.Component {
                 <Route exact path={"/apartment/:aptid"} component = {ApartmentProfile} />
                 <Route exact path={"/browseapartment"} component = {BrowseApartment} />
                 <Route exact path={"/browseroommate"} component = {BrowseRoommate} />
+                <Route exact path={"/messages/:userid"} component = {Messages} />
                 <Route path={"/"} component = {Footer} />
           </div>
         </BrowserRouter>

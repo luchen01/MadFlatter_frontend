@@ -1,12 +1,16 @@
 import React from 'react';
 import axios from 'axios';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
+
 var io = require('socket.io-client')
 
 class Chat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: io(`${process.env.URL}`),
+            socket: io('http://localhost:3030'),
             roomName: '',
             username: this.props.user.username,
         };
@@ -161,7 +165,7 @@ class ChatRoom extends React.Component {
     return (
       <div className = 'chatBox'>
         <ul className = 'chatHistory'>
-        {this.state.messages.map((message, index)=>(
+        {this.state.messages.filter(message=>{return message.user}).map((message, index)=>(
           message.user.username === this.props.username ? <li style = {{display: 'block'}} key = {index}>
           <p className = "speechBubble">
             {message.timeStamp.toLocaleString()}<br/>
@@ -176,10 +180,21 @@ class ChatRoom extends React.Component {
       )}
   </ul>
       <div className = 'typeMessageContainer'>{this.state.editMessage} </div>
-      <form onSubmit ={this.submitForm}>
-        <input type = 'text' onChange = {this.updateMessage} value = {this.state.message.content} />
-        <input type = 'submit' value = 'submit'/>
-        </form>
+      {/* <form onSubmit ={this.submitForm}> */}
+        <TextField
+          hintText="Type anything"
+          onChange = {this.updateMessage}
+          value = {this.state.message.content}/>  <br />
+          {/* <input type = 'text' onChange = {this.updateMessage} value = {this.state.message.content} /> */}
+        <RaisedButton
+              primary={true}
+              style={{margin: '20px'}}
+              label = "Send"
+              icon={<FontIcon className="material-icons"> message </FontIcon>}
+              onClick = {this.submitForm}
+                /><br/>
+        {/* <input type = 'submit' value = 'Send'/> */}
+        {/* </form> */}
       </div>
     )
   }
