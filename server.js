@@ -12,9 +12,9 @@ app.get('/*', (request, response) => {
 
 
 // app.use('/api', api);
-
+console.log('URL is:', process.env.URL);
 app.listen(PORT, error => {
     error
     ? console.error(error)
-    : console.info(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
+    : console.info(`==> 🌎 Listening on port ${PORT}. Visit localhost:${PORT}/ in your browser.`);
 });

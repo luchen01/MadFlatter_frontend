@@ -18,3 +18,11 @@ export function findApartments(apartments) {
         apartments,
     });
 }
+
+export function questionnaireResults(answers) {
+    console.log('in questionnaireResults:', answers);
+    return({
+        type: 'QUESTIONNAIRE',
+        answers,
+    });
+}

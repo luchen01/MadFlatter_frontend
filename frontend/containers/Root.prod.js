@@ -26,7 +26,7 @@ class Root extends React.Component {
   }
 
   componentWillMount(){
-    axios.get('http://localhost:3000/loggedin')
+    axios.get(`${process.env.URL}/loggedin`)
   .then(response=>{
       console.log('response router', response);
       if(response.data) {
