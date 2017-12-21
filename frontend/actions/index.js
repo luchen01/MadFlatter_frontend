@@ -26,3 +26,26 @@ export function questionnaireResults(answers) {
         answers,
     });
 }
+
+export function saveRegions(regions) {
+    console.log('in saveRegions');
+    return({
+        type: 'SAVE_REGIONS',
+        regions,
+    });
+}
+
+export function changeFilters(filters) {
+    console.log('in changeFilters');
+    return({
+        type: 'CHANGE_FILTERS',
+        filters
+    });
+}
+
+export function userData(userid) {
+    return({
+        type: 'USER_DATA',
+        userid
+    });
+}

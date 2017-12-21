@@ -6,64 +6,184 @@ class Chat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chat: '',
-            chatHistory: {},
-            socket: io.connect(`${process.env.URL}`),
+            socket: io(`${process.env.URL}`),
+            roomName: '',
+            username: this.props.user.username,
         };
-        // this.state.socket.on('message', (msg) => {
-        //   console.log(msg);
-        // });
+    }
 
-        // this.state.socket.on('update', message=>{
-        //
-        //   });
-      }
+    componentWillMount() {
+        var viewer = this.props.user;
+        var vieweeId = this.props.vieweeId;
+        var newUser = this.props.user.username;
+        var roomName;
 
-componentDidMount(){
-  // this.state.socket.on('connect', ()=>{
-  this.state.socket.emit('join room', this.props.roomName);
-  // });
-}
+        if(viewer.id < vieweeId){
+          roomName = `${viewer.id}_${vieweeId}`
+        }else{
+          roomName = `${vieweeId}_${viewer.id}`
+        }
 
-  componentWillUnmount() {
-    this.state.socket.emit('leave room', this.props.roomName);
+        this.setState({
+          roomName: roomName
+        }, ()=>{
+          // console.log('inside setState in chat', this.state);
+            this.state.socket.on('connect', () => {
+                this.state.socket.emit('username', newUser);
+                this.state.socket.emit('room', roomName);
+            });
+        });
+
+      console.log('connected');
+      // console.log('this.state username', newUser);
+      // console.log('this.state.roomName', roomName);
+
+    this.state.socket.on('errorMessage', message => {
+      console.log("errorMessage", message);
+    });
   }
 
-  // onChange(e){
-  //   this.setState({
-  //     chat: e.target.value
-  //   });
-  //   this.state.socket.emit('update', this.state.chat);
-  // }
-
-  onSubmit(){
-    this.state.socket.emit('newMessage', this.state.chat);
-  }
-
-    render() {
-        return(
-      <div className = "container">
-        Chat <br/>
-        <div className="container">
-          <ul id = "messageList">
-            {this.state.chat}
-          </ul>
-        </div>
-        <input className="inline typebox"
-              id = 'textmsg'
-              type="text"
-              value = {this.state.chat}
-              placeholder="Say Something..."
-              onChange = {(e)=>this.setState({chat: e.target.value})}
-            /><br/>
-        <button
-              className="inline submitbutton"
-              id='submitbutton'
-              onClick = {this.onSubmit.bind(this)}
-              > Send</button>
+  render() {
+    return (
+      <div>
+        <ChatRoom socket={this.state.socket} roomName = {this.state.roomName} username = {this.state.username} userid = {this.props.user.id}/>
       </div>
     );
-    }
+  }
 }
+
+class ChatRoom extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userid: this.props.userid,
+      message:{},
+      messages:[],
+      editStart: false,
+      timeOutId: false,
+      editMessage:''
+    }
+    this.updateMessage = this.updateMessage.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.handleStartEdit = this.handleStartEdit.bind(this);
+    // this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentWillMount() {
+    axios.defaults.withCredentials = true;
+    axios.post('http://localhost:3000/getMessage', {
+      roomId: this.props.roomName,
+    })
+    .then(resp=>{
+      console.log('resp in component did mount', resp.data);
+      // const currMessages = resp.data;
+      this.setState({
+        messages: resp.data
+      });
+
+      this.props.socket.on('message', ((message)=>
+        {this.setState({
+            message: {},
+            messages: this.state.messages.concat(message)
+        })}
+    ));
+    // console.log('this.state after will Mount', this.state);
+      this.props.socket.on('edit', data =>{
+        this.setState({
+          editMessage: data.editStart ? `${data.username} is typing...`: ''
+        })
+      });
+    })
+    .catch(err=>console.log(err))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.roomName !== nextProps.roomName){
+      this.setState({
+        messages:[]
+      })
+    }
+  }
+
+
+  updateMessage(event) {
+    event.preventDefault();
+    this.handleStartEdit(event);
+    let timeStamp = new Date();
+    this.setState({
+      message: {timeStamp: timeStamp,
+                user: {username: this.props.username},
+                userid: this.props.userid,
+                content: event.target.value}
+    });
+  }
+
+  submitForm(event){
+    event.preventDefault();
+    var newMessage = this.state.message;
+    this.props.socket.emit('edit', {editStart:false, username: this.props.username, roomName: this.props.roomName})
+    axios.defaults.withCredentials = true;
+    axios.post('http://localhost:3000/newMessage', {
+      roomId: this.props.roomName,
+      timeStamp: this.state.message.timeStamp.toLocaleString(),
+      content: this.state.message.content,
+      // user: this.props.username,
+      user_id: this.state.userid
+    })
+    .then((resp)=>{
+      // console.log('resp in submit save message', resp);
+      this.setState({
+        message: {timeStamp:'',
+                  user: {},
+                  userid: '',
+                  content: ''},
+        messages:this.state.messages.concat(newMessage)
+      },()=>{
+        // console.log('this.state.message in submit form', this.state.message)
+        console.log("this.state in submit form", this.state.messages);
+        this.props.socket.emit('message',newMessage)})
+    })
+  }
+
+  handleStartEdit(event){
+    if(!this.state.timeOutId){
+      this.props.socket.emit('edit',{editStart:true,username:this.props.username,roomName:this.props.roomName});
+    }else{
+      clearTimeout(this.state.timeOutId);
+    };
+    this.setState({
+      timeOutId: setTimeout(()=>{this.props.socket.emit('edit',{ editStart:false, username: this.props.username, roomName: this.props.roomName});
+        this.setState({timeOutId: false});},1000)
+    },()=>{console.log(this.state.editStart, this.state.editMessage);});
+  }
+
+  render(){
+    return (
+      <div className = 'chatBox'>
+        <ul className = 'chatHistory'>
+        {this.state.messages.map((message, index)=>(
+          message.user.username === this.props.username ? <li style = {{display: 'block'}} key = {index}>
+          <p className = "speechBubble">
+            {message.timeStamp.toLocaleString()}<br/>
+            {message.content}</p>
+        </li> :
+        <li style={{display: 'flex', flexDirection: 'row-reverse'}} key = {index}>
+        <p className = "replyBubble">
+          {message.timeStamp.toLocaleString()}<br/>
+          {message.content}</p>
+      </li>
+      )
+      )}
+  </ul>
+      <div className = 'typeMessageContainer'>{this.state.editMessage} </div>
+      <form onSubmit ={this.submitForm}>
+        <input type = 'text' onChange = {this.updateMessage} value = {this.state.message.content} />
+        <input type = 'submit' value = 'submit'/>
+        </form>
+      </div>
+    )
+  }
+
+  }
 
 export default Chat;

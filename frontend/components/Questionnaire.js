@@ -11,6 +11,7 @@ import ApartmentQuestionnaire from './ApartmentQuestionnaire';
 import {connect} from 'react-redux';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
+import {Link} from 'react-router-DOM';
 
 /**
  * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
@@ -29,14 +30,30 @@ class Questionnaire extends React.Component {
 
   handleNext() {
     const {stepIndex} = this.state;
-    axios.post(`${process.env.URL}/questionnaire`, {answers: this.props.answers})
-    .then((response) => {
-      console.log('Response message:', response.data.message);
-      this.setState({
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
-      });
-    })
+    if(stepIndex === 0){
+      axios.post(`${process.env.URL}/questionnaire`, {answers: this.props.answers})
+      .then((response) => {
+        console.log('Response message:', response.data.message);
+        this.setState({
+          stepIndex: stepIndex + 1,
+          finished: stepIndex >= 2,
+        });
+      })
+    } else if (stepIndex === 1){
+      console.log(this.props.regions);
+      axios.post(`${process.env.URL}/regions`, {regions: this.props.regions})
+      .then((response) => {
+        console.log('Response message:', response.data.message);
+        axios.post(`${process.env.URL}/filters`, {filters: this.props.filters})
+        .then((res) => {
+            console.log('Response message:', res.data.message);
+            this.setState({
+              stepIndex: stepIndex + 1,
+              finished: stepIndex >= 2,
+            });
+        })
+      })
+    }
   };
 
   handlePrev() {
@@ -103,11 +120,19 @@ class Questionnaire extends React.Component {
                   onClick={this.handlePrev.bind(this)}
                   style={{marginRight: 12}}
                 />
-                <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
-                  primary={true}
-                  onClick={this.handleNext.bind(this)}
-                />
+                {stepIndex !== 2 ?
+                  <RaisedButton
+                    label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
+                    primary={true}
+                    onClick={this.handleNext.bind(this)}
+                  /> :
+                <Link to={`../profile/${this.props.userid}`}>
+                  <RaisedButton
+                    label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
+                    primary={true}
+                    onClick={this.handleNext.bind(this)}
+                  />
+                </Link>}
               </div>
             </div>
           )}
@@ -126,6 +151,9 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     answers: state.questionnaire,
+    regions: state.regions,
+    filters: state.filters,
+    userid: state.userid
   };
 }
 
