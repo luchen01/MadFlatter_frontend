@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 import {Link} from 'react-router-DOM';
+import {apartmentMatches} from '../actions/index';
 
 /**
  * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
@@ -122,15 +123,22 @@ class Questionnaire extends React.Component {
                 />
                 {stepIndex !== 2 ?
                   <RaisedButton
-                    label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
+                    label={'Save and Continue'}
                     primary={true}
                     onClick={this.handleNext.bind(this)}
                   /> :
                 <Link to={`../profile/${this.props.userid}`}>
                   <RaisedButton
-                    label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
+                    label={'Finish'}
                     primary={true}
-                    onClick={this.handleNext.bind(this)}
+                    onClick={()=>{
+                      console.log('clicked');
+                      axios.get(`${process.env.URL}/apartmentMatches/${this.props.userid}`)
+                      .then(response => {
+                        console.log(response.data.apartments);
+                        this.props.toApartmentMatches(response.data.apartments);
+                      })
+                    }}
                   />
                 </Link>}
               </div>
@@ -144,7 +152,7 @@ class Questionnaire extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    toApartmentMatches: (apartments) => dispatch(apartmentMatches(apartments))
   }
 }
 
@@ -153,7 +161,8 @@ const mapStateToProps = (state) => {
     answers: state.questionnaire,
     regions: state.regions,
     filters: state.filters,
-    userid: state.userid
+    userid: state.userid,
+    apartmentMatches: state.apartmentMatches
   };
 }
 

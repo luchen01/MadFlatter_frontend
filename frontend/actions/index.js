@@ -27,6 +27,14 @@ export function questionnaireResults(answers) {
     });
 }
 
+export function apartmentMatches(apartments) {
+    console.log('in apartmentMatches');
+    return({
+        type: 'APARTMENT_MATCHES',
+        apartments,
+    });
+}
+
 export function saveRegions(regions) {
     console.log('in saveRegions');
     return({
