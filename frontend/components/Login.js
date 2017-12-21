@@ -25,7 +25,7 @@ class Login extends React.Component {
 
     login() {
       axios.defaults.withCredentials = true;
-      axios.post('http://localhost:3000/login', {
+      axios.post(`${process.env.URL}/login`, {
         username: this.state.username,
         password: this.state.password,
       })
@@ -49,7 +49,7 @@ class Login extends React.Component {
                 style={{margin: '20px'}}
                 // backgroundColor = {String(colors.gray200)}
                 label = "Login with Facebook"
-                href = "http://localhost:3000/auth/facebook"
+                href = {`${process.env.URL}/auth/facebook`}
                 // onClick={this.facebook.bind(this)}
               />
             <RaisedButton

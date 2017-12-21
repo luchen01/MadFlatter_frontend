@@ -12,7 +12,7 @@ class Listing extends Component{
 
   componentDidMount(){
     console.log('in listing');
-    axios.get(`http://localhost:3000/apartment/${this.state.listing.id}`)
+    axios.get(`${process.env.URL}/apartment/${this.state.listing.id}`)
     .then((response) => {
       console.log(response);
       this.setState({
@@ -26,7 +26,7 @@ class Listing extends Component{
 
   componentWillReceiveProps(props){
     console.log('in listing');
-    axios.get(`http://localhost:3000/apartment/${this.props.listing.id}`)
+    axios.get(`${process.env.URL}/apartment/${this.props.listing.id}`)
     .then((response) => {
       console.log(response);
       this.setState({

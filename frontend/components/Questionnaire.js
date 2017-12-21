@@ -8,6 +8,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import RoommateQuestionnaire from './RoommateQuestionnaire';
 import ApartmentQuestionnaire from './ApartmentQuestionnaire';
+import {connect} from 'react-redux';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 /**
  * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
@@ -26,10 +29,14 @@ class Questionnaire extends React.Component {
 
   handleNext() {
     const {stepIndex} = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    axios.post(`${process.env.URL}/questionnaire`, {answers: this.props.answers})
+    .then((response) => {
+      console.log('Response message:', response.data.message);
+      this.setState({
+        stepIndex: stepIndex + 1,
+        finished: stepIndex >= 2,
+      });
+    })
   };
 
   handlePrev() {
@@ -91,13 +98,13 @@ class Questionnaire extends React.Component {
               <p>{this.getStepContent(stepIndex)}</p>
               <div style={{marginTop: 12, textAlign: 'center'}}>
                 <FlatButton
-                  label="Back"
+                  label="Last Section"
                   disabled={stepIndex === 0}
                   onClick={this.handlePrev.bind(this)}
                   style={{marginRight: 12}}
                 />
                 <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Next'}
+                  label={stepIndex === 2 ? 'Finish' : 'Save and Continue'}
                   primary={true}
                   onClick={this.handleNext.bind(this)}
                 />
@@ -109,5 +116,20 @@ class Questionnaire extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    answers: state.questionnaire,
+  };
+}
+
+Questionnaire = connect(mapStateToProps, mapDispatchToProps)(Questionnaire);
+
 
 export default Questionnaire;

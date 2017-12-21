@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import Listing from './Listing';
 import { changeListing, findApartments } from '../actions/index';
 
@@ -109,13 +110,9 @@ class Map extends Component {
       west: -180,
       east: 0,
     }
-    axios.post('http://localhost:3000/apartmentsByLocation', {
+    axios.post(`${process.env.URL}/apartmentsByLocation`, {
         regions: regions.length ? regions : [defaultBounds],
         searchFilters: self.state.searchFilters
-      }, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        }
       })
       .then((response) => {
         console.log(response);
@@ -260,11 +257,8 @@ class Map extends Component {
       map: map
     })
     if(self.props.oneListing){
-      console.log('there is one listing', self.props.oneListing);
       self.newMarker(this.props.oneListing);
-      self.findApartmentsByLocation();
     } else {
-      console.log('no oneListing prop');
       self.findApartmentsByLocation();
     }
   }
