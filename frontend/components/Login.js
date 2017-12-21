@@ -5,6 +5,8 @@ import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
+import {connect} from 'react-redux';
+import {userData} from '../actions/index';
 
 // const config = {
 //   withCredentials: true,
@@ -31,6 +33,7 @@ class Login extends React.Component {
       })
       .then((response)=>{
         console.log("response after login", response.data.user.id, response);
+        this.props.toUserData(response.data.user.id);
         this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
@@ -86,5 +89,19 @@ class Login extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toUserData: (userid) => dispatch(userData(userid)),
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+
+  };
+}
+
+Login = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default Login;

@@ -7,6 +7,11 @@ import DatePicker from 'material-ui/DatePicker';
 import FontIcon from 'material-ui/FontIcon';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
+import Map from './Map';
+import {connect} from 'react-redux';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
+import {saveRegions, changeFilters} from '../actions/index';
 
 const styles = {
   chip: {
@@ -22,6 +27,12 @@ class ApartmentQuestionnaire extends Component{
   constructor(props) {
     super(props);
 
+    axios.get(`${process.env.URL}/regions`)
+    .then((response) => {
+      console.log(response.data.regions);
+      this.props.toSaveRegions(response.data.regions.map(({north, south, east, west, time}) => ({north, south, east, west, time})))
+    })
+
   const minDate = new Date();
       const maxDate = new Date();
       minDate.setFullYear(minDate.getFullYear() - 1);
@@ -30,12 +41,12 @@ class ApartmentQuestionnaire extends Component{
       maxDate.setHours(0, 0, 0, 0);
 
       this.state = {
-        maxBedrooom: 0,
-        minBedroom: 0,
-        maxBathroom: 0,
-        minBathroom: 0,
-        minDate: minDate,
-        maxDate: maxDate,
+        // maxBedrooom: 0,
+        // minBedroom: 0,
+        // maxBathroom: 0,
+        // minBathroom: 0,
+        // minDate: minDate,
+        // maxDate: maxDate,
         autoOk: false,
         disableYearSelection: false,
         chipData: [
@@ -61,12 +72,20 @@ class ApartmentQuestionnaire extends Component{
     };
 
     handleRequestDelete(key){
-    console.log('clicked!');
-    let newChipData = this.state.chipData;
-    const chipToDelete = newChipData.map(chip=>chip.key).indexOf(key);
-    newChipData.splice(chipToDelete, 1);
-    this.setState({chipData: newChipData})
-}
+      console.log('clicked!');
+      let newChipData = this.state.chipData;
+      const chipToDelete = newChipData.map(chip=>chip.key).indexOf(key);
+      newChipData.splice(chipToDelete, 1);
+      this.setState({chipData: newChipData})
+    }
+
+    // componentDidMount(){
+    //   axios.get(`${process.env.URL}/regions`)
+    //   .then((response) => {
+    //     console.log(response.data.regions);
+    //     this.props.toSaveRegions(response.data.regions.map(({north, south, east, west, time}) => ({north, south, east, west, time})))
+    //   })
+    // }
 
     render() {
         return(
@@ -78,8 +97,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bedrooms"
-           value={this.state.minBedroom}
-           onChange={(event, index, value)=>this.setState({minBedroom: value})}
+           value={this.props.filters.minBed}
+           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minBed: value}))}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -92,9 +111,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bedrooms"
-            value={this.state.maxBedroom}
-            onChange={(event, index, value)=>this.setState({maxBedroom: value})}
-          >
+            value={this.props.filters.maxBed}
+            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxBed: value}))}          >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
             <MenuItem value={"3"} primaryText="3" />
@@ -109,8 +127,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons"> wc </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bathrooms"
-           value={this.state.minBathroom}
-           onChange={(event, index, value)=>this.setState({minBathroom: value})}
+           value={this.props.filters.minBath}
+           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minBath: value}))}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -123,8 +141,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bathrooms"
-            value={this.state.maxBathroom}
-            onChange={(event, index, value)=>this.setState({maxBathroom: value})}
+            value={this.props.filters.maxBath}
+            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxBath: value}))}
           >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
@@ -135,21 +153,48 @@ class ApartmentQuestionnaire extends Component{
             <MenuItem value={"7"} primaryText="7" />
             <MenuItem value={"8"} primaryText="8" />
           </SelectField><br/>
+          <FontIcon className="material-icons"> money </FontIcon><br/>
+          <SelectField
+             floatingLabelText="Min Price"
+             value={this.props.filters.minPrice}
+             onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minPrice: value}))}
+           >
+             <MenuItem value={"500"} primaryText="500" />
+             <MenuItem value={"1000"} primaryText="1000" />
+             <MenuItem value={"15000"} primaryText="1500" />
+             <MenuItem value={"2000"} primaryText="2000" />
+             <MenuItem value={"2500"} primaryText="2500" />
+             <MenuItem value={"3000"} primaryText="3000" />
+           </SelectField><br/>
+           <SelectField
+              floatingLabelText="Max Price"
+              value={this.props.filters.maxPrice}
+              onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxPrice: value}))}
+            >
+              <MenuItem value={"2000"} primaryText="2000" />
+              <MenuItem value={"2500"} primaryText="2500" />
+              <MenuItem value={"3000"} primaryText="3000" />
+              <MenuItem value={"3500"} primaryText="3500" />
+              <MenuItem value={"4000"} primaryText="4000" />
+              <MenuItem value={"5000"} primaryText="5000" />
+              <MenuItem value={"7500"} primaryText="7500" />
+              <MenuItem value={"10000"} primaryText="10000" />
+            </SelectField><br/>
         </div>
         <div>
           <FontIcon className="material-icons">date_range</FontIcon><br/>
           <DatePicker
-            onChange={this.handleChangeMinDate}
+            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minDate: date}))}
             autoOk={false}
             floatingLabelText="Min Available Date"
-            defaultDate={this.state.minDate}
+            defaultDate={this.props.filters.minDate}
             disableYearSelection={this.state.disableYearSelection}
           />
           <DatePicker
-            onChange={this.handleChangeMaxDate}
+            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxDate: date}))}
             autoOk={false}
             floatingLabelText="Max Available Date"
-            defaultDate={this.state.maxDate}
+            defaultDate={this.props.filters.maxDate}
             disableYearSelection={this.state.disableYearSelection}
           />
         </div>
@@ -168,12 +213,28 @@ class ApartmentQuestionnaire extends Component{
         </div>
       </div>
       <div className = "col-md-7 col-xs-12">
-        Map: Select your neighborhood
+        {this.props.regions ? <Map noMarkers={true} drawingAllowed={true}/> : null}
       </div>
     </div>
   </div>
         );
     }
   }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toSaveRegions: (regions) => dispatch(saveRegions(regions)),
+    toChangeFilters: (filters) => dispatch(changeFilters(filters))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    regions: state.regions,
+    filters: state.filters
+  };
+}
+
+ApartmentQuestionnaire = connect(mapStateToProps, mapDispatchToProps)(ApartmentQuestionnaire);
 
 export default ApartmentQuestionnaire;
