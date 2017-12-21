@@ -36,7 +36,7 @@ class Logged extends React.Component {
   signout() {
     axios.get(`${process.env.URL}/logout`)
   .then((response)=>{
-      console.log("response after login", response.data);
+      // console.log("response after login", response.data);
       this.props.history.push('/');
   })
   .catch((err)=>{
@@ -89,13 +89,6 @@ class AppBarExampleComposition extends Component {
     render() {
         return (
       <div>
-        {/* <Toggle
-          label="Logged"
-          defaultToggled={true}
-          onToggle={this.handleChange}
-          labelPosition="right"
-          style={{margin: 20}}
-        /> */}
         <AppBar
           title="MadFlatter - Live the Way You Want!"
           iconElementLeft={<IconButton
