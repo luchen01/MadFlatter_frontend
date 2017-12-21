@@ -7,27 +7,6 @@ axios.defaults.withCredentials = true;
 import {questionnaireResults} from '../actions/index';
 import QuestionnairePage from './QuestionnairePage';
 
-// import QuestionnaireFirstPage from './QuestionnaireFirstPage';
-// import QuestionnaireSecondPage from './QuestionnaireSecondPage';
-// import QuestionnaireThirdPage from './QuestionnaireThirdPage';
-// import QuestionnaireFourthPage from './QuestionnaireFourthPage';
-// import QuestionnaireFifthPage from './QuestionnaireFifthPage';
-// import QuestionnaireSixthPage from './QuestionnaireSixthPage';
-// import QuestionnaireSeventhPage from './QuestionnaireSeventhPage';
-// import QuestionnaireEighthPage from './QuestionnaireEighthPage';
-// import QuestionnaireNinthPage from './QuestionnaireNinthPage';
-// import QuestionnaireTenthPage from './QuestionnaireTenthPage';
-// import QuestionnaireEleventhPage from './QuestionnaireEleventhPage';
-// import QuestionnaireTwelfthPage from './QuestionnaireTwelfthPage';
-// import QuestionnaireThirteenthPage from './QuestionnaireThirteenthPage';
-// import QuestionnaireFourteenthPage from './QuestionnaireFourteenthPage';
-// import QuestionnaireFifteenthPage from './QuestionnaireFifteenthPage';
-// import QuestionnaireSixteenthPage from './QuestionnaireSixteenthPage';
-// import QuestionnaireSeventeenthPage from './QuestionnaireSeventeenthPage';
-// import QuestionnaireEighteenthPage from './QuestionnaireEighteenthPage';
-// import QuestionnaireNineteenthPage from './QuestionnaireNineteenthPage';
-// import QuestionnaireTwentiethPage from './QuestionnaireTwentiethPage';
-
 const questionLabels=[
   ["Way more inclined to have friends over", "More inclined to have friends over", "Indifferent", "More inclined to keep the party outside", "Way more inclined to keep the party outside"],
   ["Very Tolerant", "Tolerant", "Indifferent", "Intolerant", "Very Intolerant"],
@@ -65,11 +44,6 @@ class RoommateQuestionnaire extends Component {
     console.log('Inside nextPage');
     console.log(this.props.answers);
     this.setState({ page: this.state.page + 1 });
-    // var answers = this.props.answers;
-    // answers[answer.question] = {};
-    // answers[answer.question].personal = answer.personal;
-    // answers[answer.question].others = answer.others;
-    // this.props.toQuestionnaireResults(answers);
   }
 
   previousPage() {
