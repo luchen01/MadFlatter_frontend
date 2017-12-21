@@ -4,6 +4,8 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { Link } from 'react-router-DOM';
+import {connect} from 'react-redux';
+
 
 const styles = {
   root: {
@@ -65,7 +67,12 @@ const tilesData = [
 ];
 
 class ApartmentMatch extends React.Component{
+  constructor(props){
+    super(props)
+  }
+
   render() {
+    console.log(this.props.apartmentMatches);
     return(
       <div style={styles.root}>
     <GridList
@@ -73,21 +80,39 @@ class ApartmentMatch extends React.Component{
       cellWidth={300}
       style={styles.gridList}
     >
-      <Subheader>Saved Results</Subheader>
-      {tilesData.map((tile) => (<Link to="/apartmentprofile">
-        <GridTile
-          key={tile.img}
-          // title={tile.title}
-          // subtitle={<span>by <b>{tile.author}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img src={tile.img} />
-        </GridTile></Link>
-      ))}
+      <Subheader>Results</Subheader>
+      {(this.props.apartmentMatches) ?
+        this.props.apartmentMatches.map((tile) => (<Link to={`/apartment/${tile.id}`}>
+          <GridTile
+            key={tile.id}
+            title={tile.title}
+            // subtitle={<span>by <b>{tile.author}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          >
+            <img src={tile.picture} />
+          </GridTile></Link>
+        )) :
+        <p>Fill out the Questionnaire to see your matches!</p>
+      }
+
     </GridList>
   </div>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    apartmentMatches: state.apartmentMatches,
+  };
+}
+
+ApartmentMatch = connect(mapStateToProps, mapDispatchToProps)(ApartmentMatch);
 
 export default ApartmentMatch;
