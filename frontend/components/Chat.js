@@ -8,7 +8,7 @@ class Chat extends React.Component {
         this.state = {
             chat: '',
             chatHistory: {},
-            socket: io.connect('http://localhost:3000'),
+            socket: io.connect(`${process.env.URL}`),
         };
         // this.state.socket.on('message', (msg) => {
         //   console.log(msg);

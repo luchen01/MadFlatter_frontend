@@ -83,7 +83,7 @@ class MyGroup extends React.Component {
     }
 
     leaveGroup() {
-      axios.post('http://localhost:3000/leavegroup', {
+      axios.post(`${process.env.URL}/leavegroup`, {
         groupid: this.props.match.params.groupid
       })
       .then((resp)=>{
