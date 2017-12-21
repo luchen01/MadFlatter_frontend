@@ -25,16 +25,16 @@ class Root extends React.Component {
       };
   }
 
-  componentWillMount(){
-    axios.get('http://localhost:3000/loggedin')
-  .then(response=>{
-      console.log('response router', response);
-      if(response.data) {
-          this.setState({user:response.data});
-      }
-  })
-  .catch(err=>console.log(err));
-  }
+  // componentWillMount(){
+  //   axios.get('http://localhost:3000/loggedin')
+  // .then(response=>{
+  //     console.log('response router', response);
+  //     if(response.data) {
+  //         this.setState({user:response.data});
+  //     }
+  // })
+  // .catch(err=>console.log(err));
+  // }
 
   render(){
     return (

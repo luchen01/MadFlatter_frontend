@@ -36,7 +36,7 @@ class Logged extends React.Component {
   signout() {
     axios.get("http://localhost:3000/logout")
   .then((response)=>{
-      console.log("response after login", response.data);
+      // console.log("response after login", response.data);
       this.props.history.push('/');
   })
   .catch((err)=>{
@@ -75,27 +75,9 @@ class AppBarExampleComposition extends Component {
         };
     }
 
-    componentWillMount() {
-        axios.get('http://localhost:3000/loggedin')
-      .then(response=>{
-          console.log('response in title', response);
-          if(response.data) {
-              this.setState({logged: true});
-          }
-      })
-      .catch(err=>console.log(err));
-    }
-
     render() {
         return (
       <div>
-        {/* <Toggle
-          label="Logged"
-          defaultToggled={true}
-          onToggle={this.handleChange}
-          labelPosition="right"
-          style={{margin: 20}}
-        /> */}
         <AppBar
           title="MadFlatter - Live the Way You Want!"
           iconElementLeft={<IconButton

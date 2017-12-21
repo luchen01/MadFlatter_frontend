@@ -26,10 +26,8 @@ class RoommateProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          firstname: "Luchen",
-          lastname: "Peng",
-          description: "Hello future roomie!",
-          budget: "1200-1500",
+          currentUser: {},
+          profileUser: {},
           chat: false,
         }
     }
@@ -37,14 +35,17 @@ class RoommateProfile extends React.Component {
     componentWillMount() {
       // console.log('componentwillmount');
       // console.log(this.props.match.params.userid);
+      axios.defaults.withCredentials = true;
       axios.post('http://localhost:3000/myprofile', {
         userid: this.props.match.params.userid
       })
       .then(resp=>{
-        console.log("response in profile page", resp.data);
+        console.log("response in roommateprofile page", resp.data);
         this.setState({
-          user: resp.data
+          currentUser: resp.data.currentUser,
+          profileUser: resp.data.profileUser
         })
+        console.log('setState in roommateProfile', this.state);
       })
       .catch(err=>console.log(err))
     }
@@ -77,21 +78,20 @@ class RoommateProfile extends React.Component {
           </div>
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
+                {this.state.chat ?
+                  <Tab label = "Chat" >
+                  <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
+                  </Tab> : <div/>
+                }
               <Tab label="About Me" >
                   <div>
-                    Hey there! I am {this.state.firstname}.
-                    <p>I'm looking for apartents in: </p><br/>
+                    Hey there! I am {this.state.profileUser.firstname}.
+                    <p>I'm looking for apartments in: </p><br/>
                     <p>My budget range is:</p>
                   </div>
                 </Tab>
-                {/* <Tab label="Roommate Matches" >
-                  <RoommateMatch />
-                </Tab>
-                <Tab label="Apartment Matches" >
-                    <ApartmentMatch />
-                </Tab> */}
               </Tabs>
-              {this.state.chat ? <Chat roomName = {this.props.match.params.userid}/> : <div/>}
+
             </div>
 
       </div>

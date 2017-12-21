@@ -35,7 +35,8 @@ class Profile extends React.Component {
         userid: this.props.match.params.userid
       })
       .then(resp=>{
-          this.setState(resp.data);
+        console.log('inside myprofile page', resp.data);
+          this.setState(resp.data.currentUser);
       })
       .catch(err=>console.log(err));
     }
@@ -47,7 +48,8 @@ class Profile extends React.Component {
           console.log('resp.data', resp.data);
           if(resp.data) {
               this.setState({edit: false})
-          }
+          };
+          alert('Edit Saved!');
       })
       .catch(err=>console.log(err));
     }

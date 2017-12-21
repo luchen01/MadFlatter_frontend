@@ -33,14 +33,14 @@ class BrowseApartment extends React.Component{
       };
   }
 
-  // componentWillMount() {
-  //     axios.post('http://localhost:3000/apartmentsByLocation')
-  //     .then(resp=>{
-  //         this.setState(resp.data);
-  //         console.log('this.state in browse apartment', this.state);
-  //     })
-  //     .catch(err=>console.log(err));
-  // }
+  componentWillMount() {
+      axios.post('http://localhost:3000/apartmentsByLocation')
+      .then(resp=>{
+          this.setState(resp.data);
+          console.log('this.state in browse apartment', this.state);
+      })
+      .catch(err=>console.log(err));
+  }
 
   render() {
     console.log(this.props.apartments);
