@@ -31,7 +31,7 @@ class Profile extends React.Component {
     componentWillMount() {
       // console.log('this.props.match.params.userid',this.props.match.params.userid);
       axios.defaults.withCredentials = true;
-      axios.post('http://localhost:3000/myprofile', {
+      axios.post(`${process.env.URL}/myprofile`, {
         userid: this.props.match.params.userid
       })
       .then(resp=>{
@@ -43,7 +43,7 @@ class Profile extends React.Component {
 
     saveEdit() {
         var sendingState = Object.assign({}, this.state, {userid: this.props.match.params.userid});
-        axios.post('http://localhost:3000/saveedit', sendingState)
+        axios.post(`${process.env.URL}/saveedit`, sendingState)
       .then(resp=>{
           console.log('resp.data', resp.data);
           if(resp.data) {

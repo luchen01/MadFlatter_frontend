@@ -24,7 +24,7 @@ class Register extends React.Component {
 
     register() {
       // console.log(process.env.BASE_URL + "signup");
-      axios.post("http://localhost:3000/signup", this.state)
+      axios.post(`${process.env.URL}/signup`, this.state)
       .then((response)=>{
         console.log('register response', response.data);
           this.props.history.push('/login')
@@ -70,14 +70,14 @@ class Register extends React.Component {
                 primary={true}
                 style={{margin: '20px'}}
                 label = "Register with Facebook"
-                href = "http://localhost:3000/auth/facebook"
+                href = {`${process.env.URL}/auth/facebook`}
               />
             <RaisedButton
                   primary={true}
                   backgroundColor = {colors.gray200}
                   style={{margin: '20px'}}
                   label = "Register with Google"
-                  href = "http://localhost:3000/auth/google"
+                  href = {`${process.env.URL}/auth/google`}
               />
               <Divider/>
             <TextField

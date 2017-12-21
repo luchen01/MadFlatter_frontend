@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import FontIcon from 'material-ui/FontIcon';
 import Toggle from 'material-ui/Toggle';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import Map from './Map';
 import {GridList, GridTile} from 'material-ui/GridList';
 
@@ -47,10 +48,11 @@ class Apartmentprofile extends React.Component {
             address: 'null'
           }
         };
+        console.log('in apartmentprofile');
     }
 
     componentDidMount(){
-      axios.get(`http://localhost:3000/apartment/${this.props.match.params.aptid}`)
+      axios.get(`${process.env.URL}/apartment/${this.props.match.params.aptid}`)
       .then((resp)=>{
           this.setState({apartment: resp.data.apartment});
       })

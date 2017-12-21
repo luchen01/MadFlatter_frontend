@@ -34,7 +34,7 @@ class Logged extends React.Component {
   }
 
   signout() {
-    axios.get("http://localhost:3000/logout")
+    axios.get(`${process.env.URL}/logout`)
   .then((response)=>{
       // console.log("response after login", response.data);
       this.props.history.push('/');
@@ -75,13 +75,24 @@ class AppBarExampleComposition extends Component {
         };
     }
 
+    componentWillMount() {
+        axios.get(`${process.env.URL}/loggedin`)
+      .then(response=>{
+          console.log('response in title', response);
+          if(response.data) {
+              this.setState({logged: true});
+          }
+      })
+      .catch(err=>console.log(err));
+    }
+
     render() {
         return (
       <div>
         <AppBar
           title="MadFlatter - Live the Way You Want!"
           iconElementLeft={<IconButton
-            href = "http://localhost:3030/"> <ActionHome /></IconButton>}
+            href = {`${process.env.URL}`}> <ActionHome /></IconButton>}
           iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px', padding: '10px'}}><Login />  <Register /></div>}
         />
       </div>

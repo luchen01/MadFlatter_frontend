@@ -5,6 +5,8 @@ import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
+import {connect} from 'react-redux';
+import {userData} from '../actions/index';
 
 // const config = {
 //   withCredentials: true,
@@ -25,12 +27,13 @@ class Login extends React.Component {
 
     login() {
       axios.defaults.withCredentials = true;
-      axios.post('http://localhost:3000/login', {
+      axios.post(`${process.env.URL}/login`, {
         username: this.state.username,
         password: this.state.password,
       })
       .then((response)=>{
         console.log("response after login", response.data.user.id, response);
+        this.props.toUserData(response.data.user.id);
         this.props.history.push('/profile/' + response.data.user.id);
       })
       .catch((err)=>{
@@ -49,7 +52,7 @@ class Login extends React.Component {
                 style={{margin: '20px'}}
                 // backgroundColor = {String(colors.gray200)}
                 label = "Login with Facebook"
-                href = "http://localhost:3000/auth/facebook"
+                href = {`${process.env.URL}/auth/facebook`}
                 // onClick={this.facebook.bind(this)}
               />
             <RaisedButton
@@ -86,5 +89,19 @@ class Login extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toUserData: (userid) => dispatch(userData(userid)),
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+
+  };
+}
+
+Login = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default Login;

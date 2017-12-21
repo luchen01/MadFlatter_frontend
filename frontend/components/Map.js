@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import Listing from './Listing';
-import { changeListing, findApartments } from '../actions/index';
+import { changeListing, findApartments, saveRegions } from '../actions/index';
 
 class Map extends Component {
 
@@ -12,7 +13,7 @@ class Map extends Component {
     this.state = {
       oneListing: this.props.listing ? this.props.listing : null,
       markers: this.props.markers ? this.props.markers : [],
-      regions: this.props.regions ? this.props.regions : [],
+      regions: this.props.savedRegions ? this.props.savedRegions : [],
       searchFilters: { },
       displayButton: false,
       drawingAllowed: this.props.drawingAllowed ? true : false
@@ -109,13 +110,9 @@ class Map extends Component {
       west: -180,
       east: 0,
     }
-    axios.post('http://localhost:3000/apartmentsByLocation', {
+    axios.post(`${process.env.URL}/apartmentsByLocation`, {
         regions: regions.length ? regions : [defaultBounds],
         searchFilters: self.state.searchFilters
-      }, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        }
       })
       .then((response) => {
         console.log(response);
@@ -129,7 +126,7 @@ class Map extends Component {
   componentWillReceiveProps(props){
       const self = this;
       let listingId = props.listing;
-      console.log('in componentWillReceiveProps. listingId =', listingId);
+      console.log('in componentWillReceiveProps. savedRegions =', props.savedRegions);
       var image = new google.maps.MarkerImage(
         'http://images.clipartpanda.com/google-location-icon-Location_marker_pin_map_gps.png',
         new google.maps.Size(200, 200),
@@ -162,11 +159,46 @@ class Map extends Component {
       if(props.oneListing) this.newMarker(props.oneListing, 45);
   }
 
+  addRectangleListeners(rectangle){
+    var self = this;
+    google.maps.event.addListener(rectangle, 'bounds_changed', function(event){
+      // console.log(rectangle.getBounds().b, rectangle.getBounds().f);
+      // console.log(rectangle);
+      const regions = self.state.regions.map((region) => {
+        console.log('line 170:', rectangle.time, region.time);
+          return (rectangle.time === region.time) ? Object.assign({}, {
+              north: rectangle.bounds.f.f,
+              south: rectangle.bounds.f.b,
+              west: rectangle.bounds.b.b,
+              east: rectangle.bounds.b.f,
+              time: region.time
+            }) : region;
+      })
+      self.setState({
+        regions: regions
+        // rectangle: Object.assign({}, self.state.rectangle, {boundaries: rectangle.getBounds()})
+      })
+      if(self.props.noMarkers) self.props.toSaveRegions(regions);
+      console.log('line 181:', self.state.regions);
+    })
+    google.maps.event.addListener(rectangle, 'rightclick', function(event){
+      rectangle.setMap(null);
+      var newRegions = self.state.regions.filter((region) => {
+        return region.time !== rectangle.time
+      })
+      self.setState({
+        regions: newRegions,
+        displayButton: newRegions.length === 0 ? false : true
+      })
+      if(self.props.noMarkers) self.props.toSaveRegions(regions);
+    })
+  }
+
   componentDidMount(){
     var self = this;
     var map = new google.maps.Map(document.getElementById('googleMap'), {
             zoom: 12,
-            center: new google.maps.LatLng(37.783335, -122.419042),
+            center: new google.maps.LatLng(37.754438, -122.445411),
             mapTypeId: 'roadmap',
             gestureHandling: 'cooperative',
             disableDoubleClickZoom: true
@@ -214,58 +246,51 @@ class Map extends Component {
           var rectangle = event.overlay;
           rectangle.time = time;
           console.log('line 153:', self.state.displayButton);
+          const regions = [...self.state.regions, {
+            north: rectangle.bounds.f.f,
+            south: rectangle.bounds.f.b,
+            west: rectangle.bounds.b.b,
+            east: rectangle.bounds.b.f,
+            time: time
+          }]
           self.setState({
             // rectangle
-            regions: [...self.state.regions, {
-              north: rectangle.bounds.f.f,
-              south: rectangle.bounds.f.b,
-              west: rectangle.bounds.b.b,
-              east: rectangle.bounds.b.f,
-              time: time
-            }],
+            regions: regions,
             displayButton: true
           })
-          google.maps.event.addListener(rectangle, 'bounds_changed', function(event){
-            // console.log(rectangle.getBounds().b, rectangle.getBounds().f);
-            // console.log(rectangle);
-            self.setState({
-              regions: self.state.regions.map((region) => {
-                console.log('line 170:', rectangle.time, region.time);
-                  return (rectangle.time === region.time) ? Object.assign({}, {
-                      north: rectangle.bounds.f.f,
-                      south: rectangle.bounds.f.b,
-                      west: rectangle.bounds.b.b,
-                      east: rectangle.bounds.b.f,
-                      time: region.time
-                    }) : region;
-              })
-              // rectangle: Object.assign({}, self.state.rectangle, {boundaries: rectangle.getBounds()})
-            })
-            console.log('line 181:', self.state.regions);
-          })
-          google.maps.event.addListener(rectangle, 'rightclick', function(event){
-            rectangle.setMap(null);
-            var newRegions = self.state.regions.filter((region) => {
-              return region.time !== rectangle.time
-            })
-            self.setState({
-              regions: newRegions,
-              displayButton: newRegions.length === 0 ? false : true
-            })
-          })
+          if(self.props.noMarkers) self.props.toSaveRegions(regions);
+          self.addRectangleListeners(rectangle);
         }
       });
     }
     this.setState({
       map: map
     })
+    console.log(self.props.savedRegions);
     if(self.props.oneListing){
-      console.log('there is one listing', self.props.oneListing);
       self.newMarker(this.props.oneListing);
+    } else if (!self.props.noMarkers){
       self.findApartmentsByLocation();
-    } else {
-      console.log('no oneListing prop');
-      self.findApartmentsByLocation();
+    } else if(self.props.savedRegions){
+      console.log('rendering regions');
+      self.setState({
+        regions: self.props.savedRegions.map((region) => {
+          var {north, south, east, west, time} = region
+          var rectangle = new google.maps.Rectangle({
+            fillColor: '#fd0202',
+            fillOpacity: .2,
+            strokeWeight: 2,
+            draggable: true,
+            editable: true,
+            clickable: true,
+            bounds: {north, south, east, west},
+            map: map
+          })
+          rectangle.time = time;
+          self.addRectangleListeners(rectangle);
+          return {north, south, east, west, time}
+        })
+      })
     }
   }
 
@@ -274,26 +299,22 @@ class Map extends Component {
     var width =  this.props.width ? this.props.width : '500px';
     return (
       <div style={{width: width, height: height}}>
-        {/* <h1>Current listing: {this.state.listing ? this.state.listing.title : 'NA'}</h1>
-        <button className="btn btn-default" onClick={()=>(this.loadApartmentsFromCraigsList())}>Click to load apartments</button>
-        <button className="btn btn-default" onClick={()=>(this.findApartmentsByLocation())}>Click to find apartments in this region</button>
-        <input placeholder="minimum area" onChange={(e)=>(this.changeSearch(e, 'areaMin'))} value={this.state.searchFilters.areaMin}/>
-        <input placeholder="maximum price" onChange={(e)=>(this.changeSearch(e, 'priceMax'))} value={this.state.searchFilters.priceMax}/>
-        <input placeholder="minimum beds" onChange={(e)=>(this.changeSearch(e, 'bedsMin'))} value={this.state.searchFilters.bedsMin}/>
-        <input placeholder="minimum baths" onChange={(e)=>(this.changeSearch(e, 'bathsMin'))} value={this.state.searchFilters.bathsMin}/> */}
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
           <div style={{position:'relative'}}>
             <div id='googleMap' style={{height: height, width: width }}></div>
-            {this.state.displayButton ? <FindApartmentButton onClick={()=>(this.findApartmentsByLocation())}/> : null}
+            {this.state.displayButton ?
+              (!this.props.noMarkers ?
+                <ApartmentButton saveRegions={true} onClick={()=>(this.findApartmentsByLocation())}/> :
+                null) :
+              null}
           </div>
-          {/* {this.state.listing ? <Listing listing={this.state.listing}/> : <p>Click on a listing to view</p>} */}
         </div>
       </div>
     );
   }
 };
 
-class FindApartmentButton extends Component {
+class ApartmentButton extends Component {
     constructor(props){
       super(props);
     }
@@ -322,7 +343,7 @@ class FindApartmentButton extends Component {
             margin: '10px',
             zIndex: '1'
           }}
-          onClick={this.props.onClick}> Find Apartments Here</div>
+          onClick={this.props.onClick}> {(this.props.saveRegions) ? 'Save Regions ': 'Find Apartments Here'}</div>
         </div>
       )
     }
@@ -335,14 +356,16 @@ Map.propTypes = {
 const mapStateToProps = (state) => {
   return {
     apartments: state.apartments,
-    listing: state.listing
+    listing: state.listing,
+    savedRegions: state.regions
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     toChangeListing: (listing) => dispatch(changeListing(listing)),
-    toFindApartments: (apartments) => dispatch(findApartments(apartments))
+    toFindApartments: (apartments) => dispatch(findApartments(apartments)),
+    toSaveRegions: (regions) => dispatch(saveRegions(regions))
   }
 }
 

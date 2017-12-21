@@ -6,7 +6,7 @@ class Chat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: io('http://localhost:3030'),
+            socket: io(`${process.env.URL}`),
             roomName: '',
             username: this.props.user.username,
         };

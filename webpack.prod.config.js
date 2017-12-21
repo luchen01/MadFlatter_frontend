@@ -34,6 +34,7 @@ module.exports = {
                 "NODE_ENV": JSON.stringify("production"),
                 // "BASE_URL": JSON.stringify(process.env.BASE_URL),
                 "GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY),
+                "URL": JSON.stringify(process.env.URL)
             }
         }),
         new webpack.optimize.UglifyJsPlugin({

@@ -62,7 +62,7 @@ class BrowseApartment extends React.Component{
                   {this.props.apartments ? this.props.apartments.map((apt) => {
                     console.log(this.props.listing ? this.props.listing : 'no listing in store');
                     return(
-                      <Link to={`/apartmentprofile/${apt.id}`}>
+                      <Link to={`/apartment/${apt.id}`}>
                       <GridTile
                         style={(this.props.listing === apt.id) ? {background: 'rgba(0, 0, 0, 0.2)'} : {background: 'rgba(0, 0, 0, 0)'}}
                         key={apt.id}
