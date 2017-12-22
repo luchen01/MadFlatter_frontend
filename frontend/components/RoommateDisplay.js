@@ -27,13 +27,13 @@ const tilesData = [
     author: 'jill111',
   },
   {
-    img: 'https://memegenerator.net/img/instances/400x/62828265/i-dont-know-all-the-words.jpg',
-    title: 'Rachel',
+    img: 'https://avatars2.githubusercontent.com/u/29764755?s=400&v=4',
+    title: 'Paul',
     author: 'pashminu',
   },
   {
-    img: 'http://preen.inquirer.net/files/2017/02/monica-friends-decluttering-meme-e1485937514859.jpg',
-    title: 'Monica',
+    img: 'https://pbs.twimg.com/profile_images/897710707164229632/Bk2Xxk0J.jpg',
+    title: 'Andrew',
     author: 'Danson67',
   },
   {

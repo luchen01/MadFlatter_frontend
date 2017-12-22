@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
+import FontIcon from 'material-ui/FontIcon';
 import axios from 'axios';
 
 const styles = {
@@ -59,10 +60,10 @@ class Profile extends React.Component {
       <div>
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
-            <h1>Profile Page</h1>
+            <h1>My Dashboard</h1>
             <img className = "profileimg" src="https://pbs.twimg.com/profile_images/446566229210181632/2IeTff-V.jpeg"></img>
             <h2>{this.state.firstname}</h2>
-            <h1>Description</h1>
+            <p>Hi! My name is {this.state.firstname}. I have just moved to San Francisco, and I am looking for apartments and roommates!</p>
           </div>
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
@@ -70,15 +71,18 @@ class Profile extends React.Component {
                 <div style = {{padding: '10px', margin: '10px', textAlign: 'center'}}>
                     <h2 style={styles.headline}>Profile Settings</h2>
                     <RaisedButton
+                        buttonStyle = {{backgroundColor: "black"}}
                         primary={true}
                         style={{margin: '20px'}}
+                        icon={<FontIcon className="material-icons"> mode_edit </FontIcon>}
                         label = {this.state.edit ? "Save" : "Edit"}
                         onClick = {()=>this.saveEdit()}
                       /><br/>
                       <Link to="/questionnaire"><RaisedButton
                           primary={true}
                           style={{margin: '20px'}}
-                          label = "Answer Questionnaire"
+                          icon={<FontIcon className="material-icons"> format_list_bulleted </FontIcon>}
+                          label = "Questionnaire"
                         /></Link><br/>
                       <TextField
                         floatingLabelText="First Name"
@@ -118,24 +122,9 @@ class Profile extends React.Component {
                   </div>
                 </Tab>
                 <Tab label="Roommate Matches" >
-                  <Link to='/mygroup/1'><RaisedButton
-                      primary={true}
-                      style={{margin: '20px'}}
-                      label = "See my group"
-                    /></Link><br/>
-                    <Link to="/browseroommate"><RaisedButton
-                        primary={true}
-                        style={{margin: '20px'}}
-                        label = "Browse more roommates"
-                      /></Link><br/>
                   <RoommateMatch />
                 </Tab>
                 <Tab label="Apartment Matches" >
-                  <Link to="/browseapartment"><RaisedButton
-                      primary={true}
-                      style={{margin: '20px'}}
-                      label = "Browse more apartment"
-                    /></Link><br/>
                     <ApartmentMatch />
                 </Tab>
               </Tabs>
