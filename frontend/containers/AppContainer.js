@@ -77,7 +77,22 @@ class AppContainer extends React.Component {
      <Link to="/browseapartment" className = "seeMore">See More Apartments >>></Link></div>
      <RoommateDisplay />
      <div style = {{textAlign: "right", margin: "10px", padding: "10px"}}>
-     <Link to="/browseroommate" className = "seeMore">See More People >>></Link></div>
+     <Link to="/browseroommate" className = "seeMore">See More People >>></Link></div><br/>
+     <h1 style = {{textAlign: 'center'}}>About the founders</h1>
+      <div className="howto row">
+          <div className = "infoContainer col-md-4">
+            <img className = "icon" src = "https://avatars2.githubusercontent.com/u/29764755?s=400&v=4"/><br/>
+            <h3>Paul Delancy</h3>.
+          </div>
+          <div className = "infoContainer col-md-4">
+            <img className = "icon" src = "https://graph.facebook.com/1597076173712979/picture?type=large"/><br/>
+            <h3>Luchen Peng</h3>
+          </div>
+          <div className = "infoContainer col-md-4">
+            <img className = "icon" src = "https://graph.facebook.com/1707185929319861/picture?type=large"/><br/>
+            <h3>Drew Medina</h3>
+        </div>
+        </div><br/>
       </div>
         );
     }

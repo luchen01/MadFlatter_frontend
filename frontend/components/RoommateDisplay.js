@@ -27,11 +27,6 @@ const tilesData = [
     author: 'jill111',
   },
   {
-    img: 'https://avatars2.githubusercontent.com/u/29764755?s=400&v=4',
-    title: 'Paul',
-    author: 'pashminu',
-  },
-  {
     img: 'https://pbs.twimg.com/profile_images/897710707164229632/Bk2Xxk0J.jpg',
     title: 'Andrew',
     author: 'Danson67',
@@ -40,6 +35,11 @@ const tilesData = [
     img: 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAwaAAAAJGMwOTUyNzRhLTI5NzMtNDI5ZS04ZDEyLTY2M2VmNWFkNWYxYQ.jpg',
     title: 'Luchen',
     author: 'fancycrave1',
+  },
+  {
+    img: 'https://avatars2.githubusercontent.com/u/29764755?s=400&v=4',
+    title: 'Paul',
+    author: 'pashminu',
   },
   {
     img: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAkoAAAAJGVlNjNhNjFlLWVlNWYtNGRiYy1hN2JhLWE5NjA3NTdkNjZiYg.jpg',
@@ -52,13 +52,23 @@ const tilesData = [
     author: 'fancycravel',
   },
   {
-    img: 'https://qph.ec.quoracdn.net/main-qimg-8328906c4dbb2bd99e1552b12e948ad9',
-    title: 'Janice',
+    img: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAjBAAAAJDdlZGUzMjE0LTNlYTMtNGJmZC04OThkLTEwMDgzODE1ODU1ZA.jpg',
+    title: 'Moose',
     author: 'jill111',
   },
   {
     img: 'https://i.imgflip.com/51kdr.jpg',
-    title: 'Water plant',
+    title: 'Minions',
+    author: 'BkrmadtyaKarki',
+  },
+  {
+    img: 'https://static-media.fox.com/dcg/img/Fox_Networks_DCG_-_FOX_Broadcasting/266/253/NewGirl-ep602_Sc5-Rm_00311_hires2.jpg?fit=inside%7C528:297',
+    title: 'Jess',
+    author: 'BkrmadtyaKarki',
+  },
+  {
+    img: 'https://www.labradortraininghq.com/wp-content/uploads/2014/02/how-to-crate-train-a-puppy-happy-lab-1.jpg',
+    title: 'Rachel',
     author: 'BkrmadtyaKarki',
   },
 ];
