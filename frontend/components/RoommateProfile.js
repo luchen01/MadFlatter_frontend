@@ -11,6 +11,7 @@ import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
 import Chat from './Chat';
+import Map from './Map';
 
 const styles = {
   headline: {
@@ -31,18 +32,24 @@ class RoommateProfile extends React.Component {
           currentUser: {},
           profileUser: {},
           chat: false,
+          regions: {}
         }
     }
 
     componentWillMount() {
       axios.defaults.withCredentials = true;
-      axios.post('http://localhost:3000/myprofile', {
+      axios.post(`${process.env.URL}/myprofile`, {
         userid: this.props.match.params.userid
       })
       .then(resp=>{
-        this.setState({
-          currentUser: resp.data.currentUser,
-          profileUser: resp.data.profileUser
+        axios.get(`${process.env.URL}/regions?userid=${resp.data.profileUser.id}`)
+        .then((response) => {
+          this.setState({
+            currentUser: resp.data.currentUser,
+            profileUser: resp.data.profileUser,
+            regions: response.data.regions
+          })
+          console.log(response.data.regions);
         })
         console.log('inside component will mount', this.state);
       })
@@ -50,6 +57,7 @@ class RoommateProfile extends React.Component {
     }
 
     render() {
+      console.log('Rendering with regions:', this.state.regions);
         return(
       <div>
         <div className = "profileContainer row">
@@ -88,6 +96,7 @@ class RoommateProfile extends React.Component {
                   <div className = "container col-md-6 col-xs-12">
                     <h4>I'm looking for apartments in: </h4><br/>
                     Map
+                    <Map noMarkers={true} roommateRegions={this.state.regions}/>
                   </div>
                   </div>
                 </Tab>

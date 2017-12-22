@@ -127,7 +127,7 @@ class Map extends Component {
   componentWillReceiveProps(props){
       const self = this;
       let listingId = props.listing;
-      console.log('in componentWillReceiveProps. savedRegions =', props.savedRegions);
+      console.log('in componentWillReceiveProps. props =', props);
       var image = new google.maps.MarkerImage(
         'http://images.clipartpanda.com/google-location-icon-Location_marker_pin_map_gps.png',
         new google.maps.Size(200, 200),
@@ -158,6 +158,27 @@ class Map extends Component {
         })
       })
       if(props.oneListing) this.newMarker(props.oneListing, 45);
+      if(props.roommateRegions && this.state.regions.length < 1) {
+        console.log('rendering new regions:', props.roommateRegions);
+        this.setState({
+          regions: props.roommateRegions.map((region) => {
+            var {north, south, east, west, time} = region
+            var rectangle = new google.maps.Rectangle({
+              fillColor: '#fd0202',
+              fillOpacity: .2,
+              strokeWeight: 2,
+              draggable: false,
+              editable: false,
+              clickable: false,
+              bounds: {north, south, east, west},
+              map: this.state.map
+            })
+            rectangle.time = time;
+            this.addRectangleListeners(rectangle);
+            return {north, south, east, west, time}
+          })
+        })
+      }
   }
 
   addRectangleListeners(rectangle){
@@ -298,6 +319,7 @@ class Map extends Component {
   render(){
     var height = this.props.height ? this.props.height : '500px';
     var width =  this.props.width ? this.props.width : '500px';
+    console.log(this.state.regions);
     return (
       <div style={{width: width, height: height}}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>

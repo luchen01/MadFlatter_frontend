@@ -7,11 +7,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 import {connect} from 'react-redux';
-<<<<<<< HEAD
-import {userData, apartmentMatches} from '../actions/index';
-=======
-import {userData, saveMatches} from '../actions/index';
->>>>>>> master
+import {userData, apartmentMatches, saveMatches} from '../actions/index';
+
 
 // const config = {
 //   withCredentials: true,
@@ -107,13 +104,9 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-<<<<<<< HEAD
     toUserData: (userid) => dispatch(userData(userid)),
-    toApartmentMatches: (apts) => dispatch(apartmentMatches(apts))
-=======
-      toUserData: userid => dispatch(userData(userid)),
-      toSaveMatches: matches => dispatch(saveMatches(matches))
->>>>>>> master
+    toApartmentMatches: (apts) => dispatch(apartmentMatches(apts)),
+    toSaveMatches: matches => dispatch(saveMatches(matches))
   }
 }
 
