@@ -8,7 +8,6 @@ import { Link } from 'react-router-DOM';
 import {connect} from 'react-redux';
 import {saveMatches} from '../actions/index';
 
-
 const styles = {
   root: {
     display: 'flex',
