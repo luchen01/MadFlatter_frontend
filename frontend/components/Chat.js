@@ -169,7 +169,7 @@ class ChatRoom extends React.Component {
           message.user.username === this.props.username ? <li style = {{display: 'block'}} key = {index}>
           <p className = "speechBubble">
             {message.timeStamp.toLocaleString()}<br/>
-            {message.content}</p>
+            {message.user.username} {message.content}</p>
         </li> :
         <li style={{display: 'flex', flexDirection: 'row-reverse'}} key = {index}>
         <p className = "replyBubble">
@@ -180,12 +180,10 @@ class ChatRoom extends React.Component {
       )}
   </ul>
       <div className = 'typeMessageContainer'>{this.state.editMessage} </div>
-      {/* <form onSubmit ={this.submitForm}> */}
         <TextField
           hintText="Type anything"
           onChange = {this.updateMessage}
-          value = {this.state.message.content}/>  <br />
-          {/* <input type = 'text' onChange = {this.updateMessage} value = {this.state.message.content} /> */}
+          value = {this.state.message.content}/>
         <RaisedButton
               primary={true}
               style={{margin: '20px'}}
@@ -193,8 +191,6 @@ class ChatRoom extends React.Component {
               icon={<FontIcon className="material-icons"> message </FontIcon>}
               onClick = {this.submitForm}
                 /><br/>
-        {/* <input type = 'submit' value = 'Send'/> */}
-        {/* </form> */}
       </div>
     )
   }

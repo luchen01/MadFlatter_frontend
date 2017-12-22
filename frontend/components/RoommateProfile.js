@@ -5,11 +5,11 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
+import FontIcon from 'material-ui/FontIcon';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
-import FontIcon from 'material-ui/FontIcon';
 import Chat from './Chat';
 
 const styles = {
@@ -44,6 +44,7 @@ class RoommateProfile extends React.Component {
           currentUser: resp.data.currentUser,
           profileUser: resp.data.profileUser
         })
+        console.log('inside component will mount', this.state);
       })
       .catch(err=>console.log(err))
     }
@@ -56,9 +57,10 @@ class RoommateProfile extends React.Component {
             <h1>Roommate Profile</h1>
             <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
             <div>
-              <h1>Basic Info</h1>
-              <p>{this.state.profileUser.firstname}</p>
-              <p>{this.state.profileUser.birthday}</p>
+              <FontIcon className="material-icons"> person </FontIcon>
+              <h1>I am {this.state.profileUser.firstname}!</h1><br/>
+              {/* <FontIcon className="material-icons"> cake </FontIcon>
+              <h1>Birthday: {this.state.profileUser.birthday}</h1> */}
             </div>
             <br/>
             <RaisedButton
@@ -78,10 +80,10 @@ class RoommateProfile extends React.Component {
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
               <Tab label="About Me" >
-                  <div>
-                    Hey there! I am {this.state.profileUser.firstname}.
-                    <p>I'm looking for apartments in: </p><br/>
-                    <p>My budget range is:</p>
+                  <div style = {{padding: '10px', margin: '10px'}}>
+                    <h4>Hey there! I am {this.state.profileUser.firstname}.</h4><br/>
+                    <h4>I'm looking for apartments in: </h4><br/>
+                    <h4>My budget range is:</h4>
                   </div>
                 </Tab>
                 {/* {this.state.chat ?
@@ -92,8 +94,13 @@ class RoommateProfile extends React.Component {
               </Tabs>
             </div>
             <Drawer width={400} openSecondary={true} open={this.state.chat} >
-              <AppBar title="Message" />
-              <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
+              {this.state.chat ?
+                <div>
+                  <AppBar title={`Message with ${this.state.profileUser.username}`} />
+                  <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
+                </div> :
+                <div/>
+              }
             </Drawer>
       </div>
       </div>

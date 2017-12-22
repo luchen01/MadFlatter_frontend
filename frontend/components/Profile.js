@@ -67,7 +67,7 @@ class Profile extends React.Component {
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
               <Tab label="Personal Information" >
-                  <div>
+                <div style = {{padding: '10px', margin: '10px', textAlign: 'center'}}>
                     <h2 style={styles.headline}>Profile Settings</h2>
                     <RaisedButton
                         primary={true}

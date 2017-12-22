@@ -26,17 +26,6 @@ class Root extends React.Component {
       };
   }
 
-  componentWillMount(){
-    axios.get(`${process.env.URL}/loggedin`)
-  .then(response=>{
-      console.log('response router', response);
-      if(response.data) {
-          this.setState({user:response.data});
-      }
-  })
-  .catch(err=>console.log(err));
-  }
-
   render(){
     return (
       <Provider store={this.props.store}>
