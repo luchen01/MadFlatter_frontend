@@ -7,7 +7,11 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 import {connect} from 'react-redux';
+<<<<<<< HEAD
 import {userData, apartmentMatches} from '../actions/index';
+=======
+import {userData, saveMatches} from '../actions/index';
+>>>>>>> master
 
 // const config = {
 //   withCredentials: true,
@@ -33,12 +37,19 @@ class Login extends React.Component {
       })
       .then((response)=>{
         console.log("response after login", response.data.user.id, response);
-        // this.props.toUserData(response.data.user.id);
-        axios.get(`${process.env.URL}/apartmentMatches/${response.data.user.id}`)
-        .then(response => {
-          this.props.toApartmentMatches(response.data.apartments);
+        this.props.toUserData(response.data.user.id);
+        this.props.history.push('/profile/' + response.data.user.id);
+
+        // axios.get(`${process.env.URL}/apartmentMatches/${response.data.user.id}`)
+        // .then(response => {
+        //   this.props.toApartmentMatches(response.data.apartments);
+        // })
+        // .then(() => this.props.history.push('/profile/' + response.data.user.id))
+
+        axios.get(`${process.env.URL}/matches/${response.data.user.id}`)
+        .then(resp => {
+            this.props.toSaveMatches(resp.data.matches);
         })
-        .then(() => this.props.history.push('/profile/' + response.data.user.id))
       })
       .catch((err)=>{
         console.log('Error: ', err);
@@ -96,14 +107,18 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+<<<<<<< HEAD
     toUserData: (userid) => dispatch(userData(userid)),
     toApartmentMatches: (apts) => dispatch(apartmentMatches(apts))
+=======
+      toUserData: userid => dispatch(userData(userid)),
+      toSaveMatches: matches => dispatch(saveMatches(matches))
+>>>>>>> master
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-
   };
 }
 

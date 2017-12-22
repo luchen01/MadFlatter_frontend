@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-// const server = require('http').createServer(app);
 
 const PORT = process.env.PORT || 3030;
 // const api = require('./backend/routes');
@@ -28,7 +27,6 @@ io.on('connection', socket => {
       return socket.emit('errorMessage', 'No username!');
     }
     socket.username = String(username);
-    // socket.emit('message', {username:username, content:'hiiiiii'})
   });
 
   socket.on('room', requestedRoom => {
@@ -70,5 +68,3 @@ io.on('connection', socket => {
   })
 
 });
-
-// app.use('/api', api);

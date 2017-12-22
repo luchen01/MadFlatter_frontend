@@ -5,9 +5,11 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
+import FontIcon from 'material-ui/FontIcon';
+import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
-import FontIcon from 'material-ui/FontIcon';
 import Chat from './Chat';
 
 const styles = {
@@ -33,19 +35,16 @@ class RoommateProfile extends React.Component {
     }
 
     componentWillMount() {
-      // console.log('componentwillmount');
-      // console.log(this.props.match.params.userid);
       axios.defaults.withCredentials = true;
       axios.post('http://localhost:3000/myprofile', {
         userid: this.props.match.params.userid
       })
       .then(resp=>{
-        console.log("response in roommateprofile page", resp.data);
         this.setState({
           currentUser: resp.data.currentUser,
           profileUser: resp.data.profileUser
         })
-        console.log('setState in roommateProfile', this.state);
+        console.log('inside component will mount', this.state);
       })
       .catch(err=>console.log(err))
     }
@@ -55,11 +54,13 @@ class RoommateProfile extends React.Component {
       <div>
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
-            <h1>Roommate Profile</h1>
+            <h1>Roommate Profile </h1>
             <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
             <div>
-              <h1>Basic Info</h1>
-
+              <FontIcon className="material-icons"> person </FontIcon>
+              <h1>I am {this.state.profileUser.firstname}!</h1><br/>
+              {/* <FontIcon className="material-icons"> cake </FontIcon>
+              <h1>Birthday: {this.state.profileUser.birthday}</h1> */}
             </div>
             <br/>
             <RaisedButton
@@ -78,22 +79,34 @@ class RoommateProfile extends React.Component {
           </div>
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
-                {this.state.chat ?
+              <Tab label="About Me" >
+                  <div style = {{padding: '10px', margin: '10px'}} className = "row">
+                    <div className = "container col-md-6 col-xs-12">
+                    <h4>Hey there! I am {this.state.profileUser.firstname}.</h4><br/>
+                    <h4>My budget range is:</h4>
+                  </div>
+                  <div className = "container col-md-6 col-xs-12">
+                    <h4>I'm looking for apartments in: </h4><br/>
+                    Map
+                  </div>
+                  </div>
+                </Tab>
+                {/* {this.state.chat ?
                   <Tab label = "Chat" >
                   <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
                   </Tab> : <div/>
-                }
-              <Tab label="About Me" >
-                  <div>
-                    Hey there! I am {this.state.profileUser.firstname}.
-                    <p>I'm looking for apartments in: </p><br/>
-                    <p>My budget range is:</p>
-                  </div>
-                </Tab>
+                } */}
               </Tabs>
-
             </div>
-
+            <Drawer width={400} openSecondary={true} open={this.state.chat} >
+              {this.state.chat ?
+                <div>
+                  <AppBar title={`Message with ${this.state.profileUser.username}`} />
+                  <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
+                </div> :
+                <div/>
+              }
+            </Drawer>
       </div>
       </div>
         );

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-DOM';
+import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -27,7 +28,6 @@ class Register extends Component {
     }
 }
 
-
 class Logged extends React.Component {
   constructor(props) {
       super(props);
@@ -36,8 +36,7 @@ class Logged extends React.Component {
   signout() {
     axios.get(`${process.env.URL}/logout`)
   .then((response)=>{
-      // console.log("response after login", response.data);
-      this.props.history.push('/');
+      console.log("response after logout", response.data);
   })
   .catch((err)=>{
       console.log('Error: ', err);
@@ -54,10 +53,16 @@ class Logged extends React.Component {
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-        <MenuItem primaryText="Help" />
-        <MenuItem primaryText="Sign out"
+        <Link to={`/profile/${this.props.userid}`}>
+          <MenuItem primaryText="Profile"
+          /></Link>
+        <Link to={`/messages/${this.props.userid}`}>
+          <MenuItem primaryText="Message"
+          /></Link>
+        <Link to="/">
+          <MenuItem primaryText="Sign out"
           onClick = {this.signout.bind(this)}
-        />
+        /></Link>
       </IconMenu>
     );
   }
@@ -67,7 +72,7 @@ class Logged extends React.Component {
  * This example is taking advantage of the composability of the `AppBar`
  * to render different components depending on the application state.
  */
-class AppBarExampleComposition extends Component {
+class Title extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,29 +80,32 @@ class AppBarExampleComposition extends Component {
         };
     }
 
-    // componentWillMount() {
-    //     axios.get(`${process.env.URL}/loggedin`)
-    //   .then(response=>{
-    //       console.log('response in title', response);
-    //       if(response.data) {
-    //           this.setState({logged: true});
-    //       }
-    //   })
-    //   .catch(err=>console.log(err));
-    // }
-
     render() {
         return (
       <div>
         <AppBar
           title="MadFlatter - Live the Way You Want!"
-          iconElementLeft={<IconButton
-            href = {`${process.env.URL}`}> <ActionHome /></IconButton>}
-          iconElementRight={this.state.logged ? <Logged /> : <div style={{margin: '10px', padding: '10px'}}><Login />  <Register /></div>}
+          iconElementLeft={<Link to="/"><IconButton><ActionHome /></IconButton></Link>}
+          iconElementRight={this.props.userid ?
+            <div>
+            <Logged />  <Login />
+            </div> :
+            <div>
+              <Login />  <Register />
+            </div>}
         />
       </div>
         );
     }
 }
 
-export default AppBarExampleComposition;
+const mapStateToProps = (state) => {
+  return {
+    userid: state.userid
+  };
+}
+
+Logged= connect(mapStateToProps)(Logged);
+Title= connect(mapStateToProps)(Title);
+
+export default Title;

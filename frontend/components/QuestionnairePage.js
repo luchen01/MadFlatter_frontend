@@ -46,30 +46,30 @@ class QuestionnairePage extends React.Component {
       const {previousPage, nextPage} = this.props;
       return (
       <div>
-        <p>Do you like to have friends over or keep the party outside?</p>
+        <p>{this.props.labels[0]}</p>
         <div>
           <RadioButtonGroup name="shipSpeed" valueSelected={this.state.personal} onChange={(e, v)=>{
             this.handleRadio(e.target.value)
           }}>
             <RadioButton
               value={1}
-              label={this.props.labels[0]}
-            />
-            <RadioButton
-              value={2}
               label={this.props.labels[1]}
             />
             <RadioButton
-              value={3}
+              value={2}
               label={this.props.labels[2]}
             />
             <RadioButton
-              value={4}
+              value={3}
               label={this.props.labels[3]}
             />
             <RadioButton
-              value={5}
+              value={4}
               label={this.props.labels[4]}
+            />
+            <RadioButton
+              value={5}
+              label={this.props.labels[5]}
             />
           </RadioButtonGroup>
         </div>

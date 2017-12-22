@@ -44,7 +44,7 @@ class Profile extends React.Component {
       })
       .then(resp=>{
         console.log('inside myprofile page', resp.data);
-          this.setState(resp.data.currentUser);
+          this.setState(resp.data.profileUser);
       })
       .catch(err=>console.log(err));
     }
@@ -52,14 +52,14 @@ class Profile extends React.Component {
     saveEdit() {
         var sendingState = Object.assign({}, this.state, {userid: this.props.match.params.userid});
         axios.post(`${process.env.URL}/saveedit`, sendingState)
-      .then(resp=>{
-          console.log('resp.data', resp.data);
-          if(resp.data) {
-              this.setState({edit: false})
-          };
-          alert('Edit Saved!');
-      })
-      .catch(err=>console.log(err));
+        .then(resp=>{
+            console.log('resp.data', resp.data);
+            if(resp.data) {
+                this.setState({edit: false})
+            };
+            alert('Edit Saved!');
+        })
+        .catch(err=>console.log(err));
     }
 
     render() {
@@ -75,7 +75,7 @@ class Profile extends React.Component {
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
               <Tab label="Personal Information" >
-                  <div>
+                <div style = {{padding: '10px', margin: '10px', textAlign: 'center'}}>
                     <h2 style={styles.headline}>Profile Settings</h2>
                     <RaisedButton
                         primary={true}

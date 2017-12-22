@@ -95,36 +95,36 @@ class MyGroup extends React.Component {
 
     render() {
         return(
-    <div>
-      <h1>My Group</h1>
-      <div className = "profileContainer row">
-        <div className = "infoContainer col-md-3 col-xs-12">
-          <Paper style={styles.paper}>
-    <Menu>
-      <MenuItem primaryText="Group Members"
-                leftIcon={<RemoveRedEye />}
-                onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
-      <MenuItem primaryText="Add Member"
-                leftIcon={<PersonAdd />}
-                onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
-      <MenuItem primaryText="Chat Group"
-                leftIcon={<FontIcon className="material-icons"> message </FontIcon>}
-                onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
-      <MenuItem primaryText="View Apartments"
-                leftIcon={<ActionHome />}
-                onClick = {(event)=>{this.setState({display: <ViewApartmentMatch />})}}/>
-      <Divider />
-      <MenuItem primaryText="Leave Group"
-                leftIcon={<Delete />}
-                onClick={()=>{this.leaveGroup()}}/>
-    </Menu>
-  </Paper>
+          <div>
+            <h1>My Group</h1>
+            <div className = "profileContainer row">
+              <div className = "infoContainer col-md-3 col-xs-12">
+                <Paper style={styles.paper}>
+          <Menu>
+            <MenuItem primaryText="Group Members"
+                      leftIcon={<RemoveRedEye />}
+                      onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
+            <MenuItem primaryText="Add Member"
+                      leftIcon={<PersonAdd />}
+                      onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
+            <MenuItem primaryText="Chat Group"
+                      leftIcon={<FontIcon className="material-icons"> message </FontIcon>}
+                      onClick = {(event)=>{this.setState({display: <ViewGroupMember />})}}/>
+            <MenuItem primaryText="View Apartments"
+                      leftIcon={<ActionHome />}
+                      onClick = {(event)=>{this.setState({display: <ViewApartmentMatch />})}}/>
+            <Divider />
+            <MenuItem primaryText="Leave Group"
+                      leftIcon={<Delete />}
+                      onClick={()=>{this.leaveGroup()}}/>
+          </Menu>
+        </Paper>
+              </div>
+              <div className = "result container col-md-9 col-xs-12">
+              {this.state.display}
+            </div>
+          </div>
         </div>
-        <div className = "result container col-md-9 col-xs-12">
-        {this.state.display}
-      </div>
-    </div>
-  </div>
         );
     }
 }

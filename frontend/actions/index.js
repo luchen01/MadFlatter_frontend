@@ -58,3 +58,10 @@ export function userData(userid) {
         userid
     });
 }
+
+export function saveMatches(matches) {
+  return({
+    type: 'SAVE_MATCHES',
+    matches
+  })
+}
