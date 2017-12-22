@@ -74,17 +74,17 @@ class AppBarExampleComposition extends Component {
             logged: false,
         };
     }
-    
-    componentWillMount() {
-        axios.get(`${process.env.URL}/loggedin`)
-      .then(response=>{
-          console.log('response in title', response);
-          if(response.data) {
-              this.setState({logged: true});
-          }
-      })
-      .catch(err=>console.log(err));
-    }
+
+    // componentWillMount() {
+    //     axios.get(`${process.env.URL}/loggedin`)
+    //   .then(response=>{
+    //       console.log('response in title', response);
+    //       if(response.data) {
+    //           this.setState({logged: true});
+    //       }
+    //   })
+    //   .catch(err=>console.log(err));
+    // }
 
     render() {
         return (
