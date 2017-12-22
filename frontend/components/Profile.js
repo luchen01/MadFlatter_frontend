@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
+import FontIcon from 'material-ui/FontIcon';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 import { connect } from 'react-redux';
@@ -120,7 +121,8 @@ class Profile extends React.Component {
                         <Link to="/questionnaire"><RaisedButton
                           primary={true}
                           style={{margin: '20px'}}
-                          label = "Answer Questionnaire"
+                          icon={<FontIcon className="material-icons"> format_list_bulleted </FontIcon>}
+                          label = "Questionnaire"
                         /></Link><br/>
                         <TextField
                           floatingLabelText="First Name"
