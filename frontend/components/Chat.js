@@ -75,7 +75,7 @@ class ChatRoom extends React.Component {
 
   componentWillMount() {
     axios.defaults.withCredentials = true;
-    axios.post('http://localhost:3000/getMessage', {
+    axios.post(`${process.env.URL}/getMessage`, {
       roomId: this.props.roomName,
     })
     .then(resp=>{
@@ -127,7 +127,7 @@ class ChatRoom extends React.Component {
     var newMessage = this.state.message;
     this.props.socket.emit('edit', {editStart:false, username: this.props.username, roomName: this.props.roomName})
     axios.defaults.withCredentials = true;
-    axios.post('http://localhost:3000/newMessage', {
+    axios.post(`${process.env.URL}/newMessage`, {
       roomId: this.props.roomName,
       timeStamp: this.state.message.timeStamp.toLocaleString(),
       content: this.state.message.content,

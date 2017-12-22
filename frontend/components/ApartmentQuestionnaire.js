@@ -97,7 +97,7 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bedrooms"
-           value={this.props.filters.bedMin}
+           value={this.props.filters.bedsMin}
            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bedsMin: value}))}
          >
            <MenuItem value={"1"} primaryText="1" />
