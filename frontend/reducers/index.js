@@ -8,6 +8,7 @@ import regionsReducer from './regions';
 import filtersReducer from './filters';
 import userReducer from './user';
 import matchesReducer from './matches';
+import apartmentMatchesReducer from './apartmentMatches';
 
 const rootReducer = combineReducers({
   listing: listingReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   filters: filtersReducer,
   userid: userReducer,
   matches: matchesReducer,
+  apartmentMatches: apartmentMatchesReducer,
   routing
 });
 
