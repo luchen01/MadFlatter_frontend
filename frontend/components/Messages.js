@@ -22,7 +22,7 @@ class Messages extends React.Component {
 
   componentWillMount() {
     axios.defaults.withCredentials = true;
-    axios.post('http://localhost:3000/myMessages', {
+    axios.post(`${process.env.URL}/myMessages`, {
       userid: this.props.userid
     })
     .then(resp=>{

@@ -25,6 +25,8 @@ const styles = {
   },
 };
 
+
+
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +71,7 @@ class Profile extends React.Component {
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
             <h1>My Dashboard</h1>
-            <img className = "profileimg" src="https://pbs.twimg.com/profile_images/446566229210181632/2IeTff-V.jpeg"></img>
+            <img className = "profileimg" src={this.state.profileUrl}></img>
             <h2>{this.state.firstname}</h2>
             <p>Hi! My name is {this.state.firstname}. I have just moved to San Francisco, and I am looking for apartments and roommates!</p>
           </div>

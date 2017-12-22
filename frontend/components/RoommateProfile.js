@@ -3,15 +3,20 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
-import RoommateMatch from './RoommateMatch';
-import ApartmentMatch from './ApartmentMatch';
 import FontIcon from 'material-ui/FontIcon';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
+import DatePicker from 'material-ui/DatePicker';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
 import Chat from './Chat';
 import Map from './Map';
+import {connect} from 'react-redux';
+axios.defaults.withCredentials = true;
 
 const styles = {
   headline: {
@@ -32,12 +37,18 @@ class RoommateProfile extends React.Component {
           currentUser: {},
           profileUser: {},
           chat: false,
-          regions: {}
+          regions: {},
+          chipData: [
+            {key: 0, label: 'I have a fluffy friend', icon: 'pets'},
+            {key: 1, label: 'Laundry in unit plz', icon: 'local_laundry_service'},
+            {key: 2, label: 'Gym in building', icon: 'fitness_center'},
+            {key: 3, label: 'Wheelchair access', icon: 'accessible'},
+            {key: 4, label: 'Furnished', icon: 'local_florist'}
+          ]
         }
     }
 
     componentWillMount() {
-      axios.defaults.withCredentials = true;
       axios.post(`${process.env.URL}/myprofile`, {
         userid: this.props.match.params.userid
       })
@@ -63,10 +74,13 @@ class RoommateProfile extends React.Component {
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
             <h1>Roommate Profile </h1>
-            <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
+            <img className = "profileimg" src={this.state.profileUser.profileUrl}></img>
             <div>
               <FontIcon className="material-icons"> person </FontIcon>
-              <h1>I am {this.state.profileUser.firstname}!</h1><br/>
+              <h1>{this.state.profileUser.firstname} {this.state.profileUser.lastname}</h1><br/>
+              <p>Hi! My name is {this.state.profileUser.firstname}.
+              I have just moved to San Francisco, and I am looking for apartments and roommates!
+              Feel free to message me for apartment and roommate info!</p>
               {/* <FontIcon className="material-icons"> cake </FontIcon>
               <h1>Birthday: {this.state.profileUser.birthday}</h1> */}
             </div>
@@ -89,9 +103,78 @@ class RoommateProfile extends React.Component {
             <Tabs>
               <Tab label="About Me" >
                   <div style = {{padding: '10px', margin: '10px'}} className = "row">
-                    <div className = "container col-md-6 col-xs-12">
-                    <h4>Hey there! I am {this.state.profileUser.firstname}.</h4><br/>
-                    <h4>My budget range is:</h4>
+                    <div className = "col-md-6 col-xs-12">
+                    <div>
+                    <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
+                    <SelectField
+                       floatingLabelText="Min Bedrooms"
+                       value={"1"}
+                     >
+                       <MenuItem value={"1"} primaryText="1" />
+                     </SelectField><br/>
+                     <SelectField
+                        floatingLabelText="Max Bedrooms"
+                        value={"1"}
+                        >
+                        <MenuItem value={"1"} primaryText="1" />
+                      </SelectField><br/>
+                    </div>
+                    <div>
+                    <FontIcon className="material-icons"> wc </FontIcon><br/>
+                    <SelectField
+                       floatingLabelText="Min Bathrooms"
+                       value={"1"}
+                     >
+                       <MenuItem value={"1"} primaryText="1" />
+                     </SelectField><br/>
+                     <SelectField
+                        floatingLabelText="Max Bathrooms"
+                        value={"1"}
+                      >
+                        <MenuItem value={"1"} primaryText="1" />
+                      </SelectField><br/>
+                      <FontIcon className="material-icons"> money </FontIcon><br/>
+                      <SelectField
+                         floatingLabelText="Min Price"
+                         value={"1"}
+                       >
+                         <MenuItem value={"1"} primaryText="500" />
+                       </SelectField><br/>
+                       <SelectField
+                          floatingLabelText="Max Price"
+                          value={"1"}
+                        >
+                          <MenuItem value={"1"} primaryText="1500" />
+                        </SelectField><br/>
+                    </div>
+                    {/* <div>
+                      <FontIcon className="material-icons">date_range</FontIcon><br/>
+                      <DatePicker
+                        onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {dateAvailableStart: date}))}
+                        autoOk={false}
+                        floatingLabelText="Min Available Date"
+                        // defaultDate={Date.now()}
+                      />
+                      <DatePicker
+                        onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {dateAvailableEnd: date}))}
+                        autoOk={false}
+                        floatingLabelText="Max Available Date"
+                        // defaultDate={Date.now()}
+                      />
+                    </div> */}
+                    <div>
+                      <FontIcon className="material-icons">playlist_add</FontIcon>Additional filters<br/>
+                      {this.state.chipData.map(chip=>{
+                        return(
+                          <Chip key = {chip.key}
+                                style={styles.chip}
+                                onRequestDelete={()=>this.handleRequestDelete(chip.key)}>
+                                <Avatar icon = {<FontIcon className = "material-icons">{chip.icon}</FontIcon>}/>
+                                {chip.label}
+                              </Chip>
+                        )
+                      })}
+                    </div>
                   </div>
                   <div className = "container col-md-6 col-xs-12">
                     <h4>I'm looking for apartments in: </h4><br/>
@@ -121,5 +204,21 @@ class RoommateProfile extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toSaveRegions: (regions) => dispatch(saveRegions(regions)),
+    toChangeFilters: (filters) => dispatch(changeFilters(filters))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    regions: state.regions,
+    filters: state.filters
+  };
+}
+
+RoommateProfile = connect(mapStateToProps, mapDispatchToProps)(RoommateProfile);
 
 export default RoommateProfile;
