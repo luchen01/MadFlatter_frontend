@@ -179,7 +179,7 @@ class ChatRoom extends React.Component {
       )
       )}
   </ul>
-      <div className = 'typeMessageContainer'>{this.state.editMessage} </div>
+      <div className = 'typeMessageContainer' style = {{margin: '5px', border: '2px solid black'}}>{this.state.editMessage} </div>
         <TextField
           hintText="Type anything"
           onChange = {this.updateMessage}

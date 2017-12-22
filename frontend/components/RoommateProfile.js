@@ -6,12 +6,14 @@ import Toggle from 'material-ui/Toggle';
 import FontIcon from 'material-ui/FontIcon';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import IconButton from 'material-ui/IconButton';
 import DatePicker from 'material-ui/DatePicker';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import axios from 'axios';
 import Chat from './Chat';
 import Map from './Map';
@@ -55,6 +57,10 @@ class RoommateProfile extends React.Component {
       .then(resp=>{
         axios.get(`${process.env.URL}/regions?userid=${resp.data.profileUser.id}`)
         .then((response) => {
+          let user = resp.data;
+          if(user.profileUser.facebookId){
+            user.profileUser.profileUrl = `https://graph.facebook.com/${user.profileUser.facebookId}/picture?type=large`
+          }
           this.setState({
             currentUser: resp.data.currentUser,
             profileUser: resp.data.profileUser,
@@ -193,7 +199,10 @@ class RoommateProfile extends React.Component {
             <Drawer width={400} openSecondary={true} open={this.state.chat} >
               {this.state.chat ?
                 <div>
-                  <AppBar title={`Message with ${this.state.profileUser.username}`} />
+                  <AppBar
+                    iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+                    onLeftIconButtonClick = {()=>this.setState({chat: !this.state.chat})}
+                    title={`Message with ${this.state.profileUser.username}`} />
                   <Chat vieweeId = {this.props.match.params.userid} user = {this.state.currentUser}/>
                 </div> :
                 <div/>

@@ -37,18 +37,18 @@ const tilesData = [
     author: 'Danson67',
   },
   {
-    img: 'http://blog.suitey.com/wp-content/uploads/2014/09/fchan.jpg',
-    title: 'Chandler',
+    img: 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAwaAAAAJGMwOTUyNzRhLTI5NzMtNDI5ZS04ZDEyLTY2M2VmNWFkNWYxYQ.jpg',
+    title: 'Luchen',
     author: 'fancycrave1',
   },
   {
-    img: 'http://s2.quickmeme.com/img/ff/ff653922c654f058c07d26c4fd5eaabd25c2fe6ad0f9c95446b6a366708c1e30.jpg',
-    title: 'Joey',
+    img: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAkoAAAAJGVlNjNhNjFlLWVlNWYtNGRiYy1hN2JhLWE5NjA3NTdkNjZiYg.jpg',
+    title: 'Pujitha',
     author: 'Hans',
   },
   {
-    img: 'https://i.pinimg.com/736x/86/0f/47/860f4753a002cdc92f7a9f31a7431735--its-a-boy-baby-names.jpg',
-    title: 'Phoebe',
+    img: 'https://i2.wp.com/www.usmagazine.com/wp-content/uploads/628353178_emma-stone-zoom-86db3120-8bfa-4084-81a5-3fc660d843ed.jpg?crop=0px%2C80px%2C2000px%2C1124px&resize=1600%2C900&ssl=1',
+    title: 'Emma',
     author: 'fancycravel',
   },
   {

@@ -77,7 +77,11 @@ class Profile extends React.Component {
       })
       .then(resp=>{
         console.log('inside myprofile page', resp.data);
-          this.setState(resp.data.profileUser);
+        let user = resp.data;
+        if(user.profileUser.facebookId){
+          user.profileUser.profileUrl = `https://graph.facebook.com/${user.profileUser.facebookId}/picture?type=large`
+        }
+          this.setState(user.profileUser);
       })
       .catch(err=>console.log(err));
     }
