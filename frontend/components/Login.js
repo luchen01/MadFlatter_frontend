@@ -9,15 +9,6 @@ import * as colors from 'material-ui/styles/colors';
 import {connect} from 'react-redux';
 import {userData, apartmentMatches, saveMatches} from '../actions/index';
 
-
-// const config = {
-//   withCredentials: true,
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'Access-Control-Allow-Origin': '*'
-//   },
-// };
-
 class Login extends React.Component {
     constructor(props) {
         super(props);
