@@ -11,7 +11,6 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 import { connect } from 'react-redux';
 import {userData} from '../actions/index';
-import FontIcon from 'material-ui/FontIcon';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
@@ -116,6 +115,7 @@ class Profile extends React.Component {
                         <RaisedButton
                           primary={true}
                           style={{margin: '20px'}}
+                          icon={<FontIcon className="material-icons"> mode_edit </FontIcon>}
                           label = {this.state.edit ? "Save" : "Edit"}
                           onClick = {()=>this.saveEdit()}
                         /><br/>
@@ -167,7 +167,7 @@ class Profile extends React.Component {
                             <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
                             <SelectField
                               floatingLabelText="Min Bedrooms"
-                              value={this.props.filters.bedMin}
+                              value={"1"}
                               onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bedsMin: value}))}
                               >
                                 <MenuItem value={"1"} primaryText="1" />
@@ -181,7 +181,7 @@ class Profile extends React.Component {
                               </SelectField><br/>
                               <SelectField
                                 floatingLabelText="Max Bedrooms"
-                                value={this.props.filters.bedsMax}
+                                value={"1"}
                                 onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bedsMax: value}))}          >
                                 <MenuItem value={"1"} primaryText="1" />
                                 <MenuItem value={"2"} primaryText="2" />
@@ -197,7 +197,7 @@ class Profile extends React.Component {
                               <FontIcon className="material-icons"> wc </FontIcon><br/>
                               <SelectField
                                 floatingLabelText="Min Bathrooms"
-                                value={this.props.filters.bathsMin}
+                                value={"1"}
                                 onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bathsMin: value}))}
                                 >
                                   <MenuItem value={"1"} primaryText="1" />
@@ -211,7 +211,7 @@ class Profile extends React.Component {
                                 </SelectField><br/>
                                 <SelectField
                                   floatingLabelText="Max Bathrooms"
-                                  value={this.props.filters.bathsMax}
+                                  value={"1"}
                                   onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bathsMax: value}))}
                                   >
                                     <MenuItem value={"1"} primaryText="1" />
@@ -226,7 +226,7 @@ class Profile extends React.Component {
                                   <FontIcon className="material-icons"> money </FontIcon><br/>
                                   <SelectField
                                     floatingLabelText="Min Price"
-                                    value={this.props.filters.priceMin}
+                                    value={"500"}
                                     onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {priceMin: value}))}
                                     >
                                       <MenuItem value={"500"} primaryText="500" />
@@ -238,7 +238,7 @@ class Profile extends React.Component {
                                     </SelectField><br/>
                                     <SelectField
                                       floatingLabelText="Max Price"
-                                      value={this.props.filters.priceMax}
+                                      value={"2000"}
                                       onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {priceMax: value}))}
                                       >
                                         <MenuItem value={"2000"} primaryText="2000" />
@@ -251,7 +251,7 @@ class Profile extends React.Component {
                                         <MenuItem value={"10000"} primaryText="10000" />
                                       </SelectField><br/>
                                     </div>
-                                    <div>
+                                    {/* <div>
                                       <FontIcon className="material-icons">date_range</FontIcon><br/>
                                       <DatePicker
                                         onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {dateAvailableStart: date}))}
@@ -267,8 +267,8 @@ class Profile extends React.Component {
                                         defaultDate={this.props.filters.dateAvailableEnd}
                                         disableYearSelection={this.state.disableYearSelection}
                                       />
-                                    </div>
-                                    <div>
+                                    </div> */}
+                                    {/* <div>
                                       <FontIcon className="material-icons">playlist_add</FontIcon>Additional filters<br/>
                                       {this.state.chipData.map(chip=>{
                                         return(
@@ -280,13 +280,13 @@ class Profile extends React.Component {
                                           </Chip>
                                         )
                                       })}
-                                    </div>
+                                    </div> */}
                                   </div>
                                 </div>
                               </div>
                             </Tab>
                             <Tab label="Roommate Matches" >
-                              <Link to='/mygroup/1'><RaisedButton
+                              {/* <Link to='/mygroup/1'><RaisedButton
                                 primary={true}
                                 style={{margin: '20px'}}
                                 label = "See my group"
@@ -295,15 +295,15 @@ class Profile extends React.Component {
                                 primary={true}
                                 style={{margin: '20px'}}
                                 label = "Browse more roommates"
-                              /></Link><br/>
+                              /></Link><br/> */}
                               <RoommateMatch />
                             </Tab>
                             <Tab label="Apartment Matches" >
-                              <Link to="/browseapartment"><RaisedButton
+                              {/* <Link to="/browseapartment"><RaisedButton
                                 primary={true}
                                 style={{margin: '20px'}}
                                 label = "Browse more apartment"
-                              /></Link><br/>
+                              /></Link><br/> */}
                               <ApartmentMatch />
                             </Tab>
                           </Tabs>
