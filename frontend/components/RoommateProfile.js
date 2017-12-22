@@ -54,7 +54,7 @@ class RoommateProfile extends React.Component {
       <div>
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
-            <h1>Roommate Profile</h1>
+            <h1>{this.state.profileUser.firstname}</h1>
             <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
             <div>
               <FontIcon className="material-icons"> person </FontIcon>

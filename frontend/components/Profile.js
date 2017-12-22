@@ -28,15 +28,15 @@ class Profile extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentWillReceiveProps(props) {
       // console.log('this.props.match.params.userid',this.props.match.params.userid);
       axios.defaults.withCredentials = true;
       axios.post(`${process.env.URL}/myprofile`, {
-        userid: this.props.match.params.userid
+        userid: props.match.params.userid
       })
       .then(resp=>{
         console.log('inside myprofile page', resp.data);
-          this.setState(resp.data.currentUser);
+          this.setState(resp.data.profileUser);
       })
       .catch(err=>console.log(err));
     }
@@ -44,14 +44,14 @@ class Profile extends React.Component {
     saveEdit() {
         var sendingState = Object.assign({}, this.state, {userid: this.props.match.params.userid});
         axios.post(`${process.env.URL}/saveedit`, sendingState)
-      .then(resp=>{
-          console.log('resp.data', resp.data);
-          if(resp.data) {
-              this.setState({edit: false})
-          };
-          alert('Edit Saved!');
-      })
-      .catch(err=>console.log(err));
+        .then(resp=>{
+            console.log('resp.data', resp.data);
+            if(resp.data) {
+                this.setState({edit: false})
+            };
+            alert('Edit Saved!');
+        })
+        .catch(err=>console.log(err));
     }
 
     render() {
@@ -61,7 +61,7 @@ class Profile extends React.Component {
           <div className = "infocontainer col-md-3 col-xs-12">
             <h1>Profile Page</h1>
             <img className = "profileimg" src="https://pbs.twimg.com/profile_images/446566229210181632/2IeTff-V.jpeg"></img>
-            <h2>Welcome {this.state.firstname} !</h2>
+            <h2>{this.state.firstname}</h2>
             <h1>Description</h1>
           </div>
           <div className = "result container col-md-9 col-xs-12">
