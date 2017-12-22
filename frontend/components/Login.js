@@ -2,11 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-DOM';
 import Divider from 'material-ui/Divider';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as colors from 'material-ui/styles/colors';
 import {connect} from 'react-redux';
-import {userData} from '../actions/index';
+import {userData, apartmentMatches} from '../actions/index';
 
 // const config = {
 //   withCredentials: true,
@@ -26,15 +27,18 @@ class Login extends React.Component {
     }
 
     login() {
-      axios.defaults.withCredentials = true;
       axios.post(`${process.env.URL}/login`, {
         username: this.state.username,
         password: this.state.password,
       })
       .then((response)=>{
         console.log("response after login", response.data.user.id, response);
-        this.props.toUserData(response.data.user.id);
-        this.props.history.push('/profile/' + response.data.user.id);
+        // this.props.toUserData(response.data.user.id);
+        axios.get(`${process.env.URL}/apartmentMatches/${response.data.user.id}`)
+        .then(response => {
+          this.props.toApartmentMatches(response.data.apartments);
+        })
+        .then(() => this.props.history.push('/profile/' + response.data.user.id))
       })
       .catch((err)=>{
         console.log('Error: ', err);
@@ -93,6 +97,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     toUserData: (userid) => dispatch(userData(userid)),
+    toApartmentMatches: (apts) => dispatch(apartmentMatches(apts))
   }
 }
 

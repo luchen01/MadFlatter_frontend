@@ -82,6 +82,7 @@ class Questionnaire extends React.Component {
   }
 
   render() {
+    console.log(this.props.userid);
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px'};
 
