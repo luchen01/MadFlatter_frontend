@@ -28,7 +28,6 @@ class Register extends Component {
     }
 }
 
-
 class Logged extends React.Component {
   constructor(props) {
       super(props);
@@ -81,17 +80,6 @@ class Title extends Component {
         };
     }
 
-    // componentWillMount() {
-    //     axios.get(`${process.env.URL}/loggedin`)
-    //   .then(response=>{
-    //       console.log('response in title', response);
-    //       if(response.data) {
-    //           this.setState({logged: true});
-    //       }
-    //   })
-    //   .catch(err=>console.log(err));
-    // }
-
     render() {
         return (
       <div>
@@ -100,13 +88,10 @@ class Title extends Component {
           iconElementLeft={<Link to="/"><IconButton><ActionHome /></IconButton></Link>}
           iconElementRight={this.props.userid ?
             <div>
-            <Logged />
-            <Login />
+            <Logged />  <Login />
             </div> :
-            <div style={{margin: '10px', padding: '10px'}}>
-              <Login />
-              <Register />
-              <Logged />
+            <div>
+              <Login />  <Register />
             </div>}
         />
       </div>

@@ -28,11 +28,11 @@ class Profile extends React.Component {
         };
     }
 
-    componentWillReceiveProps(props) {
+    componentWillMount() {
       // console.log('this.props.match.params.userid',this.props.match.params.userid);
       axios.defaults.withCredentials = true;
       axios.post(`${process.env.URL}/myprofile`, {
-        userid: props.match.params.userid
+        userid: this.props.match.params.userid
       })
       .then(resp=>{
         console.log('inside myprofile page', resp.data);

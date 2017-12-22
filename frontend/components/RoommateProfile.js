@@ -54,7 +54,7 @@ class RoommateProfile extends React.Component {
       <div>
         <div className = "profileContainer row">
           <div className = "infocontainer col-md-3 col-xs-12">
-            <h1>{this.state.profileUser.firstname}</h1>
+            <h1>Roommate Profile </h1>
             <img className = "profileimg" src="http://www.pawderosa.com/images/puppies.jpg"></img>
             <div>
               <FontIcon className="material-icons"> person </FontIcon>
@@ -80,10 +80,15 @@ class RoommateProfile extends React.Component {
           <div className = "result container col-md-9 col-xs-12">
             <Tabs>
               <Tab label="About Me" >
-                  <div style = {{padding: '10px', margin: '10px'}}>
+                  <div style = {{padding: '10px', margin: '10px'}} className = "row">
+                    <div className = "container col-md-6 col-xs-12">
                     <h4>Hey there! I am {this.state.profileUser.firstname}.</h4><br/>
-                    <h4>I'm looking for apartments in: </h4><br/>
                     <h4>My budget range is:</h4>
+                  </div>
+                  <div className = "container col-md-6 col-xs-12">
+                    <h4>I'm looking for apartments in: </h4><br/>
+                    Map
+                  </div>
                   </div>
                 </Tab>
                 {/* {this.state.chat ?

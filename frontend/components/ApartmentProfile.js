@@ -82,7 +82,7 @@ class Apartmentprofile extends React.Component {
                 {<Map oneListing={this.state.apartment} width={width + 'px'} height='400px'/>}
               </div>
               <div className = "container col-md-9 col-xs-12">
-                <Tabs>
+                <Tabs style = {{backgroundColor: 'white'}}>
                   <Tab label="Apartment Information">
                       <div>
                         {this.state.isAdmin ?  <div><RaisedButton
