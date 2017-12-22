@@ -52,6 +52,7 @@ export function changeFilters(filters) {
 }
 
 export function userData(userid) {
+
     return({
         type: 'USER_DATA',
         userid

@@ -13,8 +13,8 @@ class Map extends Component {
     this.state = {
       oneListing: this.props.listing ? this.props.listing : null,
       markers: this.props.markers ? this.props.markers : [],
-      regions: this.props.savedRegions ? this.props.savedRegions : [],
-      searchFilters: { },
+      regions: (this.props.savedRegions && this.props.noMarkers) ? this.props.savedRegions : [],
+      searchFilters: this.props.searchFilters ? this.props.searchFilters : { },
       displayButton: false,
       drawingAllowed: this.props.drawingAllowed ? true : false
     }
@@ -86,7 +86,7 @@ class Map extends Component {
     })
   }
 
-  findApartmentsByLocation() {
+  findApartmentsByLocation(searchFilters) {
     const self = this;
     // var bounds = {
     //   north: this.state.map.getBounds().f.b,
@@ -110,9 +110,10 @@ class Map extends Component {
       west: -180,
       east: 0,
     }
+    console.log(searchFilters, this.state.searchFilters);
     axios.post(`${process.env.URL}/apartmentsByLocation`, {
         regions: regions.length ? regions : [defaultBounds],
-        searchFilters: self.state.searchFilters
+        searchFilters: searchFilters ? searchFilters : {}
       })
       .then((response) => {
         console.log(response);
@@ -304,7 +305,7 @@ class Map extends Component {
             <div id='googleMap' style={{height: height, width: width }}></div>
             {this.state.displayButton ?
               (!this.props.noMarkers ?
-                <ApartmentButton saveRegions={true} onClick={()=>(this.findApartmentsByLocation())}/> :
+                <ApartmentButton onClick={()=>(this.findApartmentsByLocation(this.props.searchFilters))}/> :
                 null) :
               null}
           </div>
