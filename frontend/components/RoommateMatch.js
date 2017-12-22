@@ -2,6 +2,7 @@ import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { Link } from 'react-router-DOM';
@@ -32,13 +33,20 @@ class RoommateMatch extends React.Component{
 
   render() {
     return(
+      <div>
+        <Link to="/browseroommate"><RaisedButton
+            primary={true}
+            style={{margin: '20px'}}
+            icon={<FontIcon className="material-icons"> zoom_in </FontIcon>}
+            label = "More roommates"
+          /></Link><br/>
       <div style={styles.root}>
     <GridList
       cellHeight={180}
       cellWidth={300}
       style={styles.gridList}
     >
-      <Subheader>Saved Results</Subheader>
+      <Subheader>Matched Roommates</Subheader>
       {this.props.matches.map(match => {
         let r = 255 * (1 - match.score);
         let g = 255 * match.score;
@@ -55,6 +63,7 @@ class RoommateMatch extends React.Component{
       })}
     </GridList>
   </div>
+</div>
     )
   }
 }

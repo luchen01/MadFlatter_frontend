@@ -9,7 +9,6 @@ import ApartmentDisplay from '../components/ApartmentDisplay';
 import RoommateDisplay from '../components/RoommateDisplay';
 import FontIcon from 'material-ui/FontIcon';
 import ActionHome from 'material-ui/svg-icons/action/home';
-// import Devices from 'material-ui/svg-icons/action/importantdevices';
 import Chat from 'material-ui/svg-icons/communication/forum';
 import IconButton from 'material-ui/IconButton';
 import { Link } from 'react-router-DOM';
@@ -44,13 +43,11 @@ class AppContainer extends React.Component {
          <MenuItem value={"Both"} primaryText="Both" />
        </SelectField><br/>
        <SelectField
-          floatingLabelText="Select your City"
+          floatingLabelText="Select your city"
           value={this.state.city}
           onChange={(event, index, value)=>this.setState({city: value})}
         >
           <MenuItem value={"San Francisco"} primaryText="San Francisco" />
-          <MenuItem value={"Other"} primaryText="New York" />
-          <MenuItem value={"Other"} primaryText="Los Angeles" />
         </SelectField><br/>
         <RaisedButton
             primary={true}
@@ -64,21 +61,23 @@ class AppContainer extends React.Component {
      <div className="howto row">
          <div className = "infoContainer col-md-4">
            <img className = "icon" src = "https://cdn0.iconfinder.com/data/icons/social-messaging-productivity-5/128/questions-answers-256.png"/><br/>
-           Tell us what you want.
+           <h3>Tell us what you want</h3>.
          </div>
          <div className = "infoContainer col-md-4">
            <img className = "icon" src = "https://image.flaticon.com/icons/png/128/181/181548.png"/><br/>
-           Pick from your matched roommates and apartments.
+           <h3>Pick from your matched roommates and apartments.</h3>
          </div>
          <div className = "infoContainer col-md-4">
            <img className = "icon" src = "https://image.flaticon.com/icons/png/512/25/25694.png"/><br/>
-           Happy Moving Day!
+           <h3>Happy Moving Day!</h3>
        </div>
      </div><br/>
      <ApartmentDisplay /><br/>
-     <Link to="/browseapartment" className = "seeMore">See More Apartments >>></Link>
+     <div style = {{textAlign: "right", margin: "10px", padding: "10px"}}>
+     <Link to="/browseapartment" className = "seeMore">See More Apartments >>></Link></div>
      <RoommateDisplay />
-     <Link to="/browseroommate" className = "seeMore">See More People >>></Link>
+     <div style = {{textAlign: "right", margin: "10px", padding: "10px"}}>
+     <Link to="/browseroommate" className = "seeMore">See More People >>></Link></div>
       </div>
         );
     }
