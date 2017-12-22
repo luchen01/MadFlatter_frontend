@@ -8,6 +8,10 @@ import RoommateMatch from './RoommateMatch';
 import ApartmentMatch from './ApartmentMatch';
 import FontIcon from 'material-ui/FontIcon';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+import { connect } from 'react-redux';
+import {userData} from '../actions/index';
+
 
 const styles = {
   headline: {
@@ -29,9 +33,13 @@ class Profile extends React.Component {
         };
     }
 
+    componentDidMount(){
+      console.log('in profile componentDidMount');
+      if(!this.props.userid) this.props.toUserData(this.props.match.params.userid);
+    }
+
     componentWillMount() {
       // console.log('this.props.match.params.userid',this.props.match.params.userid);
-      axios.defaults.withCredentials = true;
       axios.post(`${process.env.URL}/myprofile`, {
         userid: this.props.match.params.userid
       })
@@ -139,5 +147,18 @@ class Profile extends React.Component {
 Facebook and will be the default if the user logged in with Facebook), age,
 compatibility ranking, and maybe some extra sections devoted to bio, perks of
 being their roommate, etc. */
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toUserData: (userid)=>dispatch(userData(userid))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    userid: state.userid
+  };
+}
+
+Profile = connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 export default Profile;

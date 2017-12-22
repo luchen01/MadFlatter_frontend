@@ -41,8 +41,8 @@ class ApartmentQuestionnaire extends Component{
       maxDate.setHours(0, 0, 0, 0);
 
       this.state = {
-        // maxBedrooom: 0,
-        // minBedroom: 0,
+        // bedsMaxrooom: 0,
+        // bedsMinroom: 0,
         // maxBathroom: 0,
         // minBathroom: 0,
         // minDate: minDate,
@@ -97,8 +97,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons" style = {{margin: '5px'}}> hotel </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bedrooms"
-           value={this.props.filters.minBed}
-           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minBed: value}))}
+           value={this.props.filters.bedMin}
+           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bedsMin: value}))}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -111,8 +111,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bedrooms"
-            value={this.props.filters.maxBed}
-            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxBed: value}))}          >
+            value={this.props.filters.bedsMax}
+            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bedsMax: value}))}          >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
             <MenuItem value={"3"} primaryText="3" />
@@ -127,8 +127,8 @@ class ApartmentQuestionnaire extends Component{
         <FontIcon className="material-icons"> wc </FontIcon><br/>
         <SelectField
            floatingLabelText="Min Bathrooms"
-           value={this.props.filters.minBath}
-           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minBath: value}))}
+           value={this.props.filters.bathsMin}
+           onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bathsMin: value}))}
          >
            <MenuItem value={"1"} primaryText="1" />
            <MenuItem value={"2"} primaryText="2" />
@@ -141,8 +141,8 @@ class ApartmentQuestionnaire extends Component{
          </SelectField><br/>
          <SelectField
             floatingLabelText="Max Bathrooms"
-            value={this.props.filters.maxBath}
-            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxBath: value}))}
+            value={this.props.filters.bathsMax}
+            onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {bathsMax: value}))}
           >
             <MenuItem value={"1"} primaryText="1" />
             <MenuItem value={"2"} primaryText="2" />
@@ -156,8 +156,8 @@ class ApartmentQuestionnaire extends Component{
           <FontIcon className="material-icons"> money </FontIcon><br/>
           <SelectField
              floatingLabelText="Min Price"
-             value={this.props.filters.minPrice}
-             onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minPrice: value}))}
+             value={this.props.filters.priceMin}
+             onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {priceMin: value}))}
            >
              <MenuItem value={"500"} primaryText="500" />
              <MenuItem value={"1000"} primaryText="1000" />
@@ -168,8 +168,8 @@ class ApartmentQuestionnaire extends Component{
            </SelectField><br/>
            <SelectField
               floatingLabelText="Max Price"
-              value={this.props.filters.maxPrice}
-              onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxPrice: value}))}
+              value={this.props.filters.priceMax}
+              onChange={(event, index, value)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {priceMax: value}))}
             >
               <MenuItem value={"2000"} primaryText="2000" />
               <MenuItem value={"2500"} primaryText="2500" />
@@ -184,17 +184,17 @@ class ApartmentQuestionnaire extends Component{
         <div>
           <FontIcon className="material-icons">date_range</FontIcon><br/>
           <DatePicker
-            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {minDate: date}))}
+            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {dateAvailableStart: date}))}
             autoOk={false}
             floatingLabelText="Min Available Date"
-            defaultDate={this.props.filters.minDate}
+            defaultDate={this.props.filters.dateAvailableEnd}
             disableYearSelection={this.state.disableYearSelection}
           />
           <DatePicker
-            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {maxDate: date}))}
+            onChange={(event, date)=>this.props.toChangeFilters(Object.assign({}, this.props.filters, {dateAvailableEnd: date}))}
             autoOk={false}
             floatingLabelText="Max Available Date"
-            defaultDate={this.props.filters.maxDate}
+            defaultDate={this.props.filters.dateAvailableEnd}
             disableYearSelection={this.state.disableYearSelection}
           />
         </div>
